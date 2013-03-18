@@ -7,12 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using PokemonBejeweled.Pokemon;
 
 namespace PokemonBejeweled
 {
-    public partial class Form1 : Form
+    public partial class PokemonBejeweledForm : Form
     {
-        public Form1()
+        public PokemonBejeweledForm()
         {
             InitializeComponent();
         }

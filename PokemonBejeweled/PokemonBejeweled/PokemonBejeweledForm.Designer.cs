@@ -1,6 +1,6 @@
 ﻿namespace PokemonBejeweled
 {
-    partial class Form1
+    partial class PokemonBejeweledForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,12 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.SuspendLayout();
+            // 
+            // PokemonBejeweledForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Text = "Form1";
+            this.ClientSize = new System.Drawing.Size(375, 492);
+            this.Name = "PokemonBejeweledForm";
+            this.Text = "Pokemon Bejeweled!!!";
+            this.ResumeLayout(false);
+
         }
 
         #endregion
+
     }
 }
 
