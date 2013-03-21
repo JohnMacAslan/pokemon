@@ -1,21 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace PokemonBejeweled.Pokemon
 {
-    abstract class BasicPokemon
+    class DittoPokemonToken : BasicPokemonToken
     {
-        protected File image;
-
-        public abstract BasicPokemon evolve();
-
-        public Ditto becomeDitto()
+        public override BasicPokemonToken evolve()
         {
-            return null;
+            throw new NotImplementedException();
+            // ditto stays ditto
         }
     }
 }

@@ -9,7 +9,7 @@ namespace PokemonBejeweled
 {
     class PokemonGrid
     {
-        private Pokemon.BasicPokemon[][] pokemonGrid;
+        private Pokemon.BasicPokemonToken[][] pokemonGrid;
 
         public PokemonGrid()
         {

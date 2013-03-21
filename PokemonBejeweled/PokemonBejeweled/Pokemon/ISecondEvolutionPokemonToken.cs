@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PokemonBejeweled.Pokemon
 {
-    abstract class FirstEvolutionPokemon : BasicPokemon
+    abstract class ISecondEvolutionPokemonToken : IPokemonToken
     {
     }
 }
