@@ -67,6 +67,17 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Pokemon\BulbasaurChain\BulbasaurToken.cs" />
+    <Compile Include="Pokemon\BulbasaurChain\IvysaurToken.cs" />
+    <Compile Include="Pokemon\BulbasaurChain\VenusaurToken.cs" />
+    <Compile Include="Pokemon\CharmanderChain\CharizardToken.cs" />
+    <Compile Include="Pokemon\CharmanderChain\CharmanderToken.cs" />
+    <Compile Include="Pokemon\CharmanderChain\CharmeleonToken.cs" />
+    <Compile Include="Pokemon\DittoPokemonToken.cs" />
+    <Compile Include="Pokemon\IBasicPokemonToken.cs" />
+    <Compile Include="Pokemon\IFirstEvolutionPokemonToken.cs" />
+    <Compile Include="Pokemon\ISecondEvolutionPokemonToken.cs" />
+    <Compile Include="Pokemon\PokemonToken.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -84,6 +95,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="DomainClassDiagram.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -93,6 +105,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
