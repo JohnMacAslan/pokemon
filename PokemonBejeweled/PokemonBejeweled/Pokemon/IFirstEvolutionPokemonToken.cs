@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PokemonBejeweled.Pokemon
 {
-    interface IFirstEvolutionPokemonToken : IPokemonToken
+    interface IFirstEvolutionPokemonToken : IBasicPokemonToken
     {
     }
 }

@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace PokemonBejeweled.Pokemon
 {
-    class DittoPokemonToken : PokemonToken
+    public class CharmanderToken : PokemonToken, IBasicPokemonToken
     {
         public override PokemonToken evolve()
         {
             throw new NotImplementedException();
-            // ditto stays ditto
         }
     }
 }

@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace PokemonBejeweled.Pokemon
 {
-    abstract class BasicPokemonToken : IPokemonToken
+    abstract class PokemonToken
     {
         protected File image;
 
-        public abstract BasicPokemonToken evolve();
+        public abstract PokemonToken evolve();
 
         public DittoPokemonToken becomeDitto()
         {

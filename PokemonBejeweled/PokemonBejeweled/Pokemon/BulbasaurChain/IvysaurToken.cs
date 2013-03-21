@@ -6,11 +6,7 @@ using System.Threading.Tasks;
 
 namespace PokemonBejeweled.Pokemon
 {
-    class BulbasaurToken : BasicPokemonToken
+    public class IvysaurToken : BulbasaurToken, IFirstEvolutionPokemonToken
     {
-        public override BasicPokemonToken evolve()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

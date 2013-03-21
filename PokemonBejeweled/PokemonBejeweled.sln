@@ -1,7 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokemonBejeweled", "PokemonBejeweled\PokemonBejeweled.csproj", "{F9F746BC-ACA1-4E29-8B6C-3A74BF385C09}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokemonBejeweledTest", "PokemonBejeweledTest\PokemonBejeweledTest.csproj", "{A7196DC5-D05A-4CE8-B966-8705F17561D0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokemonBejeweled", "PokemonBejeweled2\PokemonBejeweled.csproj", "{9BB392CB-6535-4EDD-8750-72BBF320DE5C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,10 +11,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F9F746BC-ACA1-4E29-8B6C-3A74BF385C09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F9F746BC-ACA1-4E29-8B6C-3A74BF385C09}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F9F746BC-ACA1-4E29-8B6C-3A74BF385C09}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F9F746BC-ACA1-4E29-8B6C-3A74BF385C09}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7196DC5-D05A-4CE8-B966-8705F17561D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7196DC5-D05A-4CE8-B966-8705F17561D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7196DC5-D05A-4CE8-B966-8705F17561D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7196DC5-D05A-4CE8-B966-8705F17561D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BB392CB-6535-4EDD-8750-72BBF320DE5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BB392CB-6535-4EDD-8750-72BBF320DE5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BB392CB-6535-4EDD-8750-72BBF320DE5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BB392CB-6535-4EDD-8750-72BBF320DE5C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
