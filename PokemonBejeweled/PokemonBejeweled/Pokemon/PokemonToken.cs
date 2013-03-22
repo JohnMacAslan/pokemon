@@ -9,8 +9,7 @@ namespace PokemonBejeweled.Pokemon
 {
     public abstract class PokemonToken
     {
-        protected File image;
-
+        //protected File image;
         public abstract IFirstEvolutionPokemonToken firstEvolvedToken();
 
         public abstract ISecondEvolutionPokemonToken secondEvolvedToken();
@@ -20,9 +19,9 @@ namespace PokemonBejeweled.Pokemon
             return null;
         }
 
-        public File getTokenImage()
-        {
-            return image;
-        }
+        //public File getTokenImage()
+        //{
+        //    return image;
+        //}
     }
 }

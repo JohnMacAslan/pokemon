@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using PokemonBejeweled;
-using PokemonBejeweled.GameState;
+
 
 namespace PokemonBejeweledTest
 {

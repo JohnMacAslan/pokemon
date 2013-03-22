@@ -8,9 +8,19 @@ namespace PokemonBejeweled.Pokemon
 {
     public class CharmanderToken : PokemonToken, IBasicPokemonToken
     {
-        public override PokemonToken evolve()
+         public CharmanderToken()
         {
-            throw new NotImplementedException();
+            //image = null;
+        }
+
+        public override IFirstEvolutionPokemonToken firstEvolvedToken()
+        {
+            return new CharmeleonToken();
+        }
+
+        public override ISecondEvolutionPokemonToken secondEvolvedToken()
+        {
+            return new CharizardToken();
         }
     }
 }

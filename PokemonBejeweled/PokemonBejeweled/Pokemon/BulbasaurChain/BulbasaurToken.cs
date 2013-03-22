@@ -11,7 +11,7 @@ namespace PokemonBejeweled.Pokemon
 
         public BulbasaurToken()
         {
-            image = null;
+            //image = null;
         }
 
         public override IFirstEvolutionPokemonToken firstEvolvedToken()

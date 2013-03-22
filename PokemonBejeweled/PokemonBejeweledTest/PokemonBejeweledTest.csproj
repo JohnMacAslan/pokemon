@@ -51,6 +51,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="GameStateTest.cs" />
     <Compile Include="PokemonTokenTest.cs" />
     <Compile Include="PokemonGridTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

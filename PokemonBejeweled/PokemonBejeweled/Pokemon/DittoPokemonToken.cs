@@ -6,12 +6,21 @@ using System.Threading.Tasks;
 
 namespace PokemonBejeweled.Pokemon
 {
-    class DittoPokemonToken : PokemonToken
+    public class DittoPokemonToken : PokemonToken
     {
-        public override PokemonToken evolve()
+         public DittoPokemonToken()
         {
-            throw new NotImplementedException();
-            // ditto stays ditto
+            //image = null;
+        }
+
+        public override IFirstEvolutionPokemonToken firstEvolvedToken()
+        {
+            return null;
+        }
+
+        public override ISecondEvolutionPokemonToken secondEvolvedToken()
+        {
+            return null;
         }
     }
 }

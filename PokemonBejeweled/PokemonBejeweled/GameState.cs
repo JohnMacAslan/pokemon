@@ -16,7 +16,7 @@ namespace PokemonBejeweled
         //PokemonGrid grid;
         int NO_TIME_LIMIT;
 
-        public void GameState()
+        public GameState()
         {
             newGame();
         }
