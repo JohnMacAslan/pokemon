@@ -1,6 +1,6 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PokemonBejeweled.Pokemon;
+using PokemonBejeweled;
 using NUnit.Framework;
 
 namespace PokemonBejeweledTest
@@ -17,6 +17,7 @@ namespace PokemonBejeweledTest
                                                   {null, null, null, null, null, null, null, null},
                                                   {null, null, null, null, null, null, null, null},
                                                   {null, null, null, null, null, null, null, null}};
+        private PokemonGrid pokemonActualGrid = new PokemonGrid();
 
         [Test]
         public void TestMethod1()
@@ -28,8 +29,10 @@ namespace PokemonBejeweledTest
         [Test]
         public void TestPokemonGridInitialization()
         {
-            
+            Assert.AreSame(pokemonGrid, pokemonActualGrid.getPokemonGrid());
         }
+
+        s
 
 
     }
