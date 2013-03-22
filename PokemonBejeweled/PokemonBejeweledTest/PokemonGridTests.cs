@@ -20,21 +20,20 @@ namespace PokemonBejeweledTest
         private PokemonGrid pokemonActualGrid = new PokemonGrid();
 
         [Test]
-        public void UpdateBoardAlgorithm_ColumnOfThreeOnTopEdge_ColumnOfThreeMarkedAsNull()
+        public void UpdateBoardAlgorithm_ColumnOfThreeOnTopEdge_ColumnMarkedAsNull()
         {
 
         }
 
         [Test]
-        public void UpdateBoardAlgorithm_ColumnOfThreeOnBottomEdge_ColumnOfThreeMarkedAsNull()
+        public void UpdateBoardAlgorithm_ColumnOfThreeOnBottomEdge_ColumnMarkedAsNull()
         {
 
         }
 
         [Test]
-        public void UpdateBoardAlgorithm_ColumnOfThreeOnLeftEdge_ColumnOfThreeMarkedAsNull()
+        public void UpdateBoardAlgorithm_ColumnOfThreeOnLeftEdge_ColumnMarkedAsNull()
         {
-
         }
 
         [Test]
