@@ -7,7 +7,7 @@ using PokemonBejeweled.Pokemon;
 
 namespace PokemonBejeweled
 {
-    class PokemonGrid
+    public class PokemonGrid
     {
         public PokemonToken[,] pokemon {get; set;}
         private PokemonToken[,] pokemonOld;
@@ -22,8 +22,15 @@ namespace PokemonBejeweled
             gamePlayScore = 0;
         }
 
+        public object getPokemonGrid()
+        {
+            throw new NotImplementedException();
+        }
+
         private void updateBoardAlgorithm()
         {
         }
+
+       
     }
 }
