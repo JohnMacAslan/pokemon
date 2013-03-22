@@ -118,6 +118,35 @@ namespace PokemonBejeweledTest
         }
 
         [Test]
+        public void AreThreeTokensInARow_InvalidColIndex_ReturnFalse()
+        {
+            Assert.IsFalse(pokemonActualGrid.areThreeTokensInARow(3, PokemonGrid.gridSize)); 
+        }
+
+        [Test]
+        public void AreThreeTokensInARow_InvalidRowIndex_ReturnFalse()
+        {
+            Assert.IsFalse(pokemonActualGrid.areThreeTokensInARow(PokemonGrid.gridSize, 3)); 
+        }
+
+        [Test]
+        public void AreThreeTokensInARow_ThreeInARow_ReturnTrue()
+        {
+            pokemonGrid[3, 3] = new DittoPokemonToken();
+            pokemonGrid[3, 4] = new DittoPokemonToken();
+            pokemonGrid[3, 5] = new DittoPokemonToken();
+            pokemonActualGrid.Pokemon = pokemonGrid;
+            Assert.IsTrue(pokemonActualGrid.areThreeTokensInARow(3, 3));
+        }
+
+        [Test]
+        public void AreThreeTokensInARow_ThreeNotInARow_ReturnFalse()
+        {
+            pokemonActualGrid.Pokemon = pokemonGrid;
+            Assert.IsFalse(pokemonActualGrid.areThreeTokensInARow(3, 3));
+        }
+
+        [Test]
         public void PokemonGrid_PokemonInitializedToNulls()
         {
             pokemonGrid = new PokemonToken[PokemonGrid.gridSize, PokemonGrid.gridSize];
