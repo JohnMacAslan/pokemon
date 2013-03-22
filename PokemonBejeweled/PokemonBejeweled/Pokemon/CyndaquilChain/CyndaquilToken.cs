@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PokemonBejeweled.Pokemon
 {
-    public class CyndaquilToken
+    public class CyndaquilToken : PokemonToken, IBasicPokemonToken
     {
         public CyndaquilToken()
         {

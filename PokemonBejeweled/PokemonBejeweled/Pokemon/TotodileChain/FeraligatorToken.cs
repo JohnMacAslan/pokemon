@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PokemonBejeweled.Pokemon
 {
-    public class FeraligatorToken
+    public class FeraligatorToken : TotodileToken, ISecondEvolutionPokemonToken
     {
     }
 }
