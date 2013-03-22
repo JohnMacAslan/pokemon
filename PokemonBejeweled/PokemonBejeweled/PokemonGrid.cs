@@ -46,7 +46,7 @@ namespace PokemonBejeweled
 
         public Boolean isValidMove(int row1, int col1, int row2, int col2)
         {
-
+           
             return false;
         }
 

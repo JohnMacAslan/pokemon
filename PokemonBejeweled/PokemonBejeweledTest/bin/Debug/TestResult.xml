@@ -1,30 +1,30 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <!--This file represents the results of running a test suite-->
-<test-results name="C:\Users\agnerrl\pokemon\PokemonBejeweled\PokemonBejeweledTest\bin\Debug\PokemonBejeweledTest.dll" total="32" errors="0" failures="6" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2013-03-22" time="02:00:35">
+<test-results name="C:\Users\agnerrl\pokemon\PokemonBejeweled\PokemonBejeweledTest\bin\Debug\PokemonBejeweledTest.dll" total="32" errors="0" failures="6" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2013-03-22" time="02:03:05">
   <environment nunit-version="2.6.2.12296" clr-version="2.0.50727.5466" os-version="Microsoft Windows NT 6.1.7601 Service Pack 1" platform="Win32NT" cwd="C:\Program Files\NUnit 2.6.2\bin" machine-name="AGNERRL-1" user="agnerrl" user-domain="AGNERRL-1" />
   <culture-info current-culture="en-US" current-uiculture="en-US" />
-  <test-suite type="Assembly" name="C:\Users\agnerrl\pokemon\PokemonBejeweled\PokemonBejeweledTest\bin\Debug\PokemonBejeweledTest.dll" executed="True" result="Failure" success="False" time="0.820" asserts="0">
+  <test-suite type="Assembly" name="C:\Users\agnerrl\pokemon\PokemonBejeweled\PokemonBejeweledTest\bin\Debug\PokemonBejeweledTest.dll" executed="True" result="Failure" success="False" time="0.521" asserts="0">
     <results>
-      <test-suite type="Namespace" name="PokemonBejeweledTest" executed="True" result="Failure" success="False" time="0.810" asserts="0">
+      <test-suite type="Namespace" name="PokemonBejeweledTest" executed="True" result="Failure" success="False" time="0.513" asserts="0">
         <results>
-          <test-suite type="TestFixture" name="GameStateTest" executed="True" result="Success" success="True" time="0.045" asserts="0">
+          <test-suite type="TestFixture" name="GameStateTest" executed="True" result="Success" success="True" time="0.075" asserts="0">
             <results>
-              <test-case name="PokemonBejeweledTest.GameStateTest.TestGameInitialization" executed="True" result="Success" success="True" time="0.037" asserts="1" />
+              <test-case name="PokemonBejeweledTest.GameStateTest.TestGameInitialization" executed="True" result="Success" success="True" time="0.068" asserts="1" />
             </results>
           </test-suite>
-          <test-suite type="TestFixture" name="PokemonGridTests" executed="True" result="Failure" success="False" time="0.668" asserts="0">
+          <test-suite type="TestFixture" name="PokemonGridTests" executed="True" result="Failure" success="False" time="0.319" asserts="0">
             <results>
-              <test-case name="PokemonBejeweledTest.PokemonGridTests.AreThreeTokensInACol_InvalidColIndex_ReturnFalse" executed="True" result="Success" success="True" time="0.001" asserts="1" />
-              <test-case name="PokemonBejeweledTest.PokemonGridTests.AreThreeTokensInACol_InvalidRowIndex_ReturnFalse" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+              <test-case name="PokemonBejeweledTest.PokemonGridTests.AreThreeTokensInACol_InvalidColIndex_ReturnFalse" executed="True" result="Success" success="True" time="0.002" asserts="1" />
+              <test-case name="PokemonBejeweledTest.PokemonGridTests.AreThreeTokensInACol_InvalidRowIndex_ReturnFalse" executed="True" result="Success" success="True" time="0.000" asserts="1" />
               <test-case name="PokemonBejeweledTest.PokemonGridTests.AreThreeTokensInACol_ThreeInACol_ReturnTrue" executed="True" result="Success" success="True" time="0.001" asserts="1" />
               <test-case name="PokemonBejeweledTest.PokemonGridTests.AreThreeTokensInACol_ThreeNotInACol_ReturnFalse" executed="True" result="Success" success="True" time="0.000" asserts="1" />
-              <test-case name="PokemonBejeweledTest.PokemonGridTests.AreThreeTokensInARow_InvalidColIndex_ReturnFalse" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+              <test-case name="PokemonBejeweledTest.PokemonGridTests.AreThreeTokensInARow_InvalidColIndex_ReturnFalse" executed="True" result="Success" success="True" time="0.001" asserts="1" />
               <test-case name="PokemonBejeweledTest.PokemonGridTests.AreThreeTokensInARow_InvalidRowIndex_ReturnFalse" executed="True" result="Success" success="True" time="0.001" asserts="1" />
               <test-case name="PokemonBejeweledTest.PokemonGridTests.AreThreeTokensInARow_ThreeInARow_ReturnTrue" executed="True" result="Success" success="True" time="0.001" asserts="1" />
               <test-case name="PokemonBejeweledTest.PokemonGridTests.AreThreeTokensInARow_ThreeNotInARow_ReturnFalse" executed="True" result="Success" success="True" time="0.000" asserts="1" />
-              <test-case name="PokemonBejeweledTest.PokemonGridTests.PokemonGrid_GamePlayScoreSetTo0" executed="True" result="Success" success="True" time="0.006" asserts="1" />
-              <test-case name="PokemonBejeweledTest.PokemonGridTests.TestIsValidMoveReturnsFalse" executed="True" result="Success" success="True" time="0.001" asserts="1" />
-              <test-case name="PokemonBejeweledTest.PokemonGridTests.UpdateGridAlgorithm_ColumnOfThreeInMiddle_ColumnMarkedAsNull" executed="True" result="Failure" success="False" time="0.273" asserts="1">
+              <test-case name="PokemonBejeweledTest.PokemonGridTests.PokemonGrid_GamePlayScoreSetTo0" executed="True" result="Success" success="True" time="0.008" asserts="1" />
+              <test-case name="PokemonBejeweledTest.PokemonGridTests.TestIsValidMoveReturnsFalse" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+              <test-case name="PokemonBejeweledTest.PokemonGridTests.UpdateGridAlgorithm_ColumnOfThreeInMiddle_ColumnMarkedAsNull" executed="True" result="Failure" success="False" time="0.016" asserts="1">
                 <failure>
                   <message><![CDATA[  Expected and actual are both <PokemonBejeweled.Pokemon.PokemonToken[8,8]>
   Values differ at index [3,3]
@@ -46,7 +46,7 @@
 ]]></stack-trace>
                 </failure>
               </test-case>
-              <test-case name="PokemonBejeweledTest.PokemonGridTests.UpdateGridAlgorithm_ColumnOfThreeOnTopEdge_ColumnMarkedAsNull" executed="True" result="Failure" success="False" time="0.001" asserts="1">
+              <test-case name="PokemonBejeweledTest.PokemonGridTests.UpdateGridAlgorithm_ColumnOfThreeOnTopEdge_ColumnMarkedAsNull" executed="True" result="Failure" success="False" time="0.002" asserts="1">
                 <failure>
                   <message><![CDATA[  Expected and actual are both <PokemonBejeweled.Pokemon.PokemonToken[8,8]>
   Values differ at index [0,3]
@@ -57,7 +57,7 @@
 ]]></stack-trace>
                 </failure>
               </test-case>
-              <test-case name="PokemonBejeweledTest.PokemonGridTests.UpdateGridAlgorithm_NoRowsOrColumnsOfThree_GridUnchanged" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+              <test-case name="PokemonBejeweledTest.PokemonGridTests.UpdateGridAlgorithm_NoRowsOrColumnsOfThree_GridUnchanged" executed="True" result="Success" success="True" time="0.000" asserts="1" />
               <test-case name="PokemonBejeweledTest.PokemonGridTests.UpdateGridAlgorithm_RowOfThreeInMiddle_RowMarkedAsNull" executed="True" result="Failure" success="False" time="0.001" asserts="1">
                 <failure>
                   <message><![CDATA[  Expected and actual are both <PokemonBejeweled.Pokemon.PokemonToken[8,8]>
@@ -69,7 +69,7 @@
 ]]></stack-trace>
                 </failure>
               </test-case>
-              <test-case name="PokemonBejeweledTest.PokemonGridTests.UpdateGridAlgorithm_RowOfThreeOnLeftEdge_RowMarkedAsNull" executed="True" result="Failure" success="False" time="0.001" asserts="1">
+              <test-case name="PokemonBejeweledTest.PokemonGridTests.UpdateGridAlgorithm_RowOfThreeOnLeftEdge_RowMarkedAsNull" executed="True" result="Failure" success="False" time="0.002" asserts="1">
                 <failure>
                   <message><![CDATA[  Expected and actual are both <PokemonBejeweled.Pokemon.PokemonToken[8,8]>
   Values differ at index [3,0]
@@ -80,7 +80,7 @@
 ]]></stack-trace>
                 </failure>
               </test-case>
-              <test-case name="PokemonBejeweledTest.PokemonGridTests.UpdateGridAlgorithm_RowOfThreeOnRightEdge_RowMarkedAsNull" executed="True" result="Failure" success="False" time="0.001" asserts="1">
+              <test-case name="PokemonBejeweledTest.PokemonGridTests.UpdateGridAlgorithm_RowOfThreeOnRightEdge_RowMarkedAsNull" executed="True" result="Failure" success="False" time="0.002" asserts="1">
                 <failure>
                   <message><![CDATA[  Expected and actual are both <PokemonBejeweled.Pokemon.PokemonToken[8,8]>
   Values differ at index [3,5]
@@ -93,21 +93,21 @@
               </test-case>
             </results>
           </test-suite>
-          <test-suite type="TestFixture" name="PokemonTokenTest" executed="True" result="Success" success="True" time="0.064" asserts="0">
+          <test-suite type="TestFixture" name="PokemonTokenTest" executed="True" result="Success" success="True" time="0.067" asserts="0">
             <results>
-              <test-case name="PokemonBejeweledTest.PokemonTokenTest.TestThatBulbasaurTokenCreatesFirstEvolvedToken" executed="True" result="Success" success="True" time="0.001" asserts="1" />
-              <test-case name="PokemonBejeweledTest.PokemonTokenTest.TestThatBulbasaurTokenCreatesSecondEvolvedToken" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+              <test-case name="PokemonBejeweledTest.PokemonTokenTest.TestThatBulbasaurTokenCreatesFirstEvolvedToken" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+              <test-case name="PokemonBejeweledTest.PokemonTokenTest.TestThatBulbasaurTokenCreatesSecondEvolvedToken" executed="True" result="Success" success="True" time="0.001" asserts="1" />
               <test-case name="PokemonBejeweledTest.PokemonTokenTest.TestThatCharmanderTokenCreatesFirstEvolvedToken" executed="True" result="Success" success="True" time="0.000" asserts="1" />
-              <test-case name="PokemonBejeweledTest.PokemonTokenTest.TestThatCharmanderTokenCreatesSecondEvolvedToken" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+              <test-case name="PokemonBejeweledTest.PokemonTokenTest.TestThatCharmanderTokenCreatesSecondEvolvedToken" executed="True" result="Success" success="True" time="0.001" asserts="1" />
               <test-case name="PokemonBejeweledTest.PokemonTokenTest.TestThatChikoritaTokenCreatesFirstEvolvedToken" executed="True" result="Success" success="True" time="0.000" asserts="1" />
-              <test-case name="PokemonBejeweledTest.PokemonTokenTest.TestThatChikoritaTokenCreatesSecondEvolvedToken" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+              <test-case name="PokemonBejeweledTest.PokemonTokenTest.TestThatChikoritaTokenCreatesSecondEvolvedToken" executed="True" result="Success" success="True" time="0.001" asserts="1" />
               <test-case name="PokemonBejeweledTest.PokemonTokenTest.TestThatCyndaquilTokenCreatesFirstEvolvedToken" executed="True" result="Success" success="True" time="0.000" asserts="1" />
               <test-case name="PokemonBejeweledTest.PokemonTokenTest.TestThatCyndaquilTokenCreatesSecondEvolvedToken" executed="True" result="Success" success="True" time="0.000" asserts="1" />
-              <test-case name="PokemonBejeweledTest.PokemonTokenTest.TestThatPichuTokenCreatesFirstEvolvedToken" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+              <test-case name="PokemonBejeweledTest.PokemonTokenTest.TestThatPichuTokenCreatesFirstEvolvedToken" executed="True" result="Success" success="True" time="0.000" asserts="1" />
               <test-case name="PokemonBejeweledTest.PokemonTokenTest.TestThatPichuTokenCreatesSecondEvolvedToken" executed="True" result="Success" success="True" time="0.000" asserts="1" />
-              <test-case name="PokemonBejeweledTest.PokemonTokenTest.TestThatSquirtleTokenCreatesFirstEvolvedToken" executed="True" result="Success" success="True" time="0.000" asserts="1" />
-              <test-case name="PokemonBejeweledTest.PokemonTokenTest.TestThatSquirtleTokenCreatesSecondEvolvedToken" executed="True" result="Success" success="True" time="0.000" asserts="1" />
-              <test-case name="PokemonBejeweledTest.PokemonTokenTest.TestThatTotodileTokenCreatesFirstEvolvedToken" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+              <test-case name="PokemonBejeweledTest.PokemonTokenTest.TestThatSquirtleTokenCreatesFirstEvolvedToken" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+              <test-case name="PokemonBejeweledTest.PokemonTokenTest.TestThatSquirtleTokenCreatesSecondEvolvedToken" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+              <test-case name="PokemonBejeweledTest.PokemonTokenTest.TestThatTotodileTokenCreatesFirstEvolvedToken" executed="True" result="Success" success="True" time="0.001" asserts="1" />
               <test-case name="PokemonBejeweledTest.PokemonTokenTest.TestThatTotodileTokenCreatesSecondEvolvedToken" executed="True" result="Success" success="True" time="0.000" asserts="1" />
             </results>
           </test-suite>
