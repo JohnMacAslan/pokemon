@@ -42,8 +42,12 @@ namespace PokemonBejeweledTest
             Assert.AreEqual(pokemonGrid, pokemonActualGrid.pokemon);
         }
 
-        
+        [Test]
+        public void TestIsValidMoveReturnsFalse()
+        {
+            Assert.False(pokemonActualGrid.isValidMove(-1, -1, -1, -1));
+        }
 
-
+       
     }
 }

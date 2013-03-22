@@ -22,6 +22,17 @@ namespace PokemonBejeweled
             gamePlayScore = 0;
         }
 
+        public void updateBoard()
+        {
+            pokemon = pokemonOld;
+        }
+
+        public Boolean isValidMove(int row1, int col1, int row2, int col2)
+        {
+
+            return false;
+        }
+
         
 
         private void updateBoardAlgorithm()

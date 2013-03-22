@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PokemonBejeweled.Pokemon
 {
-    public class VenusaurToken : BulbasaurToken, ISecondEvolutionPokemonToken
+    public class TotodileToken
     {
     }
 }
