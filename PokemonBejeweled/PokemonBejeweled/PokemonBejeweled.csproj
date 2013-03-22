@@ -76,11 +76,26 @@
     <Compile Include="Pokemon\CharmanderChain\CharizardToken.cs" />
     <Compile Include="Pokemon\CharmanderChain\CharmanderToken.cs" />
     <Compile Include="Pokemon\CharmanderChain\CharmeleonToken.cs" />
+    <Compile Include="Pokemon\ChikoritaChain\BayleefToken.cs" />
+    <Compile Include="Pokemon\ChikoritaChain\ChikoritaToken.cs" />
+    <Compile Include="Pokemon\ChikoritaChain\MeganiumToken.cs" />
+    <Compile Include="Pokemon\CyndaquilChain\CyndaquilToken.cs" />
+    <Compile Include="Pokemon\CyndaquilChain\QuilavaToken.cs" />
+    <Compile Include="Pokemon\CyndaquilChain\TyphlosionToken.cs" />
     <Compile Include="Pokemon\DittoPokemonToken.cs" />
     <Compile Include="Pokemon\IBasicPokemonToken.cs" />
     <Compile Include="Pokemon\IFirstEvolutionPokemonToken.cs" />
     <Compile Include="Pokemon\ISecondEvolutionPokemonToken.cs" />
+    <Compile Include="Pokemon\PichuChain\PichuToken.cs" />
+    <Compile Include="Pokemon\PichuChain\PikachuToken.cs" />
+    <Compile Include="Pokemon\PichuChain\RaichuToken.cs" />
     <Compile Include="Pokemon\PokemonToken.cs" />
+    <Compile Include="Pokemon\SquirtleChain\BlastoiseToken.cs" />
+    <Compile Include="Pokemon\SquirtleChain\SquirtleToken.cs" />
+    <Compile Include="Pokemon\SquirtleChain\WartortleToken.cs" />
+    <Compile Include="Pokemon\TotodileChain\CroconawToken.cs" />
+    <Compile Include="Pokemon\TotodileChain\FeraligatorToken.cs" />
+    <Compile Include="Pokemon\TotodileChain\TotodileToken.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
