@@ -22,9 +22,9 @@ namespace PokemonBejeweled
             gamePlayScore = 0;
         }
 
-        public object getPokemonGrid()
+        public PokemonToken[,] getPokemonGrid()
         {
-            throw new NotImplementedException();
+            return pokemon;
         }
 
         private void updateBoardAlgorithm()
