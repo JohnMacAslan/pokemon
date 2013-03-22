@@ -1,9 +1,9 @@
-C:\Users\agnerrl\pokemon\PokemonBejeweled\PokemonBejeweledTest\obj\Debug\PokemonBejeweledTest.csprojResolveAssemblyReference.cache
 C:\Users\agnerrl\pokemon\PokemonBejeweled\PokemonBejeweledTest\bin\Debug\PokemonBejeweledTest.dll
 C:\Users\agnerrl\pokemon\PokemonBejeweled\PokemonBejeweledTest\bin\Debug\PokemonBejeweledTest.pdb
 C:\Users\agnerrl\pokemon\PokemonBejeweled\PokemonBejeweledTest\bin\Debug\nunit.framework.dll
 C:\Users\agnerrl\pokemon\PokemonBejeweled\PokemonBejeweledTest\bin\Debug\PokemonBejeweled.exe
 C:\Users\agnerrl\pokemon\PokemonBejeweled\PokemonBejeweledTest\bin\Debug\PokemonBejeweled.pdb
 C:\Users\agnerrl\pokemon\PokemonBejeweled\PokemonBejeweledTest\bin\Debug\nunit.framework.xml
+C:\Users\agnerrl\pokemon\PokemonBejeweled\PokemonBejeweledTest\obj\Debug\PokemonBejeweledTest.csprojResolveAssemblyReference.cache
 C:\Users\agnerrl\pokemon\PokemonBejeweled\PokemonBejeweledTest\obj\Debug\PokemonBejeweledTest.dll
 C:\Users\agnerrl\pokemon\PokemonBejeweled\PokemonBejeweledTest\obj\Debug\PokemonBejeweledTest.pdb

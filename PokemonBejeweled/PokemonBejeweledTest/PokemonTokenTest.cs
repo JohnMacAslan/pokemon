@@ -18,14 +18,14 @@ namespace PokemonBejeweledTest
         [Test()]
         public void TestThatBulbasaurTokenCreatesFirstEvolvedToken()
         {
-            Assert.AreSame(new IvysaurToken(), bulba.firstEvolvedToken());
+            Assert.AreEqual((new IvysaurToken()).GetType(), bulba.firstEvolvedToken().GetType());
            
         }
 
         [Test()]
         public void TestThatBulbasaurTokenCreatesSecondEvolvedToken()
         {
-            Assert.AreSame(new IvysaurToken(), bulba.secondEvolvedToken());
+            Assert.AreEqual((new VenusaurToken()).GetType(), bulba.secondEvolvedToken().GetType());
 
         }
 

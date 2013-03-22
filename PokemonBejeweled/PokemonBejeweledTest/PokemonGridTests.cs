@@ -39,7 +39,7 @@ namespace PokemonBejeweledTest
         [Test]
         public void TestPokemonGridInitialization()
         {
-            Assert.AreSame(pokemonGrid, pokemonActualGrid.getPokemonGrid());
+            Assert.AreEqual(pokemonGrid, pokemonActualGrid.pokemon);
         }
 
         
