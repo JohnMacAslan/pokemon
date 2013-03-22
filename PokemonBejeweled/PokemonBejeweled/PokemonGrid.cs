@@ -57,6 +57,21 @@ namespace PokemonBejeweled
             return false;
         }
 
-       
+        public bool areThreeTokensInACol(int row, int col)
+        {
+            if (row > gridSize - 3 || col > gridSize - 1)
+            {
+                return false;
+            }
+            else
+            {
+                Type pokemonType = _pokemon[row, col].GetType();
+                if (_pokemon[row + 1, col].GetType() == pokemonType && _pokemon[row + 2, col].GetType() == pokemonType)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }
