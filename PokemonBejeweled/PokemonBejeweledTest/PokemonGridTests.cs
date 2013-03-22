@@ -1,6 +1,6 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PokemonBejeweled.Pokemon;
+using PokemonBejeweled;
 using NUnit.Framework;
 
 namespace PokemonBejeweledTest
@@ -17,12 +17,33 @@ namespace PokemonBejeweledTest
                                                   {null, null, null, null, null, null, null, null},
                                                   {null, null, null, null, null, null, null, null},
                                                   {null, null, null, null, null, null, null, null}};
+        private PokemonGrid pokemonActualGrid = new PokemonGrid();
 
-        [TestMethod]
-        public void TestMethod1()
+        [Test]
+        public void UpdateBoardAlgorithm_ColumnOfThreeOnTopEdge_ColumnMarkedAsNull()
         {
-            PokemonToken[] pokemen = {new PokemonBejeweled.Pokemon.BulbasaurToken(), new PokemonBejeweled.Pokemon.CharmanderToken()};
-            pokemonGrid = {{new PokemonBejeweled.Pokemon.BulbasaurToken(), new PokemonBejeweled.Pokemon.CharmanderToken()}, {new PokemonBejeweled.Pokemon.BulbasaurToken(), new PokemonBejeweled.Pokemon.CharmanderToken()}};
+
         }
+
+        [Test]
+        public void UpdateBoardAlgorithm_ColumnOfThreeOnBottomEdge_ColumnMarkedAsNull()
+        {
+
+        }
+
+        [Test]
+        public void UpdateBoardAlgorithm_ColumnOfThreeOnLeftEdge_ColumnMarkedAsNull()
+        {
+        }
+
+        [Test]
+        public void TestPokemonGridInitialization()
+        {
+            Assert.AreSame(pokemonGrid, pokemonActualGrid.getPokemonGrid());
+        }
+
+        s
+
+
     }
 }
