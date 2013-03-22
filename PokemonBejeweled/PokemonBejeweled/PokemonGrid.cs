@@ -22,10 +22,7 @@ namespace PokemonBejeweled
             gamePlayScore = 0;
         }
 
-        public PokemonToken[,] getPokemonGrid()
-        {
-            return pokemon;
-        }
+        
 
         private void updateBoardAlgorithm()
         {
