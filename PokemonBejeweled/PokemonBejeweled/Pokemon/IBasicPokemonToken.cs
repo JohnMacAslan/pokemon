@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PokemonBejeweled.Pokemon
 {
-    interface IBasicPokemonToken
+    public interface IBasicPokemonToken
     {
     }
 }

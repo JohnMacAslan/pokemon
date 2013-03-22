@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PokemonBejeweled.Pokemon
+namespace PokemonBejeweled
 {
-    public interface ISecondEvolutionPokemonToken : IFirstEvolutionPokemonToken
+    class PokemonGrid
     {
     }
 }

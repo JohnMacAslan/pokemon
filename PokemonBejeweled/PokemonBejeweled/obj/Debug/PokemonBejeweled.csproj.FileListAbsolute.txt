@@ -1,1 +1,2 @@
 C:\Users\macaslje\Documents\_Rose-Hulman\_2012-2013\_2 Spring\3 Software Quality Assurance\pokemon\PokemonBejeweled\PokemonBejeweled\bin\Debug\PokemonBejeweled.exe.config
+C:\Users\agnerrl\pokemon\PokemonBejeweled\PokemonBejeweled\bin\Debug\PokemonBejeweled.exe.config

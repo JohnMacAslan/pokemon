@@ -1,10 +1,11 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PokemonBejeweled.Pokemon;
+using NUnit.Framework;
 
 namespace PokemonBejeweledTest
 {
-    [TestClass]
+    [TestFixture()]
     public class PokemonGridTests
     {
         private int[,] test;
