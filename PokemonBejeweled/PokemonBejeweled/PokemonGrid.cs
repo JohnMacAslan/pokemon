@@ -9,7 +9,7 @@ namespace PokemonBejeweled
 {
     class PokemonGrid
     {
-        private PokemonToken[,] pokemon;
+        public PokemonToken[,] pokemon {get; set;}
         private PokemonToken[,] pokemonOld;
         private int gamePlayScore;
         private int pokemonGridSize = 8;
