@@ -91,6 +91,36 @@ namespace PokemonBejeweledTest
 
         }
 
+        [Test()]
+        public void TestThatCyndaquilTokenCreatesFirstEvolvedToken()
+        {
+            Assert.AreEqual((new QuilavaToken()).GetType(), cynda.firstEvolvedToken().GetType());
+
+        }
+
+        [Test()]
+        public void TestThatCyndaquilTokenCreatesSecondEvolvedToken()
+        {
+            Assert.AreEqual((new TyphlosionToken()).GetType(), cynda.secondEvolvedToken().GetType());
+
+        }
+
+        [Test()]
+        public void TestThatTotodileTokenCreatesFirstEvolvedToken()
+        {
+            Assert.AreEqual((new CroconawToken()).GetType(), toto.firstEvolvedToken().GetType());
+
+        }
+
+        [Test()]
+        public void TestThatTotodileTokenCreatesSecondEvolvedToken()
+        {
+            Assert.AreEqual((new FeraligatorToken()).GetType(), toto.secondEvolvedToken().GetType());
+
+        }
+
+
+
 
         
     }
