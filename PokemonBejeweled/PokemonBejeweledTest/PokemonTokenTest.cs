@@ -77,6 +77,20 @@ namespace PokemonBejeweledTest
 
         }
 
+        [Test()]
+        public void TestThatChikoritaTokenCreatesFirstEvolvedToken()
+        {
+            Assert.AreEqual((new BayleefToken()).GetType(), chik.firstEvolvedToken().GetType());
+
+        }
+
+        [Test()]
+        public void TestThatChikoritaTokenCreatesSecondEvolvedToken()
+        {
+            Assert.AreEqual((new MeganiumToken()).GetType(), chik.secondEvolvedToken().GetType());
+
+        }
+
 
         
     }
