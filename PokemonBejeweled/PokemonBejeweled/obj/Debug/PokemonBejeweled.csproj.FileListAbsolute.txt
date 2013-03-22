@@ -13,4 +13,3 @@ C:\Users\agnerrl\pokemon\PokemonBejeweled\PokemonBejeweled\obj\Debug\PokemonBeje
 C:\Users\agnerrl\pokemon\PokemonBejeweled\PokemonBejeweled\obj\Debug\PokemonBejeweled.csproj.GenerateResource.Cache
 C:\Users\agnerrl\pokemon\PokemonBejeweled\PokemonBejeweled\obj\Debug\PokemonBejeweled.exe
 C:\Users\agnerrl\pokemon\PokemonBejeweled\PokemonBejeweled\obj\Debug\PokemonBejeweled.pdb
-C:\Users\agnerrl\pokemon\PokemonBejeweled\PokemonBejeweled\obj\Debug\PokemonBejeweled.csprojResolveAssemblyReference.cache
