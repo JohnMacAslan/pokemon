@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PokemonBejeweled.Pokemon
 {
-    public class TyphlosionToken
+    public class TyphlosionToken : CyndaquilToken, ISecondEvolutionPokemonToken
     {
     }
 }
