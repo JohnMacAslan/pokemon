@@ -8,5 +8,21 @@ namespace PokemonBejeweled.Pokemon
 {
     public class PichuToken
     {
+
+        public PichuToken()
+        {
+
+        }
+
+        public override IFirstEvolutionPokemonToken firstEvolvedToken()
+        {
+            return new PikachuToken();
+        }
+
+        public override ISecondEvolutionPokemonToken secondEvolvedToken()
+        {
+            return new RaichuToken();
+        }
+
     }
 }

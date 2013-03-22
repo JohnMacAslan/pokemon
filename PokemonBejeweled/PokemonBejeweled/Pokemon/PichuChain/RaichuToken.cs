@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PokemonBejeweled.Pokemon
 {
-    public class RaichuToken
+    public class RaichuToken : PichuToken, ISecondEvolutionPokemonToken
     {
     }
 }
