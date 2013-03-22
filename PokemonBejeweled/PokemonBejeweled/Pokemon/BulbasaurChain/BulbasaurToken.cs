@@ -8,9 +8,25 @@ namespace PokemonBejeweled.Pokemon
 {
     public class BulbasaurToken : PokemonToken, IBasicPokemonToken
     {
-        public override PokemonToken evolve()
+
+        public BulbasaurToken()
         {
-            throw new NotImplementedException();
+            image = null;
         }
+
+        public override IFirstEvolutionPokemonToken firstEvolvedToken()
+        {
+            return new IvysaurToken();
+        }
+
+        public override ISecondEvolutionPokemonToken secondEvolvedToken()
+        {
+            return new VenusaurToken();
+        }
+
+
+
+
+        
     }
 }
