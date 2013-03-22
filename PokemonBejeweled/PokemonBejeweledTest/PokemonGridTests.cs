@@ -19,10 +19,8 @@ namespace PokemonBejeweledTest
                                                   {null, null, null, null, null, null, null, null}};
 
         [Test]
-        public void TestMethod1()
+        public void UpdateBoardAlgorithm_ColumnOfThreeOnTopEdge_ColumnMarkedAsNull()
         {
-            PokemonToken[] pokemen = {new PokemonBejeweled.Pokemon.BulbasaurToken(), new PokemonBejeweled.Pokemon.CharmanderToken()};
-            pokemonGrid = {{new PokemonBejeweled.Pokemon.BulbasaurToken(), new PokemonBejeweled.Pokemon.CharmanderToken()}, {new PokemonBejeweled.Pokemon.BulbasaurToken(), new PokemonBejeweled.Pokemon.CharmanderToken()}};
         }
 
         [Test]
