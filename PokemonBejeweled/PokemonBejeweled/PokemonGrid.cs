@@ -9,25 +9,37 @@ namespace PokemonBejeweled
 {
     public class PokemonGrid
     {
-        public PokemonToken[,] pokemon {get; set;}
-        private PokemonToken[,] pokemonOld;
-        private int gamePlayScore;
-        private int pokemonGridSize = 8;
+        public static int gridSize = 8;
+        private PokemonToken[,] _pokemonOld;
+        public int GamePlayScore { get; set; }
+        private PokemonToken[,] _pokemon = new PokemonToken[gridSize, gridSize];
+        public PokemonToken[,] Pokemon
+        {
+            get
+            {
+                return _pokemon;
+            }
+            set
+            {
+                for (int i = 0; i < gridSize; i++)
+                {
+                    for (int j = 0; j < gridSize; j++)
+                    {
+                        _pokemon[i, j] = value[i, j];
+                    }
+                }
+            }
+        }
 
 
         public PokemonGrid()
         {
-            pokemon = new PokemonToken[pokemonGridSize, pokemonGridSize];
-            pokemonOld = new PokemonToken[pokemonGridSize, pokemonGridSize];
-            gamePlayScore = 0;
+            Pokemon = new PokemonToken[gridSize, gridSize];
+            _pokemonOld = new PokemonToken[gridSize, gridSize];
+            GamePlayScore = 0;
         }
 
-        public PokemonToken[,] getPokemonGrid()
-        {
-            return pokemon;
-        }
-
-        private void updateBoardAlgorithm()
+        public void updateBoardAlgorithm()
         {
         }
 
