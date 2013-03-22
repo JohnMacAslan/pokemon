@@ -23,6 +23,7 @@ namespace PokemonBejeweledTest
                     pokemonGrid[i,j+1] = new CharmanderToken();
                 }
             }
+            pokemonActualGrid.Pokemon = pokemonGrid;
         }
 
         [Test]
@@ -112,7 +113,6 @@ namespace PokemonBejeweledTest
         [Test]
         public void UpdateGridAlgorithm_NoRowsOrColumnsOfThree_GridUnchanged()
         {
-            pokemonActualGrid.Pokemon = pokemonGrid;
             pokemonActualGrid.updateBoardAlgorithm();
             Assert.AreEqual(pokemonActualGrid.Pokemon, pokemonGrid);
         }
@@ -142,6 +142,13 @@ namespace PokemonBejeweledTest
         [Test]
         public void AreThreeTokensInARow_ThreeNotInARow_ReturnFalse()
         {
+            Assert.IsFalse(pokemonActualGrid.areThreeTokensInARow(3, 3));
+        }
+
+        [Test]
+        public void AreThreeTokensInARow_TokenIsNull_ReturnFalse()
+        {
+            pokemonGrid[3, 3] = null;
             pokemonActualGrid.Pokemon = pokemonGrid;
             Assert.IsFalse(pokemonActualGrid.areThreeTokensInARow(3, 3));
         }
@@ -153,7 +160,7 @@ namespace PokemonBejeweledTest
         }
 
         [Test]
-        public void AreThreeTokensInACol_InvalidColIndex_ReturnFalse()
+        public void AreThreeTokensInACol_InvalidRowIndex_ReturnFalse()
         {
             Assert.IsFalse(pokemonActualGrid.areThreeTokensInACol(PokemonGrid.gridSize, 3));
         }
@@ -171,6 +178,13 @@ namespace PokemonBejeweledTest
         [Test]
         public void AreThreeTokensInACol_ThreeNotInACol_ReturnFalse()
         {
+            Assert.IsFalse(pokemonActualGrid.areThreeTokensInACol(3, 3));
+        }
+
+        [Test]
+        public void AreThreeTokensInACol_TokenIsNull_ReturnFalse()
+        {
+            pokemonGrid[3, 3] = null;
             pokemonActualGrid.Pokemon = pokemonGrid;
             Assert.IsFalse(pokemonActualGrid.areThreeTokensInACol(3, 3));
         }
@@ -179,7 +193,7 @@ namespace PokemonBejeweledTest
         public void PokemonGrid_PokemonInitializedToNulls()
         {
             pokemonGrid = new PokemonToken[PokemonGrid.gridSize, PokemonGrid.gridSize];
-            Assert.AreEqual(pokemonGrid, pokemonActualGrid.Pokemon);
+            Assert.AreEqual((new PokemonGrid()).Pokemon, pokemonGrid);
         }
 
         [Test]

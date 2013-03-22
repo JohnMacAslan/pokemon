@@ -40,6 +40,24 @@ namespace PokemonBejeweled
 
         public void updateBoardAlgorithm()
         {
+            for (int row = 0; row < gridSize; row++)
+            {
+                for (int col = 0; col < gridSize; col++)
+                {
+                    if (areThreeTokensInARow(row, col))
+                    {
+                        _pokemon[row, col] = null;
+                        _pokemon[row, col + 1] = null;
+                        _pokemon[row, col + 2] = null;
+                    }
+                    if (areThreeTokensInACol(row, col))
+                    {
+                        _pokemon[row, col] = null;
+                        _pokemon[row + 1, col] = null;
+                        _pokemon[row + 2, col] = null;
+                    }
+                }
+            }
         }
 
         public Boolean areThreeTokensInARow(int row, int col)
@@ -48,10 +66,17 @@ namespace PokemonBejeweled
             {
                 return false;
             } else {
-                Type pokemonType = _pokemon[row,col].GetType();
-                if (_pokemon[row, col + 1].GetType() == pokemonType && _pokemon[row, col + 2].GetType() == pokemonType)
+                if (null == _pokemon[row, col] || null == _pokemon[row, col + 1] || null == _pokemon[row, col + 2])
                 {
-                    return true;
+                    return false;
+                }
+                else
+                {
+                    Type pokemonType = _pokemon[row, col].GetType();
+                    if (_pokemon[row, col + 1].GetType() == pokemonType && _pokemon[row, col + 2].GetType() == pokemonType)
+                    {
+                        return true;
+                    }
                 }
             }
             return false;
@@ -65,10 +90,17 @@ namespace PokemonBejeweled
             }
             else
             {
-                Type pokemonType = _pokemon[row, col].GetType();
-                if (_pokemon[row + 1, col].GetType() == pokemonType && _pokemon[row + 2, col].GetType() == pokemonType)
+                if (null == _pokemon[row, col] || null == _pokemon[row + 1, col] || null == _pokemon[row + 2, col])
                 {
-                    return true;
+                    return false;
+                }
+                else
+                {
+                    Type pokemonType = _pokemon[row, col].GetType();
+                    if (_pokemon[row + 1, col].GetType() == pokemonType && _pokemon[row + 2, col].GetType() == pokemonType)
+                    {
+                        return true;
+                    }
                 }
             }
             return false;
