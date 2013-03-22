@@ -42,7 +42,7 @@ namespace PokemonBejeweledTest
             Assert.AreSame(pokemonGrid, pokemonActualGrid.getPokemonGrid());
         }
 
-        s
+        
 
 
     }
