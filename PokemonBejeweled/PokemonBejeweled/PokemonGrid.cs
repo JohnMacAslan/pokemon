@@ -21,7 +21,5 @@ namespace PokemonBejeweled
             pokemonOld = new PokemonToken[pokemonGridSize, pokemonGridSize];
             gamePlayScore = 0;
         }
-
-        
     }
 }
