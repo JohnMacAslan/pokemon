@@ -18,11 +18,19 @@ namespace PokemonBejeweledTest
                                                   {null, null, null, null, null, null, null, null},
                                                   {null, null, null, null, null, null, null, null}};
 
-        [TestMethod]
+        [Test]
         public void TestMethod1()
         {
             PokemonToken[] pokemen = {new PokemonBejeweled.Pokemon.BulbasaurToken(), new PokemonBejeweled.Pokemon.CharmanderToken()};
             pokemonGrid = {{new PokemonBejeweled.Pokemon.BulbasaurToken(), new PokemonBejeweled.Pokemon.CharmanderToken()}, {new PokemonBejeweled.Pokemon.BulbasaurToken(), new PokemonBejeweled.Pokemon.CharmanderToken()}};
         }
+
+        [Test]
+        public void TestPokemonGridInitialization()
+        {
+            
+        }
+
+
     }
 }
