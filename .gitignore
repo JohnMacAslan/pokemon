@@ -146,3 +146,8 @@ $RECYCLE.BIN/
 
 # Mac crap
 .DS_Store
+
+PokemonBejeweled/PokemonBejeweled/bin/*
+PokemonBejeweled/PokemonBejeweled/obj/*
+PokemonBejeweled/PokemonBejeweledTest/bin/*
+PokemonBejeweled/PokemonBejeweledTest/obj/*
