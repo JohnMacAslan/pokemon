@@ -190,6 +190,12 @@ namespace PokemonBejeweledTest
         }
 
         [Test]
+
+        public void TestIsValidMoveReturnsFalse()
+        {
+            Assert.False(pokemonActualGrid.isValidMove(-1, -1, -1, -1));
+        }
+
         public void PokemonGrid_PokemonInitializedToNulls()
         {
             pokemonGrid = new PokemonToken[PokemonGrid.gridSize, PokemonGrid.gridSize];
@@ -203,5 +209,7 @@ namespace PokemonBejeweledTest
         }
 
 
+
+       
     }
 }

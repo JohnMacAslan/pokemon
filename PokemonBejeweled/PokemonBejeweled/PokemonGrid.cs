@@ -38,6 +38,20 @@ namespace PokemonBejeweled
             GamePlayScore = 0;
         }
 
+
+        public void updateBoard()
+        {
+            _pokemon = _pokemonOld;
+        }
+
+        public Boolean isValidMove(int row1, int col1, int row2, int col2)
+        {
+           
+            return false;
+        }
+
+        
+
         public void updateBoardAlgorithm()
         {
             for (int row = 0; row < gridSize; row++)
@@ -59,6 +73,7 @@ namespace PokemonBejeweled
                 }
             }
         }
+
 
         public Boolean areThreeTokensInARow(int row, int col)
         {
