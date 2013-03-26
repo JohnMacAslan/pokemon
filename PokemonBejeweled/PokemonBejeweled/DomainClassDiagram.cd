@@ -7,11 +7,11 @@
       <FileName>GameBoard.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PokemonBejeweled.PokemonBejeweled">
+  <Class Name="PokemonBejeweled.App">
     <Position X="7.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
-      <FileName>PokemonBejeweled.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>App.xaml.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="PokemonBejeweled.PokemonBejeweledForm">
@@ -24,21 +24,21 @@
   <Class Name="PokemonBejeweled.PokemonGrid">
     <Position X="12.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <HashCode>AAAAAAEAEAACAAAAAABAEAAAAAAAAAAAAgAQAIAAAAA=</HashCode>
       <FileName>PokemonGrid.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="PokemonBejeweled.Pokemon.PokemonToken">
     <Position X="2.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAACAEAAAAAAAAAAAACAAAAA=</HashCode>
+      <HashCode>AQAAAAAAAAQAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Pokemon\PokemonToken.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="PokemonBejeweled.Pokemon.CharmanderToken">
     <Position X="2.5" Y="4.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <HashCode>AQAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Pokemon\CharmanderChain\CharmanderToken.cs</FileName>
       <NewMemberFileName>Pokemon\BulbasaurChain\BulbasaurToken.cs</NewMemberFileName>
     </TypeIdentifier>
@@ -47,7 +47,7 @@
   <Class Name="PokemonBejeweled.Pokemon.DittoPokemonToken">
     <Position X="4.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <HashCode>AQAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Pokemon\DittoPokemonToken.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -72,7 +72,7 @@
   <Class Name="PokemonBejeweled.Pokemon.BulbasaurToken">
     <Position X="5" Y="4.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <HashCode>AQAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Pokemon\BulbasaurChain\BulbasaurToken.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -112,7 +112,7 @@
       <FileName>Pokemon\IFirstEvolutionPokemonToken.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="PokemonBejeweled.Pokemon.IBasicPokemonToken">
+  <Interface Name="PokemonBejeweled.Pokemon.IBasicPokemonToken" Collapsed="true">
     <Position X="0.5" Y="4.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
