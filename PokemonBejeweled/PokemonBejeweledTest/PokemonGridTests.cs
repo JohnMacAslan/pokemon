@@ -123,6 +123,18 @@ namespace PokemonBejeweledTest
         }
 
         [Test]
+        public void UpdateBoard_RowOfThreeInBottom_CorrectPokemonCascadeDown()
+        {
+            pokemonGrid[7, 0] = null;
+            pokemonGrid[7, 1] = null;
+            pokemonGrid[7, 2] = null;
+            pokemonActualGrid.updateBoard(pokemonGrid);
+            Assert.AreEqual(pokemonActualGrid.Pokemon[7, 0], pokemonGrid[6, 0]);
+            Assert.AreEqual(pokemonActualGrid.Pokemon[7, 1], pokemonGrid[6, 1]);
+            Assert.AreEqual(pokemonActualGrid.Pokemon[7, 2], pokemonGrid[6, 2]);
+        }
+
+        [Test]
         public void UpdateGridAlgorithm_NoRowsOrColumnsOfThree_GridUnchanged()
         {
             pokemonActualGrid.updateBoardAlgorithm();
