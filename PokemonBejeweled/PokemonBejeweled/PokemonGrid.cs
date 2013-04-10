@@ -92,28 +92,43 @@ namespace PokemonBejeweled
             }
         }
 
-
-        //public void updateBoardAlgorithm()
-        //{
-        //    for (int row = 0; row < gridSize; row++)
-        //    {
-        //        for (int col = 0; col < gridSize; col++)
-        //        {
-        //            if (areThreeTokensInARow(row, col))
-        //            {
-        //                _pokemon[row, col] = null;
-        //                _pokemon[row, col + 1] = null;
-        //                _pokemon[row, col + 2] = null;
-        //            }
-        //            if (areThreeTokensInACol(row, col))
-        //            {
-        //                _pokemon[row, col] = null;
-        //                _pokemon[row + 1, col] = null;
-        //                _pokemon[row + 2, col] = null;
-        //            }
-        //        }
-        //    }
-        //}
+        public void markColumnsOfSameTokenAsNull(PokemonToken[,] _newPokemon)
+        {
+            int numberOfSameTokens;
+            PokemonToken currentToken;
+            for (int col = 0; col < gridSize; col++)
+            {
+                currentToken = _pokemon[0, col];
+                numberOfSameTokens = 1;
+                for (int row = 1; row < gridSize; row++)
+                {
+                    if (currentToken.GetType() == _pokemon[row, col].GetType())
+                    {
+                        numberOfSameTokens++;
+                    }
+                    else if (3 <= numberOfSameTokens)
+                    {
+                        while (numberOfSameTokens > 0)
+                        {
+                            _newPokemon[row, col - numberOfSameTokens] = null;
+                            numberOfSameTokens--;
+                        }
+                    }
+                    else
+                    {
+                        currentToken = _pokemon[row, col];
+                    }
+                }
+                if (3 <= numberOfSameTokens)
+                {
+                    while (numberOfSameTokens > 0)
+                    {
+                        _newPokemon[gridSize - numberOfSameTokens, col] = null;
+                        numberOfSameTokens--;
+                    }
+                }
+            }
+        }
 
 
         public Boolean areThreeTokensInARow(int row, int col)
