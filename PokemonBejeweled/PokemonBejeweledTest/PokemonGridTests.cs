@@ -27,6 +27,96 @@ namespace PokemonBejeweledTest
         }
 
         [Test]
+        public void MarkRowsOfSameTokenAsNull_RowOfThreeOnLeftEdge_RowMarkedAsNull()
+        {
+            _pokemon[0, 0] = new DittoPokemonToken();
+            _pokemon[0, 1] = new DittoPokemonToken();
+            _pokemon[0, 2] = new DittoPokemonToken();
+            pokemonGrid.Pokemon = _pokemon;
+            PokemonToken[,] _newPokemon = _pokemon;
+            _pokemon[0, 0] = null;
+            _pokemon[0, 1] = null;
+            _pokemon[0, 2] = null;
+            pokemonGrid.markRowsOfSameTokenAsNull(_newPokemon);
+            Assert.AreEqual(_pokemon, _newPokemon);
+        }
+
+        [Test]
+        public void MarkRowsOfSameTokenAsNull_RowOfThreeOnRightEdge_RowMarkedAsNull()
+        {
+            _pokemon[0, 5] = new DittoPokemonToken();
+            _pokemon[0, 6] = new DittoPokemonToken();
+            _pokemon[0, 7] = new DittoPokemonToken();
+            pokemonGrid.Pokemon = _pokemon;
+            PokemonToken[,] _newPokemon = _pokemon;
+            _pokemon[0, 5] = null;
+            _pokemon[0, 6] = null;
+            _pokemon[0, 7] = null;
+            pokemonGrid.markRowsOfSameTokenAsNull(_newPokemon);
+            Assert.AreEqual(_pokemon, _newPokemon);
+        }
+
+        [Test]
+        public void MarkRowsOfSameTokenAsNull_RowOfThreeInMiddle_RowMarkedAsNull()
+        {
+            _pokemon[0, 3] = new DittoPokemonToken();
+            _pokemon[0, 4] = new DittoPokemonToken();
+            _pokemon[0, 5] = new DittoPokemonToken();
+            pokemonGrid.Pokemon = _pokemon;
+            PokemonToken[,] _newPokemon = _pokemon;
+            _pokemon[0, 3] = null;
+            _pokemon[0, 4] = null;
+            _pokemon[0, 5] = null;
+            pokemonGrid.markRowsOfSameTokenAsNull(_newPokemon);
+            Assert.AreEqual(_pokemon, _newPokemon);
+        }
+
+        [Test]
+        public void MarkColumnsOfSameTokenAsNull_ColumnOfThreeOnTop_ColumnMarkedAsNull()
+        {
+            _pokemon[0, 3] = new DittoPokemonToken();
+            _pokemon[1, 3] = new DittoPokemonToken();
+            _pokemon[2, 3] = new DittoPokemonToken();
+            pokemonGrid.Pokemon = _pokemon;
+            PokemonToken[,] _newPokemon = _pokemon;
+            _pokemon[0, 3] = null;
+            _pokemon[1, 3] = null;
+            _pokemon[2, 3] = null;
+            pokemonGrid.markColumnsOfSameTokenAsNull(_newPokemon);
+            Assert.AreEqual(_pokemon, _newPokemon);
+        }
+
+        [Test]
+        public void MarkColumnsOfSameTokenAsNull_ColumnOfThreeOnBottom_ColumnMarkedAsNull()
+        {
+            _pokemon[5, 3] = new DittoPokemonToken();
+            _pokemon[6, 3] = new DittoPokemonToken();
+            _pokemon[7, 3] = new DittoPokemonToken();
+            pokemonGrid.Pokemon = _pokemon;
+            PokemonToken[,] _newPokemon = _pokemon;
+            _pokemon[5, 3] = null;
+            _pokemon[6, 3] = null;
+            _pokemon[7, 3] = null;
+            pokemonGrid.markColumnsOfSameTokenAsNull(_newPokemon);
+            Assert.AreEqual(_pokemon, _newPokemon);
+        }
+
+        [Test]
+        public void MarkColumnsOfSameTokenAsNull_ColumnOfThreeInMiddle_ColumnMarkedAsNull()
+        {
+            _pokemon[3, 3] = new DittoPokemonToken();
+            _pokemon[4, 3] = new DittoPokemonToken();
+            _pokemon[5, 3] = new DittoPokemonToken();
+            pokemonGrid.Pokemon = _pokemon;
+            PokemonToken[,] _newPokemon = _pokemon;
+            _pokemon[3, 3] = null;
+            _pokemon[4, 3] = null;
+            _pokemon[5, 3] = null;
+            pokemonGrid.markColumnsOfSameTokenAsNull(_newPokemon);
+            Assert.AreEqual(_pokemon, _newPokemon);
+        }
+
+        [Test]
         public void UpdateGridAlgorithm_ColumnOfThreeOnTopEdge_ColumnMarkedAsNull()
         {
             _pokemon[0, 3] = new DittoPokemonToken();
@@ -66,21 +156,6 @@ namespace PokemonBejeweledTest
             _pokemon[5, 3] = null;
             pokemonGrid.updateBoardAlgorithm();
             Assert.AreEqual(_pokemon, pokemonGrid.Pokemon);
-        }
-
-        [Test]
-        public void MarkRowsAsNull_RowOfThreeOnLeftEdge_RowMarkedAsNull()
-        {
-            _pokemon[0, 0] = new DittoPokemonToken();
-            _pokemon[0, 1] = new DittoPokemonToken();
-            _pokemon[0, 2] = new DittoPokemonToken();
-            pokemonGrid.Pokemon = _pokemon;
-            PokemonToken[,] _newPokemon = _pokemon;
-            _pokemon[0, 0] = null;
-            _pokemon[0, 1] = null;
-            _pokemon[0, 2] = null;
-            pokemonGrid.markRowsOfSameTokenAsNull(_newPokemon);
-            Assert.AreEqual(_pokemon, _newPokemon);
         }
 
         [Test]

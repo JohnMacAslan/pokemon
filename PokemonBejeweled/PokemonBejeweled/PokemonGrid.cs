@@ -49,42 +49,8 @@ namespace PokemonBejeweled
 
         public void updateBoardAlgorithm()
         {
-            int numberOfSameTokens;
-            PokemonToken currentToken;
             PokemonToken[,] _newPokemon = _pokemon;
-            // marking the rows
-            for (int row = 0; row < gridSize; row++)
-            {
-                currentToken = _pokemon[row, 0];
-                numberOfSameTokens = 1;
-                for (int col = 1; col < gridSize; col++)
-                {
-                    if (currentToken.GetType() == _pokemon[row, col].GetType())
-                    {
-                        numberOfSameTokens++;
-                    }
-                    else if (3 <= numberOfSameTokens)
-                    {
-                        while (numberOfSameTokens > 0)
-                        {
-                            _newPokemon[row, col - numberOfSameTokens] = null;
-                            numberOfSameTokens--;
-                        }
-                    }
-                    else
-                    {
-                        currentToken = _pokemon[row, col];
-                    }
-                }
-                if (3 <= numberOfSameTokens)
-                {
-                    while (numberOfSameTokens > 0)
-                    {
-                        _newPokemon[row, gridSize - numberOfSameTokens] = null;
-                        numberOfSameTokens--;
-                    }
-                }
-            }
+            markRowsOfSameTokenAsNull(_newPokemon);
             Pokemon = _newPokemon;
         }
 
