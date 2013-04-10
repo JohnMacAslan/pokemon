@@ -30,31 +30,20 @@ namespace PokemonBejeweled
             GamePlayScore = 0;
         }
 
-        public void pullDownTokens()
-        {
-        }
-
-        public void addNewTokens()
-        {
-        }
-
         public Boolean isValidMove(int row1, int col1, int row2, int col2)
         {
             return false;
         }
 
-        public PokemonToken updateMovedToken(int row, int col)
-        {
-            return null;
-        }
-
-        public void updateBoard()
+        public void updateBoard(int row1, int col1, int row2, int col2)
         {
             PokemonToken[,] newPokemon = new PokemonToken[gridSize, gridSize];
             copyGrid(_pokemon, newPokemon);
             markColumnsOfSameTokenAsNull(newPokemon);
             markRowsOfSameTokenAsNull(newPokemon);
             copyGrid(newPokemon, _pokemon);
+            _pokemon[row1, col1] = updateMovedToken(row1, col1);
+            _pokemon[row2, col2] = updateMovedToken(row2, col2);
             pullDownTokens();
             addNewTokens();
         }
@@ -133,6 +122,19 @@ namespace PokemonBejeweled
                     }
                 }
             }
+        }
+
+        private PokemonToken updateMovedToken(int row, int col)
+        {
+            return null;
+        }
+
+        private void pullDownTokens()
+        {
+        }
+
+        private void addNewTokens()
+        {
         }
 
         public static void copyGrid(PokemonToken[,] gridToCopy, PokemonToken[,] gridDestination)

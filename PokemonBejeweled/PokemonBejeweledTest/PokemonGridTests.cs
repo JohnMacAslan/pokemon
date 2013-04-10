@@ -35,7 +35,7 @@ namespace PokemonBejeweledTest
         }
 
         [Test]
-        public void UpdateGridAlgorithm_ColumnOfThreeOnTopEdge_ColumnMarkedAsNull()
+        public void UpdateBoard_ColumnOfThreeOnTopEdge_ColumnMarkedAsNull()
         {
             _pokemon[0, 0] = new DittoPokemonToken();
             _pokemon[1, 0] = new DittoPokemonToken();
@@ -44,12 +44,12 @@ namespace PokemonBejeweledTest
             _pokemon[0, 0] = null;
             _pokemon[1, 0] = null;
             _pokemon[2, 0] = null;
-            pokemonGrid.updateBoard();
+            pokemonGrid.updateBoard(0, 0, 0, 0);
             Assert.AreEqual(_pokemon, pokemonGrid.Pokemon);
         }
 
         [Test]
-        public void UpdateGridAlgorithm_ColumnOfThreeOnBottomEdge_ColumnMarkedAsNull()
+        public void UpdateBoard_ColumnOfThreeOnBottomEdge_ColumnMarkedAsNull()
         {
             _pokemon[5, 0] = new DittoPokemonToken();
             _pokemon[6, 0] = new DittoPokemonToken();
@@ -58,12 +58,12 @@ namespace PokemonBejeweledTest
             _pokemon[5, 0] = null;
             _pokemon[6, 0] = null;
             _pokemon[7, 0] = null;
-            pokemonGrid.updateBoard();
+            pokemonGrid.updateBoard(0, 0, 0, 0);
             Assert.AreEqual(_pokemon, pokemonGrid.Pokemon);
         }
 
         [Test]
-        public void UpdateGridAlgorithm_ColumnOfThreeInMiddle_ColumnMarkedAsNull()
+        public void UpdateBoard_ColumnOfThreeInMiddle_ColumnMarkedAsNull()
         {
             _pokemon[3, 0] = new DittoPokemonToken();
             _pokemon[4, 0] = new DittoPokemonToken();
@@ -72,12 +72,12 @@ namespace PokemonBejeweledTest
             _pokemon[3, 0] = null;
             _pokemon[4, 0] = null;
             _pokemon[5, 0] = null;
-            pokemonGrid.updateBoard();
+            pokemonGrid.updateBoard(0, 0, 0, 0);
             Assert.AreEqual(_pokemon, pokemonGrid.Pokemon);
         }
 
         [Test]
-        public void UpdateGridAlgorithm_RowOfThreeOnLeftEdge_RowMarkedAsNull()
+        public void UpdateBoard_RowOfThreeOnLeftEdge_RowMarkedAsNull()
         {
             _pokemon[0, 0] = new DittoPokemonToken();
             _pokemon[0, 1] = new DittoPokemonToken();
@@ -86,12 +86,12 @@ namespace PokemonBejeweledTest
             _pokemon[0, 0] = null;
             _pokemon[0, 1] = null;
             _pokemon[0, 2] = null;
-            pokemonGrid.updateBoard();
+            pokemonGrid.updateBoard(0, 0, 0, 0);
             Assert.AreEqual(_pokemon, pokemonGrid.Pokemon);
         }
 
         [Test]
-        public void UpdateGridAlgorithm_RowOfThreeOnRightEdge_RowMarkedAsNull()
+        public void UpdateBoard_RowOfThreeOnRightEdge_RowMarkedAsNull()
         {
             _pokemon[0, 5] = new DittoPokemonToken();
             _pokemon[0, 6] = new DittoPokemonToken();
@@ -100,12 +100,12 @@ namespace PokemonBejeweledTest
             _pokemon[0, 5] = null;
             _pokemon[0, 6] = null;
             _pokemon[0, 7] = null;
-            pokemonGrid.updateBoard();
+            pokemonGrid.updateBoard(0, 0, 0, 0);
             Assert.AreEqual(_pokemon, pokemonGrid.Pokemon);
         }
 
         [Test]
-        public void UpdateGridAlgorithm_RowOfThreeInMiddle_RowMarkedAsNull()
+        public void UpdateBoard_RowOfThreeInMiddle_RowMarkedAsNull()
         {
             _pokemon[0, 3] = new DittoPokemonToken();
             _pokemon[0, 4] = new DittoPokemonToken();
@@ -114,15 +114,45 @@ namespace PokemonBejeweledTest
             _pokemon[0, 3] = null;
             _pokemon[0, 4] = null;
             _pokemon[0, 5] = null;
-            pokemonGrid.updateBoard();
+            pokemonGrid.updateBoard(0, 0, 0, 0);
             Assert.AreEqual(_pokemon, pokemonGrid.Pokemon);
         }
 
         [Test]
-        public void UpdateGridAlgorithm_NoRowsOrColumnsOfThree_GridUnchanged()
+        public void UpdateBoard_NoRowsOrColumnsOfThree_GridUnchanged()
         {
-            pokemonGrid.updateBoard();
+            pokemonGrid.updateBoard(0,0,0,0);
             Assert.AreEqual(_pokemon, pokemonGrid.Pokemon);
+        }
+
+        [Test]
+        public void UpdateBoard_RowOfFour_MovedTokenReplacedByFirstEvolution()
+        {
+        }
+
+        [Test]
+        public void UpdateBoard_ColumnOfFour_MovedTokenReplacedByFirstEvolution()
+        {
+        }
+
+        [Test]
+        public void UpdateBoard_RowOfFive_MovedTokenReplacedByDitto()
+        {
+        }
+
+        [Test]
+        public void UpdateBoard_ColumnOfFive_MovedTokenReplacedByDitto()
+        {
+        }
+
+        [Test]
+        public void UpdateBoard_RowOfSix_MovedTokenReplacedBySecondEvolution()
+        {
+        }
+
+        [Test]
+        public void UpdateBoard_ColumnOfSix_MovedTokenReplacedBySecondEvolution()
+        {
         }
 
         [Test]
