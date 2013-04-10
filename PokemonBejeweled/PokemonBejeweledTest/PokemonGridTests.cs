@@ -75,13 +75,12 @@ namespace PokemonBejeweledTest
             _pokemon[0, 1] = new DittoPokemonToken();
             _pokemon[0, 2] = new DittoPokemonToken();
             pokemonGrid.Pokemon = _pokemon;
+            PokemonToken[,] _newPokemon = _pokemon;
             _pokemon[0, 0] = null;
             _pokemon[0, 1] = null;
             _pokemon[0, 2] = null;
-
-            PokemonToken[,] _newPokemon = new PokemonToken[PokemonGrid.gridSize, PokemonGrid.gridSize];
-            pokemonGrid.markRowsAsNull(_newPokemon);
-            Assert.AreEqual(_pokemon, pokemonGrid.Pokemon);
+            pokemonGrid.markRowsOfSameTokenAsNull(_newPokemon);
+            Assert.AreEqual(_pokemon, _newPokemon);
         }
 
         [Test]
