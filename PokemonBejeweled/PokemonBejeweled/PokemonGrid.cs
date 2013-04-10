@@ -31,7 +31,7 @@ namespace PokemonBejeweled
         }
 
 
-        public void updateBoard()
+        public void updateBoard(PokemonToken[,] newPokemon)
         {
         }
 
@@ -43,14 +43,14 @@ namespace PokemonBejeweled
 
         public void updateBoardAlgorithm()
         {
-            PokemonToken[,] _newPokemon = new PokemonToken[gridSize, gridSize];
-            copyGrid(_pokemon, _newPokemon);
-            markColumnsOfSameTokenAsNull(_newPokemon);
-            markRowsOfSameTokenAsNull(_newPokemon);
-            copyGrid(_newPokemon, _pokemon);
+            PokemonToken[,] newPokemon = new PokemonToken[gridSize, gridSize];
+            copyGrid(_pokemon, newPokemon);
+            markColumnsOfSameTokenAsNull(newPokemon);
+            markRowsOfSameTokenAsNull(newPokemon);
+            copyGrid(newPokemon, _pokemon);
         }
 
-        public void markRowsOfSameTokenAsNull(PokemonToken[,] _newPokemon)
+        public void markRowsOfSameTokenAsNull(PokemonToken[,] newPokemon)
         {
             int numberOfSameTokens;
             PokemonToken currentToken;
@@ -68,7 +68,7 @@ namespace PokemonBejeweled
                     {
                         while (numberOfSameTokens > 0)
                         {
-                            _newPokemon[row, col - numberOfSameTokens] = null;
+                            newPokemon[row, col - numberOfSameTokens] = null;
                             numberOfSameTokens--;
                         }
                     }
@@ -81,14 +81,14 @@ namespace PokemonBejeweled
                 {
                     while (numberOfSameTokens > 0)
                     {
-                        _newPokemon[row, gridSize - numberOfSameTokens] = null;
+                        newPokemon[row, gridSize - numberOfSameTokens] = null;
                         numberOfSameTokens--;
                     }
                 }
             }
         }
 
-        public void markColumnsOfSameTokenAsNull(PokemonToken[,] _newPokemon)
+        public void markColumnsOfSameTokenAsNull(PokemonToken[,] newPokemon)
         {
             int numberOfSameTokens;
             PokemonToken currentToken;
@@ -106,7 +106,7 @@ namespace PokemonBejeweled
                     {
                         while (numberOfSameTokens > 0)
                         {
-                            _newPokemon[row - numberOfSameTokens, col] = null;
+                            newPokemon[row - numberOfSameTokens, col] = null;
                             numberOfSameTokens--;
                         }
                     }
@@ -119,7 +119,7 @@ namespace PokemonBejeweled
                 {
                     while (numberOfSameTokens > 0)
                     {
-                        _newPokemon[gridSize - numberOfSameTokens, col] = null;
+                        newPokemon[gridSize - numberOfSameTokens, col] = null;
                         numberOfSameTokens--;
                     }
                 }
