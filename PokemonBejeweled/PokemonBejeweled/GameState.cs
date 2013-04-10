@@ -10,10 +10,10 @@ namespace PokemonBejeweled
 {
     public class GameState
     {
-        Timer countdown = new Timer(1000);
+        public Timer countdown = new Timer(1000);
         double timeLeft;
         int score;
-        //PokemonGrid grid;
+        PokemonGrid grid;
         int NO_TIME_LIMIT;
 
         public GameState()
@@ -23,31 +23,51 @@ namespace PokemonBejeweled
 
         public void makePlay(Point start, Point end)
         {
-            //   if (grid.isValidMove(start, end))
-            //   {
-            //       grid.updateBoard(start, end);
-            //       score += grid.lastPlayScore();
-            //   }
+            //  if (grid.isValidMove(start, end))
+            //{
+            //   grid.updateBoard(start, end);
+            //  score += grid.lastPlayScore();
+            // }
         }
 
-        public void newGame() 
+        public void newGame()
         {
-            // make grid 
+            grid = new PokemonGrid();
+            NO_TIME_LIMIT = -1;
             score = 0;
             timeLeft = 120000; // Default
         }
 
+        public void setScore(int value)
+        {
+            score = value;
+        }
+
+        public void addToScore(int value)
+        {
+            score += value;
+        }
+
+        public int getScore()
+        {
+            return score;
+        }
+
         public void setTime(double time)
         {
+            if (time < 0 && time != NO_TIME_LIMIT)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
             timeLeft = time;
         }
 
-        public double getTimer()
+        public double getTime()
         {
             return timeLeft;
         }
 
-        public void start() 
+        public void start()
         {
             if (NO_TIME_LIMIT != timeLeft)
             {
@@ -67,6 +87,5 @@ namespace PokemonBejeweled
                 timeLeft--;
             }
         }
-
     }
 }

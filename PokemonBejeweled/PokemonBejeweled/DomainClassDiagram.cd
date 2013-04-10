@@ -1,126 +1,243 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="PokemonBejeweled.GameBoard">
-    <Position X="11" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAABgAAAAIAAAAAAAAAAAAAAwAAAAQBAA=</HashCode>
-      <FileName>GameBoard.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="PokemonBejeweled.App">
-    <Position X="7.5" Y="0.5" Width="1.5" />
+  <Class Name="PokemonBejeweled.App" Collapsed="true">
+    <Position X="3.25" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>App.xaml.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PokemonBejeweled.PokemonBejeweledForm">
-    <Position X="9.25" Y="0.5" Width="1.5" />
+  <Class Name="PokemonBejeweled.GameState" Collapsed="true">
+    <Position X="5" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAACAAAAAAAACAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>PokemonBejeweledForm.cs</FileName>
+      <HashCode>AAAAAAAAAAIAABogAAAIAAAAAAAgCACIEAQAAAEQBAA=</HashCode>
+      <FileName>GameState.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PokemonBejeweled.PokemonGrid">
-    <Position X="12.75" Y="0.5" Width="1.5" />
+  <Class Name="PokemonBejeweled.MainWindow" Collapsed="true">
+    <Position X="6.75" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAEAEAACAAAAAABAEAAAAAAAAAAAAgAQAIAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MainWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PokemonBejeweled.PokemonGrid" Collapsed="true">
+    <Position X="3.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAEAACAAAAAABAEIAAAAAAIAAAAgAQAIAAAAA=</HashCode>
       <FileName>PokemonGrid.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PokemonBejeweled.Pokemon.PokemonToken">
-    <Position X="2.5" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AQAAAAAAAAQAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Pokemon\PokemonToken.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="PokemonBejeweled.Pokemon.CharmanderToken">
-    <Position X="2.5" Y="4.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AQAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Pokemon\CharmanderChain\CharmanderToken.cs</FileName>
-      <NewMemberFileName>Pokemon\BulbasaurChain\BulbasaurToken.cs</NewMemberFileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="PokemonBejeweled.Pokemon.DittoPokemonToken">
-    <Position X="4.75" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AQAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Pokemon\DittoPokemonToken.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="PokemonBejeweled.Pokemon.CharmeleonToken">
-    <Position X="2.5" Y="6.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Pokemon\CharmanderChain\CharmeleonToken.cs</FileName>
-      <NewMemberFileName>Pokemon\BulbasaurChain\IvysaurToken.cs</NewMemberFileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="PokemonBejeweled.Pokemon.CharizardToken">
-    <Position X="2.5" Y="8" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Pokemon\CharmanderChain\CharizardToken.cs</FileName>
-      <NewMemberFileName>Pokemon\BulbasaurChain\VenusaurToken.cs</NewMemberFileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="PokemonBejeweled.Pokemon.BulbasaurToken">
-    <Position X="5" Y="4.25" Width="1.5" />
+  <Class Name="PokemonBejeweled.Pokemon.BulbasaurToken" Collapsed="true">
+    <Position X="18.75" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AQAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Pokemon\BulbasaurChain\BulbasaurToken.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="PokemonBejeweled.Pokemon.IvysaurToken">
-    <Position X="5" Y="6.25" Width="1.5" />
+  <Class Name="PokemonBejeweled.Pokemon.IvysaurToken" Collapsed="true">
+    <Position X="19.75" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Pokemon\BulbasaurChain\IvysaurToken.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="PokemonBejeweled.Pokemon.VenusaurToken">
-    <Position X="5" Y="8" Width="1.5" />
+  <Class Name="PokemonBejeweled.Pokemon.VenusaurToken" Collapsed="true">
+    <Position X="17.5" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Pokemon\BulbasaurChain\VenusaurToken.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
+  <Class Name="PokemonBejeweled.Pokemon.CharizardToken" Collapsed="true">
+    <Position X="10.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pokemon\CharmanderChain\CharizardToken.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PokemonBejeweled.Pokemon.CharmanderToken" Collapsed="true">
+    <Position X="10.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pokemon\CharmanderChain\CharmanderToken.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PokemonBejeweled.Pokemon.CharmeleonToken" Collapsed="true">
+    <Position X="10.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pokemon\CharmanderChain\CharmeleonToken.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PokemonBejeweled.Pokemon.BayleefToken" Collapsed="true">
+    <Position X="26.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pokemon\ChikoritaChain\BayleefToken.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PokemonBejeweled.Pokemon.ChikoritaToken" Collapsed="true">
+    <Position X="25.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pokemon\ChikoritaChain\ChikoritaToken.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PokemonBejeweled.Pokemon.MeganiumToken" Collapsed="true">
+    <Position X="24.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pokemon\ChikoritaChain\MeganiumToken.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PokemonBejeweled.Pokemon.CyndaquilToken" Collapsed="true">
+    <Position X="3" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pokemon\CyndaquilChain\CyndaquilToken.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PokemonBejeweled.Pokemon.QuilavaToken" Collapsed="true">
+    <Position X="1.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pokemon\CyndaquilChain\QuilavaToken.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PokemonBejeweled.Pokemon.TyphlosionToken" Collapsed="true">
+    <Position X="4" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pokemon\CyndaquilChain\TyphlosionToken.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PokemonBejeweled.Pokemon.DittoPokemonToken" Collapsed="true">
+    <Position X="22" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pokemon\DittoPokemonToken.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PokemonBejeweled.Pokemon.PichuToken" Collapsed="true">
+    <Position X="14.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pokemon\PichuChain\PichuToken.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PokemonBejeweled.Pokemon.PikachuToken" Collapsed="true">
+    <Position X="13" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pokemon\PichuChain\PikachuToken.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PokemonBejeweled.Pokemon.RaichuToken" Collapsed="true">
+    <Position X="15.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pokemon\PichuChain\RaichuToken.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PokemonBejeweled.Pokemon.PokemonToken" Collapsed="true">
+    <Position X="16.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAQAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pokemon\PokemonToken.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PokemonBejeweled.Pokemon.BlastoiseToken" Collapsed="true">
+    <Position X="6.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pokemon\SquirtleChain\BlastoiseToken.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PokemonBejeweled.Pokemon.SquirtleToken" Collapsed="true">
+    <Position X="7.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pokemon\SquirtleChain\SquirtleToken.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PokemonBejeweled.Pokemon.WartortleToken" Collapsed="true">
+    <Position X="8.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pokemon\SquirtleChain\WartortleToken.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PokemonBejeweled.Pokemon.CroconawToken" Collapsed="true">
+    <Position X="28.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pokemon\TotodileChain\CroconawToken.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PokemonBejeweled.Pokemon.FeraligatorToken" Collapsed="true">
+    <Position X="31" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pokemon\TotodileChain\FeraligatorToken.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PokemonBejeweled.Pokemon.TotodileToken" Collapsed="true">
+    <Position X="30" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pokemon\TotodileChain\TotodileToken.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
   <Class Name="PokemonBejeweled.Properties.Resources" Collapsed="true">
-    <Position X="17.25" Y="0.5" Width="1.5" />
+    <Position X="5" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="PokemonBejeweled.Properties.Settings" Collapsed="true">
-    <Position X="17.25" Y="1.5" Width="1.5" />
+    <Position X="6.75" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
-  <Interface Name="PokemonBejeweled.Pokemon.IFirstEvolutionPokemonToken">
-    <Position X="0.5" Y="6.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Pokemon\IFirstEvolutionPokemonToken.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
   <Interface Name="PokemonBejeweled.Pokemon.IBasicPokemonToken" Collapsed="true">
-    <Position X="0.5" Y="4.25" Width="1.5" />
+    <Position X="0.5" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Pokemon\IBasicPokemonToken.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="PokemonBejeweled.Pokemon.ISecondEvolutionPokemonToken">
-    <Position X="0.5" Y="8" Width="1.5" />
+  <Interface Name="PokemonBejeweled.Pokemon.IFirstEvolutionPokemonToken" Collapsed="true">
+    <Position X="0.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pokemon\IFirstEvolutionPokemonToken.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PokemonBejeweled.Pokemon.ISecondEvolutionPokemonToken" Collapsed="true">
+    <Position X="0.5" Y="7.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Pokemon\ISecondEvolutionPokemonToken.cs</FileName>

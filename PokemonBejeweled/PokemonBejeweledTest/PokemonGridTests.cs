@@ -65,6 +65,30 @@ namespace PokemonBejeweledTest
         }
 
         [Test]
+        public void UpdateBoard_RowOfThreeInBottom_NotNullAfterUpdate()
+        {
+            _pokemon[7, 0] = null;
+            _pokemon[7, 1] = null;
+            _pokemon[7, 2] = null;
+            pokemonGrid.updateBoard(pokemonGrid);
+            Assert.IsNotNull(pokemonGrid.Pokemon[7, 0]);
+            Assert.IsNotNull(pokemonGrid.Pokemon[7, 1]);
+            Assert.IsNotNull(pokemonGrid.Pokemon[7, 2]);
+        }
+
+        [Test]
+        public void UpdateBoard_RowOfThreeInBottom_CorrectPokemonCascadeDown()
+        {
+            _pokemon[7, 0] = null;
+            _pokemon[7, 1] = null;
+            _pokemon[7, 2] = null;
+            pokemonGrid.updateBoard(_pokemon);
+            Assert.AreEqual(pokemonGrid.Pokemon[7, 0], _pokemon[6, 0]);
+            Assert.AreEqual(pokemonGrid.Pokemon[7, 1], _pokemon[6, 1]);
+            Assert.AreEqual(pokemonGrid.Pokemon[7, 2], _pokemon[6, 2]);
+        }
+
+        [Test]
         public void MarkRowsOfSameTokenAsNull_RowOfThreeInMiddle_RowMarkedAsNull()
         {
             _pokemon[0, 3] = new DittoPokemonToken();
