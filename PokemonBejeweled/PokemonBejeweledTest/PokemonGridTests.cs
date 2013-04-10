@@ -31,6 +31,7 @@ namespace PokemonBejeweledTest
         {
             PokemonToken[,] _newPokemon = new PokemonToken[PokemonGrid.gridSize, PokemonGrid.gridSize];
             PokemonGrid.copyGrid(_pokemon, _newPokemon);
+            Assert.AreEqual(_pokemon, _newPokemon);
         }
 
         [Test]

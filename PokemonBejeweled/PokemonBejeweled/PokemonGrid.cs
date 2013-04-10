@@ -20,13 +20,7 @@ namespace PokemonBejeweled
             }
             set
             {
-                for (int i = 0; i < gridSize; i++)
-                {
-                    for (int j = 0; j < gridSize; j++)
-                    {
-                        _pokemon[i, j] = value[i, j];
-                    }
-                }
+                copyGrid(value, _pokemon);
             }
         }
 
@@ -128,6 +122,17 @@ namespace PokemonBejeweled
                         _newPokemon[gridSize - numberOfSameTokens, col] = null;
                         numberOfSameTokens--;
                     }
+                }
+            }
+        }
+
+        public static void copyGrid(PokemonToken[,] gridToCopy, PokemonToken[,] gridDestination)
+        {
+            for (int row = 0; row < gridSize; row++)
+            {
+                for (int col = 0; col < gridSize; col++)
+                {
+                    gridDestination[row, col] = gridToCopy[row, col];
                 }
             }
         }
