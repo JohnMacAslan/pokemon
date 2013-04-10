@@ -44,10 +44,10 @@ namespace PokemonBejeweled
         public void updateBoardAlgorithm()
         {
             PokemonToken[,] _newPokemon = new PokemonToken[gridSize, gridSize];
-            Array.Copy(_pokemon, _newPokemon, 8);
-            markRowsOfSameTokenAsNull(_newPokemon);
+            copyGrid(_pokemon, _newPokemon);
             markColumnsOfSameTokenAsNull(_newPokemon);
-            Pokemon = _newPokemon;
+            markRowsOfSameTokenAsNull(_newPokemon);
+            copyGrid(_newPokemon, _pokemon);
         }
 
         public void markRowsOfSameTokenAsNull(PokemonToken[,] _newPokemon)
@@ -106,7 +106,7 @@ namespace PokemonBejeweled
                     {
                         while (numberOfSameTokens > 0)
                         {
-                            _newPokemon[row, col - numberOfSameTokens] = null;
+                            _newPokemon[row - numberOfSameTokens, col] = null;
                             numberOfSameTokens--;
                         }
                     }
