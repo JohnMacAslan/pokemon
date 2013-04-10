@@ -126,7 +126,7 @@ namespace PokemonBejeweled
 
         private PokemonToken updateMovedToken(int row, int col)
         {
-            return null;
+            return _pokemon[row, col];
         }
 
         private void pullDownTokens()
