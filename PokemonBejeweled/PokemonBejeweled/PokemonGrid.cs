@@ -10,7 +10,6 @@ namespace PokemonBejeweled
     public class PokemonGrid
     {
         public static int gridSize = 8;
-        private PokemonToken[,] _pokemonOld;
         public int GamePlayScore { get; set; }
         private PokemonToken[,] _pokemon = new PokemonToken[gridSize, gridSize];
         public PokemonToken[,] Pokemon
@@ -34,14 +33,12 @@ namespace PokemonBejeweled
         public PokemonGrid()
         {
             Pokemon = new PokemonToken[gridSize, gridSize];
-            _pokemonOld = new PokemonToken[gridSize, gridSize];
             GamePlayScore = 0;
         }
 
 
         public void updateBoard()
         {
-            _pokemon = _pokemonOld;
         }
 
         public Boolean isValidMove(int row1, int col1, int row2, int col2)
@@ -50,29 +47,69 @@ namespace PokemonBejeweled
             return false;
         }
 
-        
-
         public void updateBoardAlgorithm()
         {
+            int numberOfSameTokens;
+            PokemonToken currentToken;
+            PokemonToken[,] _newPokemon = _pokemon;
+            // marking the rows
             for (int row = 0; row < gridSize; row++)
             {
-                for (int col = 0; col < gridSize; col++)
+                currentToken = _pokemon[row, 0];
+                numberOfSameTokens = 1;
+                for (int col = 1; col < gridSize; col++)
                 {
-                    if (areThreeTokensInARow(row, col))
+                    if (currentToken.GetType() == _pokemon[row, col].GetType())
                     {
-                        _pokemon[row, col] = null;
-                        _pokemon[row, col + 1] = null;
-                        _pokemon[row, col + 2] = null;
+                        numberOfSameTokens++;
                     }
-                    if (areThreeTokensInACol(row, col))
+                    else if (3 <= numberOfSameTokens)
                     {
-                        _pokemon[row, col] = null;
-                        _pokemon[row + 1, col] = null;
-                        _pokemon[row + 2, col] = null;
+                        while (numberOfSameTokens > 0)
+                        {
+                            _newPokemon[row, col - numberOfSameTokens] = null;
+                            numberOfSameTokens--;
+                        }
+                    }
+                    else
+                    {
+                        currentToken = _pokemon[row, col];
+                    }
+                }
+                if (3 <= numberOfSameTokens)
+                {
+                    while (numberOfSameTokens > 0)
+                    {
+                        _newPokemon[row, gridSize - numberOfSameTokens] = null;
+                        numberOfSameTokens--;
                     }
                 }
             }
+            Pokemon = _newPokemon;
         }
+
+
+        //public void updateBoardAlgorithm()
+        //{
+        //    for (int row = 0; row < gridSize; row++)
+        //    {
+        //        for (int col = 0; col < gridSize; col++)
+        //        {
+        //            if (areThreeTokensInARow(row, col))
+        //            {
+        //                _pokemon[row, col] = null;
+        //                _pokemon[row, col + 1] = null;
+        //                _pokemon[row, col + 2] = null;
+        //            }
+        //            if (areThreeTokensInACol(row, col))
+        //            {
+        //                _pokemon[row, col] = null;
+        //                _pokemon[row + 1, col] = null;
+        //                _pokemon[row + 2, col] = null;
+        //            }
+        //        }
+        //    }
+        //}
 
 
         public Boolean areThreeTokensInARow(int row, int col)
