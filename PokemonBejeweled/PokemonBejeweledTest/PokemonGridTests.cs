@@ -27,6 +27,13 @@ namespace PokemonBejeweledTest
         }
 
         [Test]
+        public void CopyGrid_ValidGrid_GridCopiedCorrectly()
+        {
+            PokemonToken[,] _newPokemon = new PokemonToken[PokemonGrid.gridSize, PokemonGrid.gridSize];
+            PokemonGrid.copyGrid(_pokemon, _newPokemon);
+        }
+
+        [Test]
         public void MarkRowsOfSameTokenAsNull_RowOfThreeOnLeftEdge_RowMarkedAsNull()
         {
             _pokemon[0, 0] = new DittoPokemonToken();
@@ -208,79 +215,6 @@ namespace PokemonBejeweledTest
         }
 
         [Test]
-        public void AreThreeTokensInARow_InvalidColIndex_ReturnFalse()
-        {
-            Assert.IsFalse(pokemonGrid.areThreeTokensInARow(3, PokemonGrid.gridSize)); 
-        }
-
-        [Test]
-        public void AreThreeTokensInARow_InvalidRowIndex_ReturnFalse()
-        {
-            Assert.IsFalse(pokemonGrid.areThreeTokensInARow(PokemonGrid.gridSize, 3)); 
-        }
-
-        [Test]
-        public void AreThreeTokensInARow_ThreeInARow_ReturnTrue()
-        {
-            _pokemon[3, 3] = new DittoPokemonToken();
-            _pokemon[3, 4] = new DittoPokemonToken();
-            _pokemon[3, 5] = new DittoPokemonToken();
-            pokemonGrid.Pokemon = _pokemon;
-            Assert.IsTrue(pokemonGrid.areThreeTokensInARow(3, 3));
-        }
-
-        [Test]
-        public void AreThreeTokensInARow_ThreeNotInARow_ReturnFalse()
-        {
-            Assert.IsFalse(pokemonGrid.areThreeTokensInARow(3, 3));
-        }
-
-        [Test]
-        public void AreThreeTokensInARow_TokenIsNull_ReturnFalse()
-        {
-            _pokemon[3, 3] = null;
-            pokemonGrid.Pokemon = _pokemon;
-            Assert.IsFalse(pokemonGrid.areThreeTokensInARow(3, 3));
-        }
-
-        [Test]
-        public void AreThreeTokensInACol_InvalidColIndex_ReturnFalse()
-        {
-            Assert.IsFalse(pokemonGrid.areThreeTokensInACol(3, PokemonGrid.gridSize));
-        }
-
-        [Test]
-        public void AreThreeTokensInACol_InvalidRowIndex_ReturnFalse()
-        {
-            Assert.IsFalse(pokemonGrid.areThreeTokensInACol(PokemonGrid.gridSize, 3));
-        }
-
-        [Test]
-        public void AreThreeTokensInACol_ThreeInACol_ReturnTrue()
-        {
-            _pokemon[3, 3] = new DittoPokemonToken();
-            _pokemon[4, 3] = new DittoPokemonToken();
-            _pokemon[5, 3] = new DittoPokemonToken();
-            pokemonGrid.Pokemon = _pokemon;
-            Assert.IsTrue(pokemonGrid.areThreeTokensInACol(3, 3));
-        }
-
-        [Test]
-        public void AreThreeTokensInACol_ThreeNotInACol_ReturnFalse()
-        {
-            Assert.IsFalse(pokemonGrid.areThreeTokensInACol(3, 3));
-        }
-
-        [Test]
-        public void AreThreeTokensInACol_TokenIsNull_ReturnFalse()
-        {
-            _pokemon[3, 3] = null;
-            pokemonGrid.Pokemon = _pokemon;
-            Assert.IsFalse(pokemonGrid.areThreeTokensInACol(3, 3));
-        }
-
-        [Test]
-
         public void TestIsValidMoveReturnsFalse()
         {
             Assert.False(pokemonGrid.isValidMove(-1, -1, -1, -1));

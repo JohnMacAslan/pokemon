@@ -49,8 +49,10 @@ namespace PokemonBejeweled
 
         public void updateBoardAlgorithm()
         {
-            PokemonToken[,] _newPokemon = _pokemon;
+            PokemonToken[,] _newPokemon = new PokemonToken[gridSize, gridSize];
+            Array.Copy(_pokemon, _newPokemon, 8);
             markRowsOfSameTokenAsNull(_newPokemon);
+            markColumnsOfSameTokenAsNull(_newPokemon);
             Pokemon = _newPokemon;
         }
 
@@ -128,53 +130,6 @@ namespace PokemonBejeweled
                     }
                 }
             }
-        }
-
-
-        public Boolean areThreeTokensInARow(int row, int col)
-        {
-            if (col > gridSize - 3 || row > gridSize - 1)
-            {
-                return false;
-            } else {
-                if (null == _pokemon[row, col] || null == _pokemon[row, col + 1] || null == _pokemon[row, col + 2])
-                {
-                    return false;
-                }
-                else
-                {
-                    Type pokemonType = _pokemon[row, col].GetType();
-                    if (_pokemon[row, col + 1].GetType() == pokemonType && _pokemon[row, col + 2].GetType() == pokemonType)
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-
-        public bool areThreeTokensInACol(int row, int col)
-        {
-            if (row > gridSize - 3 || col > gridSize - 1)
-            {
-                return false;
-            }
-            else
-            {
-                if (null == _pokemon[row, col] || null == _pokemon[row + 1, col] || null == _pokemon[row + 2, col])
-                {
-                    return false;
-                }
-                else
-                {
-                    Type pokemonType = _pokemon[row, col].GetType();
-                    if (_pokemon[row + 1, col].GetType() == pokemonType && _pokemon[row + 2, col].GetType() == pokemonType)
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
         }
     }
 }
