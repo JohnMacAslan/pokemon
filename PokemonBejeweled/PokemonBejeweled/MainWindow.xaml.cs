@@ -22,16 +22,44 @@ namespace PokemonBejeweled
     {
 
         private GameState gameState;
+        private System.Windows.Controls.Primitives.UniformGrid gridBoard { get; }
         
         public MainWindow()
         {
             InitializeComponent();
             gameState = new GameState();
+            gridBoard = this.GridBoard;
+            setUpGridBoard();
             
         }
 
+        
+
         public void setUpGridBoard()
         {
+            
+            for(int r = 0; r < PokemonGrid.gridSize; r++)
+            {
+                for(int c = 0; c < PokemonGrid.gridSize; c++)
+                {
+                    GridButton newButton = new GridButton(r, c);
+                    //for now this is just filling the board with something
+                    Brush color;
+                    if(r%2 == 0)
+                    {
+                       color = Brushes.Yellow;
+                    }
+                    else
+                    {
+                       color = Brushes.SkyBlue;
+                    }
+                    newButton.setBackgroundColor(color);
+                    newButton.Height = gridBoard.Height / PokemonGrid.gridSize;
+                    newButton.Width = gridBoard.Width / PokemonGrid.gridSize;
+
+                   gridBoard.Children.Add(newButton);
+                }
+            }
             
         }
 
