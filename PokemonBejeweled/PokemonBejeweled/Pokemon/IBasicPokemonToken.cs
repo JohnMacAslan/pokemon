@@ -9,5 +9,7 @@ namespace PokemonBejeweled.Pokemon
 {
     public interface IBasicPokemonToken
     {
+        IFirstEvolutionPokemonToken firstEvolvedToken();
+        ISecondEvolutionPokemonToken secondEvolvedToken();
     }
 }

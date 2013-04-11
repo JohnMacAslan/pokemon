@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PokemonBejeweled.Pokemon
 {
-    public class SquirtleToken : PokemonToken, IBasicPokemonToken
+    public class SquirtleToken : PokemonToken
     {
 
         public SquirtleToken()

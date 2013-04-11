@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PokemonBejeweled.Pokemon
 {
-    public class ChikoritaToken : PokemonToken, IBasicPokemonToken
+    public class ChikoritaToken : PokemonToken
     {
         public ChikoritaToken()
         {

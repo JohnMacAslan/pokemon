@@ -82,7 +82,7 @@
     <Compile Include="Pokemon\CyndaquilChain\CyndaquilToken.cs" />
     <Compile Include="Pokemon\CyndaquilChain\QuilavaToken.cs" />
     <Compile Include="Pokemon\CyndaquilChain\TyphlosionToken.cs" />
-    <Compile Include="Pokemon\DittoPokemonToken.cs" />
+    <Compile Include="Pokemon\DittoToken.cs" />
     <Compile Include="Pokemon\IBasicPokemonToken.cs" />
     <Compile Include="Pokemon\IFirstEvolutionPokemonToken.cs" />
     <Compile Include="Pokemon\ISecondEvolutionPokemonToken.cs" />

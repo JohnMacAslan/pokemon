@@ -11,8 +11,8 @@ namespace PokemonBejeweled
     {
         public static int gridSize = 8;
         public int GamePlayScore { get; set; }
-        private PokemonToken[,] _pokemon = new PokemonToken[gridSize, gridSize];
-        public PokemonToken[,] Pokemon
+        private IBasicPokemonToken[,] _pokemon = new IBasicPokemonToken[gridSize, gridSize];
+        public IBasicPokemonToken[,] Pokemon
         {
             get
             {
@@ -26,32 +26,89 @@ namespace PokemonBejeweled
 
         public PokemonGrid()
         {
-            Pokemon = new PokemonToken[gridSize, gridSize];
+            Pokemon = new IBasicPokemonToken[gridSize, gridSize];
             GamePlayScore = 0;
         }
 
-        public Boolean isValidMove(int row1, int col1, int row2, int col2)
+        private int numberOfSameTokensFromToken(int row, int col)
         {
-            return false;
+            Type tokenType = _pokemon[row, col].GetType();
+            int numberOfSameColumnTokens = 1;
+            int numberOfSameRowTokens = 1;
+
+            int currentRow = row - 1;
+            while (currentRow >= 0 && tokenType == _pokemon[currentRow, col].GetType())
+            {
+                numberOfSameColumnTokens++;
+                currentRow--;
+            }
+            currentRow = row + 1;
+            while (currentRow < gridSize && tokenType == _pokemon[currentRow, col].GetType())
+            {
+                numberOfSameColumnTokens++;
+                currentRow++;
+            }
+
+            int currentCol = col - 1;
+            while (currentCol >= 0 && tokenType == _pokemon[row, currentCol].GetType())
+            {
+                numberOfSameRowTokens++;
+                currentCol--;
+            }
+            currentCol = col + 1;
+            while (currentCol < gridSize && tokenType == _pokemon[row, currentCol].GetType())
+            {
+                numberOfSameRowTokens++;
+                currentCol++;
+            }
+            return Math.Max(numberOfSameColumnTokens, numberOfSameRowTokens);
+        }
+
+        private IBasicPokemonToken updateMovedToken(int row, int col, int numberOfSameTokens)
+        {
+            IBasicPokemonToken movedToken = _pokemon[row, col];
+            switch (numberOfSameTokens)
+            {
+                case 3:
+                    return null;
+                case 4:
+                    return movedToken.firstEvolvedToken();
+                case 5:
+                    return new DittoToken();
+                case 6:
+                    return movedToken.secondEvolvedToken();
+                default:
+                    return movedToken;
+            }
         }
 
         public void updateBoard(int row1, int col1, int row2, int col2)
         {
-            PokemonToken[,] newPokemon = new PokemonToken[gridSize, gridSize];
-            copyGrid(_pokemon, newPokemon);
-            markColumnsOfSameTokenAsNull(newPokemon);
-            markRowsOfSameTokenAsNull(newPokemon);
-            copyGrid(newPokemon, _pokemon);
-            _pokemon[row1, col1] = updateMovedToken(row1, col1);
-            _pokemon[row2, col2] = updateMovedToken(row2, col2);
-            pullDownTokens();
-            addNewTokens();
+            IBasicPokemonToken firstNewToken;
+            IBasicPokemonToken secondNewToken;
+            int numberOfSameTokensFromFirstToken = numberOfSameTokensFromToken(row1, col1);
+            int numberOfSameTokensFromSecondToken = numberOfSameTokensFromToken(row2, col2);
+            if (3 >= numberOfSameTokensFromFirstToken || 3 >= numberOfSameTokensFromSecondToken)
+            {
+                firstNewToken = updateMovedToken(row1, col1, numberOfSameTokensFromFirstToken);
+                secondNewToken = updateMovedToken(row1, col1, numberOfSameTokensFromSecondToken);
+                IBasicPokemonToken[,] newPokemon = new IBasicPokemonToken[gridSize, gridSize];
+                copyGrid(_pokemon, newPokemon);
+                markColumnsOfSameTokenAsNull(newPokemon);
+                markRowsOfSameTokenAsNull(newPokemon);
+                copyGrid(newPokemon, _pokemon);
+                _pokemon[row1, col1] = firstNewToken;
+                _pokemon[row2, col2] = secondNewToken;
+                pullDownTokens();
+                addNewTokens();
+            }
+            // once numberOfSameTokensFromToken is implemented, this needs to be moved into the if statement
         }
 
-        private void markRowsOfSameTokenAsNull(PokemonToken[,] newPokemon)
+        private void markRowsOfSameTokenAsNull(IBasicPokemonToken[,] newPokemon)
         {
             int numberOfSameTokens;
-            PokemonToken currentToken;
+            IBasicPokemonToken currentToken;
             for (int row = 0; row < gridSize; row++)
             {
                 currentToken = _pokemon[row, 0];
@@ -86,10 +143,10 @@ namespace PokemonBejeweled
             }
         }
 
-        private void markColumnsOfSameTokenAsNull(PokemonToken[,] newPokemon)
+        private void markColumnsOfSameTokenAsNull(IBasicPokemonToken[,] newPokemon)
         {
             int numberOfSameTokens;
-            PokemonToken currentToken;
+            IBasicPokemonToken currentToken;
             for (int col = 0; col < gridSize; col++)
             {
                 currentToken = _pokemon[0, col];
@@ -124,11 +181,6 @@ namespace PokemonBejeweled
             }
         }
 
-        private PokemonToken updateMovedToken(int row, int col)
-        {
-            return _pokemon[row, col];
-        }
-
         private void pullDownTokens()
         {
         }
@@ -137,7 +189,7 @@ namespace PokemonBejeweled
         {
         }
 
-        public static void copyGrid(PokemonToken[,] gridToCopy, PokemonToken[,] gridDestination)
+        public static void copyGrid(IBasicPokemonToken[,] gridToCopy, IBasicPokemonToken[,] gridDestination)
         {
             for (int row = 0; row < gridSize; row++)
             {

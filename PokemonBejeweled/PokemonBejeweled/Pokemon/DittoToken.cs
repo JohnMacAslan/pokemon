@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace PokemonBejeweled.Pokemon
 {
-    public class DittoPokemonToken : PokemonToken
+    public class DittoToken : PokemonToken
     {
-         public DittoPokemonToken()
+         public DittoToken()
         {
             //image = null;
         }
