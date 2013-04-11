@@ -13,8 +13,8 @@
             <StackPanel Background="Black"  DockPanel.Dock="Left" Width="110">
                 <Expander IsExpanded="True" Header="Main Menu" TextElement.Foreground="YellowGreen">
                     <StackPanel Width="75" >
-                        <Button Background="YellowGreen">New Game</Button>
-                        <Button Background="YellowGreen">Quit</Button>
+                        <Button Background="YellowGreen" Name="NewGameButton">New Game</Button>
+                        <Button Background="YellowGreen" Name="QuitGameButton">Quit</Button>
                     </StackPanel>
                 </Expander>
                 <Expander IsExpanded="True" Header="Settings">

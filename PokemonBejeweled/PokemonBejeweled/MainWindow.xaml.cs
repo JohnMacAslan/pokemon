@@ -30,8 +30,10 @@ namespace PokemonBejeweled
             gameState = new GameState();
             gridBoard = this.GridBoard;
             setUpGridBoard();
-            
+            NewGameButton.Click += delegate { gameState.newGame(); };
         }
+
+
 
         
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using System.Windows.Controls;
 
 
 namespace PokemonBejeweled
@@ -11,7 +12,7 @@ namespace PokemonBejeweled
 
     
 
-    public class GridButton : System.Windows.Controls.Button
+    public class GridButton : Button
     {
         private int _row;
         public int row

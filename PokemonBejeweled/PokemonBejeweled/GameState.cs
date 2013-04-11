@@ -42,6 +42,7 @@ namespace PokemonBejeweled
             NO_TIME_LIMIT = -1;
             score = 0;
             timeLeft = 120000; // Default
+            Console.Out.WriteLine("a new game was made");
         }
 
         public void setScore(int value)
