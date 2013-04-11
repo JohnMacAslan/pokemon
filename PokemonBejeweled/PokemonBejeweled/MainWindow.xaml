@@ -3,6 +3,39 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <DockPanel Margin="0,0,0.4,0.4" Grid.ColumnSpan="2">
+        <TextBlock Background="GreenYellow" DockPanel.Dock="Top" FontSize="36">
+            Pokemon Bejeweled</TextBlock>
+            <StackPanel Background="ForestGreen" DockPanel.Dock="Left" Width="110">
+                <Expander IsExpanded="True" Header="Main Menu">
+                    <StackPanel Width="75" >
+                        <Button>New Game</Button>
+                        <Button>Quit</Button>
+                    </StackPanel>
+                </Expander>
+                <Expander IsExpanded="True" Header="Settings">
+                    <StackPanel Width="100" >
+                        <RadioButton GroupName="GameTime" Content="One Minute"/>
+                        <RadioButton GroupName="GameTime" Content ="Five Minutes" IsChecked="True"/>
+                        <RadioButton GroupName="GameTime" Content ="Ten Minutes" />
+                    </StackPanel>
+                </Expander>
+            </StackPanel>
+            <StackPanel Background="SkyBlue" DockPanel.Dock="Right">
+                <Expander IsExpanded="True" Header="Time Left">
+                    <StackPanel Width="75" >
+                        <TextBlock FontSize="25" Padding="10">5:00</TextBlock>
+                        
+                    </StackPanel>
+                </Expander>
+            </StackPanel>
+            
+            <StackPanel Background="Black"/>
         
+        </DockPanel>
     </Grid>
 </Window>
