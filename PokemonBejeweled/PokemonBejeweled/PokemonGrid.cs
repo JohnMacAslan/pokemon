@@ -183,10 +183,31 @@ namespace PokemonBejeweled
 
         private void pullDownTokens()
         {
+            for (int col = 0; col < gridSize; col++)
+            {
+                for (int row = gridSize - 1; row > 0; row--)
+                {
+                    if (_pokemon[row, col] == null)
+                    {
+                        _pokemon[row, col] = _pokemon[row - 1, col];
+                        _pokemon[row - 1, col] = null;
+                    }
+                }
+            }
         }
 
         private void addNewTokens()
         {
+            for (int row = 0; row < gridSize; row++)
+            {
+                for (int col = 0; col < gridSize; col++)
+                {
+                    if (_pokemon[row, col] == null)
+                    {
+                        _pokemon[row, col] = new CharmanderToken(); // Cause charmander rocks
+                    }
+                }
+            }
         }
 
         public static void copyGrid(IBasicPokemonToken[,] gridToCopy, IBasicPokemonToken[,] gridDestination)
