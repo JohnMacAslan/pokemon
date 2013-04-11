@@ -13,7 +13,14 @@ namespace PokemonBejeweled
         public Timer countdown = new Timer(1000);
         double timeLeft;
         int score;
-        PokemonGrid grid;
+        private PokemonGrid _grid;
+        public PokemonGrid Grid
+        {
+            get
+            {
+                return _grid;
+            }
+        }
         int NO_TIME_LIMIT;
 
         public GameState()
@@ -28,11 +35,12 @@ namespace PokemonBejeweled
             //   grid.updateBoard(start, end);
             //  score += grid.lastPlayScore();
             // }
+
         }
 
         public void newGame()
         {
-            grid = new PokemonGrid();
+            _grid = new PokemonGrid();
             NO_TIME_LIMIT = -1;
             score = 0;
             timeLeft = 120000; // Default
