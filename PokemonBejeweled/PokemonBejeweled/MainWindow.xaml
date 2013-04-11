@@ -1,7 +1,7 @@
 ﻿<Window x:Class="PokemonBejeweled.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="600" Width="600">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0*"/>
@@ -34,7 +34,12 @@
                 </Expander>
             </StackPanel>
             
-            <StackPanel Background="Black"/>
+            <StackPanel Background="Black">
+                <UniformGrid Name="GridBoard" Margin="5" Columns="8" Rows="8">
+                      
+                   
+                </UniformGrid>
+            </StackPanel>
         
         </DockPanel>
     </Grid>
