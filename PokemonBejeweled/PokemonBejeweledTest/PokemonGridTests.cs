@@ -234,6 +234,19 @@ namespace PokemonBejeweledTest
         }
 
         [Test]
+        public void UpdateBoard_RowOfThreeBottomLeft_PullDownTokens()
+        {
+            _pokemon[7, 0] = null;
+            _pokemon[7, 1] = null;
+            _pokemon[7, 2] = null;
+            pokemonGrid.Pokemon = _pokemon;
+            pokemonGrid.updateBoard(0, 0, 0, 0);
+            Assert.IsNotNull(pokemonGrid.Pokemon[7, 0]);
+            Assert.IsNotNull(pokemonGrid.Pokemon[7, 1]);
+            Assert.IsNotNull(pokemonGrid.Pokemon[7, 3]);
+        }
+
+        [Test]
         public void PokemonGrid_PokemonInitializedToNulls()
         {
             _pokemon = new PokemonToken[PokemonGrid.gridSize, PokemonGrid.gridSize];
