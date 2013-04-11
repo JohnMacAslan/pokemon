@@ -10,6 +10,7 @@ namespace PokemonBejeweled
     public class PokemonGrid
     {
         public static int gridSize = 8;
+        private Dictionary<int, Type> dict = new Dictionary<int, Type>();
         public int GamePlayScore { get; set; }
         private IBasicPokemonToken[,] _pokemon = new IBasicPokemonToken[gridSize, gridSize];
         public IBasicPokemonToken[,] Pokemon
@@ -28,6 +29,14 @@ namespace PokemonBejeweled
         {
             Pokemon = new IBasicPokemonToken[gridSize, gridSize];
             GamePlayScore = 0;
+
+            dict.Add(1, typeof(BulbasaurToken));
+            dict.Add(2, typeof(CharmanderToken));
+            dict.Add(3, typeof(ChikoritaToken));
+            dict.Add(4, typeof(CyndaquilToken));
+            dict.Add(5, typeof(PichuToken));
+            dict.Add(6, typeof(SquirtleToken));
+            dict.Add(7, typeof(TotodileToken));
         }
 
         private bool piecesAreAdjacent(int row1, int col1, int row2, int col2)
@@ -199,10 +208,38 @@ namespace PokemonBejeweled
 
         private void pullDownTokens()
         {
+            for (int col = 0; col < gridSize; col++)
+            {
+                for (int row = gridSize - 1; row > 0; row--)
+                {
+                    if (_pokemon[row, col] == null)
+                    {
+                        _pokemon[row, col] = _pokemon[row - 1, col];
+                        _pokemon[row - 1, col] = null;
+                    }
+                }
+            }
         }
 
         private void addNewTokens()
         {
+            for (int row = 0; row < gridSize; row++)
+            {
+                for (int col = 0; col < gridSize; col++)
+                {
+                    if (_pokemon[row, col] == null)
+                    {
+                        _pokemon[row, col] = generateNewPokemon(); // Cause charmander rocks!
+                    }
+                }
+            }
+        }
+
+        private IBasicPokemonToken generateNewPokemon()
+        {
+            Random rand = new Random();
+            int pokeNumber = rand.Next(1, 8);
+            return (IBasicPokemonToken)Activator.CreateInstance(dict[pokeNumber]);
         }
 
         public static void copyGrid(IBasicPokemonToken[,] gridToCopy, IBasicPokemonToken[,] gridDestination)
