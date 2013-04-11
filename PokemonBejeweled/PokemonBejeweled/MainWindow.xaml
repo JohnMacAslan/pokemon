@@ -1,7 +1,7 @@
 ﻿<Window x:Class="PokemonBejeweled.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="500" Width="600">
+        Title="MainWindow" Height="600" Width="600">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0*"/>
@@ -9,26 +9,26 @@
         </Grid.ColumnDefinitions>
         <DockPanel Margin="0,0,0.4,0.4" Grid.ColumnSpan="2">
         <TextBlock Background="GreenYellow" DockPanel.Dock="Top" FontSize="36">
-            Pokemon Bejeweled</TextBlock>
-            <StackPanel Background="ForestGreen" DockPanel.Dock="Left" Width="110">
-                <Expander IsExpanded="True" Header="Main Menu">
+           Cutesiest Bejeweled EVAR!!!</TextBlock>
+            <StackPanel Background="Black"  DockPanel.Dock="Left" Width="110">
+                <Expander IsExpanded="True" Header="Main Menu" TextElement.Foreground="YellowGreen">
                     <StackPanel Width="75" >
-                        <Button>New Game</Button>
-                        <Button>Quit</Button>
+                        <Button Background="YellowGreen">New Game</Button>
+                        <Button Background="YellowGreen">Quit</Button>
                     </StackPanel>
                 </Expander>
                 <Expander IsExpanded="True" Header="Settings">
                     <StackPanel Width="100" >
-                        <RadioButton GroupName="GameTime" Content="One Minute"/>
-                        <RadioButton GroupName="GameTime" Content ="Five Minutes" IsChecked="True"/>
-                        <RadioButton GroupName="GameTime" Content ="Ten Minutes" />
+                        <RadioButton GroupName="GameTime" Content="One Minute" TextElement.Foreground="YellowGreen"/>
+                        <RadioButton GroupName="GameTime" Content ="Five Minutes" TextElement.Foreground="YellowGreen" IsChecked="True"/>
+                        <RadioButton GroupName="GameTime" Content ="Ten Minutes" TextElement.Foreground="YellowGreen"/>
                     </StackPanel>
                 </Expander>
             </StackPanel>
-            <StackPanel Background="SkyBlue" DockPanel.Dock="Right">
-                <Expander IsExpanded="True" Header="Time Left">
-                    <StackPanel Width="75" >
-                        <TextBlock FontSize="25" Padding="10">5:00</TextBlock>
+            <StackPanel Background="Black" DockPanel.Dock="Bottom">
+                <Expander IsExpanded="True" Header="Time Left" TextElement.Foreground="YellowGreen">
+                    <StackPanel Height="50">
+                        <TextBlock FontSize="40" TextElement.Foreground="YellowGreen" >5:00</TextBlock>
                         
                     </StackPanel>
                 </Expander>

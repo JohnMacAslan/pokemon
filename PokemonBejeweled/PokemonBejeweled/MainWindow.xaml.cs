@@ -22,7 +22,7 @@ namespace PokemonBejeweled
     {
 
         private GameState gameState;
-        private System.Windows.Controls.Primitives.UniformGrid gridBoard { get; }
+        private System.Windows.Controls.Primitives.UniformGrid gridBoard;
         
         public MainWindow()
         {
@@ -45,7 +45,7 @@ namespace PokemonBejeweled
                     GridButton newButton = new GridButton(r, c);
                     //for now this is just filling the board with something
                     Brush color;
-                    if(r%2 == 0)
+                    if((c+(r%2))%2 == 0)
                     {
                        color = Brushes.Yellow;
                     }
