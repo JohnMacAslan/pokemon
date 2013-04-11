@@ -6,23 +6,12 @@ using System.Threading.Tasks;
 
 namespace PokemonBejeweled.Pokemon
 {
-    public class PichuToken : PokemonToken, IBasicPokemonToken
+    public class PichuToken : PokemonToken
     {
-
         public PichuToken()
         {
-
+            firstEvolution = typeof(PikachuToken);
+            secondEvolution = typeof(RaichuToken);
         }
-
-        public override IFirstEvolutionPokemonToken firstEvolvedToken()
-        {
-            return new PikachuToken();
-        }
-
-        public override ISecondEvolutionPokemonToken secondEvolvedToken()
-        {
-            return new RaichuToken();
-        }
-
     }
 }

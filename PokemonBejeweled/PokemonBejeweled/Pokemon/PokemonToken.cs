@@ -1,27 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace PokemonBejeweled.Pokemon
 {
-    public abstract class PokemonToken
+    public abstract class PokemonToken : IBasicPokemonToken
     {
-        //protected File image;
-        public abstract IFirstEvolutionPokemonToken firstEvolvedToken();
+        protected Type firstEvolution;
+        protected Type secondEvolution;
 
-        public abstract ISecondEvolutionPokemonToken secondEvolvedToken();
-
-        public DittoPokemonToken becomeDitto()
+        public virtual IFirstEvolutionPokemonToken firstEvolvedToken()
         {
-            return null;
+            return (IFirstEvolutionPokemonToken)Activator.CreateInstance(firstEvolution);
         }
 
-        //public File getTokenImage()
-        //{
-        //    return image;
-        //}
+        public virtual ISecondEvolutionPokemonToken secondEvolvedToken()
+        {
+            return (ISecondEvolutionPokemonToken)Activator.CreateInstance(secondEvolution);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj.GetType() == GetType();
+        }
     }
 }

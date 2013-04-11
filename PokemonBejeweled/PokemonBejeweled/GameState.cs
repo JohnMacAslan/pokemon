@@ -30,11 +30,9 @@ namespace PokemonBejeweled
 
         public void makePlay(Point start, Point end)
         {
-            //  if (grid.isValidMove(start, end))
-            //{
-            //   grid.updateBoard(start, end);
-            //  score += grid.lastPlayScore();
-            // }
+
+            // convert points to rows and columns
+
 
         }
 

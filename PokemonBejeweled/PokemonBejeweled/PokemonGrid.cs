@@ -10,10 +10,9 @@ namespace PokemonBejeweled
     public class PokemonGrid
     {
         public static int gridSize = 8;
-        private PokemonToken[,] _pokemonOld;
         public int GamePlayScore { get; set; }
-        private PokemonToken[,] _pokemon = new PokemonToken[gridSize, gridSize];
-        public PokemonToken[,] Pokemon
+        private IBasicPokemonToken[,] _pokemon = new IBasicPokemonToken[gridSize, gridSize];
+        public IBasicPokemonToken[,] Pokemon
         {
             get
             {
@@ -21,104 +20,200 @@ namespace PokemonBejeweled
             }
             set
             {
-                for (int i = 0; i < gridSize; i++)
-                {
-                    for (int j = 0; j < gridSize; j++)
-                    {
-                        _pokemon[i, j] = value[i, j];
-                    }
-                }
+                copyGrid(value, _pokemon);
             }
         }
 
         public PokemonGrid()
         {
-            Pokemon = new PokemonToken[gridSize, gridSize];
-            _pokemonOld = new PokemonToken[gridSize, gridSize];
+            Pokemon = new IBasicPokemonToken[gridSize, gridSize];
             GamePlayScore = 0;
         }
 
-
-        public void updateBoard()
+        private bool piecesAreAdjacent(int row1, int col1, int row2, int col2)
         {
-            _pokemon = _pokemonOld;
-        }
-
-        public Boolean isValidMove(int row1, int col1, int row2, int col2)
-        {
-           
+            if (row1 == row2 && Math.Abs(col1 - col2) == 1)
+            {
+                return true;
+            }
+            if (col1 == col2 && Math.Abs(row1 - row2) == 1)
+            {
+                return true;
+            }
             return false;
         }
 
-        
+        private int numberOfSameTokensFromToken(int row, int col)
+        {
+            Type tokenType = _pokemon[row, col].GetType();
+            int numberOfSameColumnTokens = 1;
+            int numberOfSameRowTokens = 1;
 
-        public void updateBoardAlgorithm()
+            int currentRow = row - 1;
+            while (currentRow >= 0 && tokenType == _pokemon[currentRow, col].GetType())
+            {
+                numberOfSameColumnTokens++;
+                currentRow--;
+            }
+            currentRow = row + 1;
+            while (currentRow < gridSize && tokenType == _pokemon[currentRow, col].GetType())
+            {
+                numberOfSameColumnTokens++;
+                currentRow++;
+            }
+
+            int currentCol = col - 1;
+            while (currentCol >= 0 && tokenType == _pokemon[row, currentCol].GetType())
+            {
+                numberOfSameRowTokens++;
+                currentCol--;
+            }
+            currentCol = col + 1;
+            while (currentCol < gridSize && tokenType == _pokemon[row, currentCol].GetType())
+            {
+                numberOfSameRowTokens++;
+                currentCol++;
+            }
+            return Math.Max(numberOfSameColumnTokens, numberOfSameRowTokens);
+        }
+
+        private IBasicPokemonToken updateMovedToken(int row, int col, int numberOfSameTokens)
+        {
+            Dictionary<int, Delegate> updateMovedToken;
+            IBasicPokemonToken movedToken = _pokemon[row, col];
+            switch (numberOfSameTokens)
+            {
+                case 3:
+                    return null;
+                case 4:
+                    return movedToken.firstEvolvedToken();
+                case 5:
+                    return new DittoToken();
+                case 6:
+                    return movedToken.secondEvolvedToken();
+                default:
+                    return movedToken;
+            }
+        }
+
+        public void updateBoard(int row1, int col1, int row2, int col2)
+        {
+            if (piecesAreAdjacent(row1, col1, row2, col2))
+            {
+                IBasicPokemonToken firstNewToken;
+                IBasicPokemonToken secondNewToken;
+                int numberOfSameTokensFromFirstToken = numberOfSameTokensFromToken(row1, col1);
+                int numberOfSameTokensFromSecondToken = numberOfSameTokensFromToken(row2, col2);
+                if (3 >= numberOfSameTokensFromFirstToken || 3 >= numberOfSameTokensFromSecondToken)
+                {
+                    firstNewToken = updateMovedToken(row1, col1, numberOfSameTokensFromFirstToken);
+                    secondNewToken = updateMovedToken(row1, col1, numberOfSameTokensFromSecondToken);
+                    IBasicPokemonToken[,] newPokemon = new IBasicPokemonToken[gridSize, gridSize];
+                    copyGrid(_pokemon, newPokemon);
+                    markColumnsOfSameTokenAsNull(newPokemon);
+                    markRowsOfSameTokenAsNull(newPokemon);
+                    copyGrid(newPokemon, _pokemon);
+                    _pokemon[row1, col1] = firstNewToken;
+                    _pokemon[row2, col2] = secondNewToken;
+                    pullDownTokens();
+                    addNewTokens();
+                }
+            }
+        }
+
+        private void markRowsOfSameTokenAsNull(IBasicPokemonToken[,] newPokemon)
+        {
+            int numberOfSameTokens;
+            IBasicPokemonToken currentToken;
+            for (int row = 0; row < gridSize; row++)
+            {
+                currentToken = _pokemon[row, 0];
+                numberOfSameTokens = 1;
+                for (int col = 1; col < gridSize; col++)
+                {
+                    if (currentToken.GetType() == _pokemon[row, col].GetType())
+                    {
+                        numberOfSameTokens++;
+                    }
+                    else if (3 <= numberOfSameTokens)
+                    {
+                        while (numberOfSameTokens > 0)
+                        {
+                            newPokemon[row, col - numberOfSameTokens] = null;
+                            numberOfSameTokens--;
+                        }
+                    }
+                    else
+                    {
+                        currentToken = _pokemon[row, col];
+                    }
+                }
+                if (3 <= numberOfSameTokens)
+                {
+                    while (numberOfSameTokens > 0)
+                    {
+                        newPokemon[row, gridSize - numberOfSameTokens] = null;
+                        numberOfSameTokens--;
+                    }
+                }
+            }
+        }
+
+        private void markColumnsOfSameTokenAsNull(IBasicPokemonToken[,] newPokemon)
+        {
+            int numberOfSameTokens;
+            IBasicPokemonToken currentToken;
+            for (int col = 0; col < gridSize; col++)
+            {
+                currentToken = _pokemon[0, col];
+                numberOfSameTokens = 1;
+                for (int row = 1; row < gridSize; row++)
+                {
+                    if (currentToken.GetType() == _pokemon[row, col].GetType())
+                    {
+                        numberOfSameTokens++;
+                    }
+                    else if (3 <= numberOfSameTokens)
+                    {
+                        while (numberOfSameTokens > 0)
+                        {
+                            newPokemon[row - numberOfSameTokens, col] = null;
+                            numberOfSameTokens--;
+                        }
+                    }
+                    else
+                    {
+                        currentToken = _pokemon[row, col];
+                    }
+                }
+                if (3 <= numberOfSameTokens)
+                {
+                    while (numberOfSameTokens > 0)
+                    {
+                        newPokemon[gridSize - numberOfSameTokens, col] = null;
+                        numberOfSameTokens--;
+                    }
+                }
+            }
+        }
+
+        private void pullDownTokens()
+        {
+        }
+
+        private void addNewTokens()
+        {
+        }
+
+        public static void copyGrid(IBasicPokemonToken[,] gridToCopy, IBasicPokemonToken[,] gridDestination)
         {
             for (int row = 0; row < gridSize; row++)
             {
                 for (int col = 0; col < gridSize; col++)
                 {
-                    if (areThreeTokensInARow(row, col))
-                    {
-                        _pokemon[row, col] = null;
-                        _pokemon[row, col + 1] = null;
-                        _pokemon[row, col + 2] = null;
-                    }
-                    if (areThreeTokensInACol(row, col))
-                    {
-                        _pokemon[row, col] = null;
-                        _pokemon[row + 1, col] = null;
-                        _pokemon[row + 2, col] = null;
-                    }
+                    gridDestination[row, col] = gridToCopy[row, col];
                 }
             }
-        }
-
-
-        public Boolean areThreeTokensInARow(int row, int col)
-        {
-            if (col > gridSize - 3 || row > gridSize - 1)
-            {
-                return false;
-            } else {
-                if (null == _pokemon[row, col] || null == _pokemon[row, col + 1] || null == _pokemon[row, col + 2])
-                {
-                    return false;
-                }
-                else
-                {
-                    Type pokemonType = _pokemon[row, col].GetType();
-                    if (_pokemon[row, col + 1].GetType() == pokemonType && _pokemon[row, col + 2].GetType() == pokemonType)
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-
-        public bool areThreeTokensInACol(int row, int col)
-        {
-            if (row > gridSize - 3 || col > gridSize - 1)
-            {
-                return false;
-            }
-            else
-            {
-                if (null == _pokemon[row, col] || null == _pokemon[row + 1, col] || null == _pokemon[row + 2, col])
-                {
-                    return false;
-                }
-                else
-                {
-                    Type pokemonType = _pokemon[row, col].GetType();
-                    if (_pokemon[row + 1, col].GetType() == pokemonType && _pokemon[row + 2, col].GetType() == pokemonType)
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
         }
     }
 }

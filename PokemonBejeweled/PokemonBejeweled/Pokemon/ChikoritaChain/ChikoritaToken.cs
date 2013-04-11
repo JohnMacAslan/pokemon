@@ -6,22 +6,12 @@ using System.Threading.Tasks;
 
 namespace PokemonBejeweled.Pokemon
 {
-    public class ChikoritaToken : PokemonToken, IBasicPokemonToken
+    public class ChikoritaToken : PokemonToken
     {
         public ChikoritaToken()
         {
-        
+            firstEvolution = typeof(BayleefToken);
+            secondEvolution = typeof(MeganiumToken);
         }
-
-        public override IFirstEvolutionPokemonToken firstEvolvedToken()
-        {
-            return new BayleefToken();
-        }
-
-        public override ISecondEvolutionPokemonToken secondEvolvedToken()
-        {
-            return new MeganiumToken();
-        }
-
     }
 }

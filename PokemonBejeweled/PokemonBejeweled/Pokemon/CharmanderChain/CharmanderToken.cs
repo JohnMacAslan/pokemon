@@ -6,21 +6,12 @@ using System.Threading.Tasks;
 
 namespace PokemonBejeweled.Pokemon
 {
-    public class CharmanderToken : PokemonToken, IBasicPokemonToken
+    public class CharmanderToken : PokemonToken
     {
-         public CharmanderToken()
+        public CharmanderToken()
         {
-            //image = null;
-        }
-
-        public override IFirstEvolutionPokemonToken firstEvolvedToken()
-        {
-            return new CharmeleonToken();
-        }
-
-        public override ISecondEvolutionPokemonToken secondEvolvedToken()
-        {
-            return new CharizardToken();
+            firstEvolution = typeof(CharmeleonToken);
+            secondEvolution = typeof(CharizardToken);
         }
     }
 }

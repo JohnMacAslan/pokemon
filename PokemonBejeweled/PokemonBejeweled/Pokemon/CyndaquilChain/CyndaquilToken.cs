@@ -6,22 +6,12 @@ using System.Threading.Tasks;
 
 namespace PokemonBejeweled.Pokemon
 {
-    public class CyndaquilToken : PokemonToken, IBasicPokemonToken
+    public class CyndaquilToken : PokemonToken
     {
         public CyndaquilToken()
         {
-
+            firstEvolution = typeof(QuilavaToken);
+            secondEvolution = typeof(TyphlosionToken);
         }
-
-        public override IFirstEvolutionPokemonToken firstEvolvedToken()
-        {
-            return new QuilavaToken();
-        }
-
-        public override ISecondEvolutionPokemonToken secondEvolvedToken()
-        {
-            return new TyphlosionToken();
-        }
-
     }
 }
