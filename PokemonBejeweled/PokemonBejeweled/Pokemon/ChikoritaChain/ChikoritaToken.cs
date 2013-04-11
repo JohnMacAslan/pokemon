@@ -10,18 +10,8 @@ namespace PokemonBejeweled.Pokemon
     {
         public ChikoritaToken()
         {
-        
+            firstEvolution = typeof(BayleefToken);
+            secondEvolution = typeof(MeganiumToken);
         }
-
-        public override IFirstEvolutionPokemonToken firstEvolvedToken()
-        {
-            return new BayleefToken();
-        }
-
-        public override ISecondEvolutionPokemonToken secondEvolvedToken()
-        {
-            return new MeganiumToken();
-        }
-
     }
 }

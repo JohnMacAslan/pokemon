@@ -8,20 +8,10 @@ namespace PokemonBejeweled.Pokemon
 {
     public class SquirtleToken : PokemonToken
     {
-
         public SquirtleToken()
         {
-
-        }
-
-        public override IFirstEvolutionPokemonToken firstEvolvedToken()
-        {
-            return new WartortleToken();
-        }
-
-        public override ISecondEvolutionPokemonToken secondEvolvedToken()
-        {
-            return new BlastoiseToken();
+            firstEvolution = typeof(WartortleToken);
+            secondEvolution = typeof(BlastoiseToken);
         }
     }
 }

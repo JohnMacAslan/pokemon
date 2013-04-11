@@ -20,9 +20,21 @@ namespace PokemonBejeweled
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        private GameState gameState;
+        
         public MainWindow()
         {
             InitializeComponent();
+            gameState = new GameState();
+            
         }
+
+        public void setUpGridBoard()
+        {
+            
+        }
+
+        
     }
 }
