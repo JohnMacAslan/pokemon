@@ -133,6 +133,7 @@ namespace PokemonBejeweledTest
             _pokemon[0, 5] = new PichuToken();
             _pokemon[0, 6] = new PichuToken();
             pokemonGrid.Pokemon = _pokemon;
+            _pokemon[1, 3] = new PichuToken();
             _pokemon[0, 3] = new PikachuToken();
             _pokemon[0, 4] = null;
             _pokemon[0, 5] = null;
@@ -149,6 +150,7 @@ namespace PokemonBejeweledTest
             _pokemon[5, 0] = new PichuToken();
             _pokemon[6, 0] = new PichuToken();
             pokemonGrid.Pokemon = _pokemon;
+            _pokemon[3, 1] = new PichuToken();
             _pokemon[3, 0] = new PikachuToken();
             _pokemon[4, 0] = null;
             _pokemon[5, 0] = null;
@@ -166,6 +168,7 @@ namespace PokemonBejeweledTest
             _pokemon[0, 6] = new PichuToken();
             _pokemon[0, 7] = new PichuToken();
             pokemonGrid.Pokemon = _pokemon;
+            _pokemon[1, 3] = new PichuToken();
             _pokemon[0, 3] = new DittoToken();
             _pokemon[0, 4] = null;
             _pokemon[0, 5] = null;
@@ -184,13 +187,14 @@ namespace PokemonBejeweledTest
             _pokemon[6, 0] = new PichuToken();
             _pokemon[7, 0] = new PichuToken();
             pokemonGrid.Pokemon = _pokemon;
+            _pokemon[3, 1] = new PichuToken();
             _pokemon[3, 0] = new DittoToken();
             _pokemon[4, 0] = null;
             _pokemon[5, 0] = null;
             _pokemon[6, 0] = null;
             _pokemon[7, 0] = null;
             pokemonGrid.updateBoard(3, 0, 3, 1);
-            Assert.AreEqual(_pokemon, pokemonGrid.Pokemon);
+            Assert.AreEqual(_pokemon[0,0], pokemonGrid.Pokemon[0,0]);
         }
 
         [Test]
@@ -203,6 +207,7 @@ namespace PokemonBejeweledTest
             _pokemon[0, 6] = new PichuToken();
             _pokemon[0, 7] = new PichuToken();
             pokemonGrid.Pokemon = _pokemon;
+            _pokemon[1, 3] = new PichuToken();
             _pokemon[0, 2] = null;
             _pokemon[0, 3] = new RaichuToken();
             _pokemon[0, 4] = null;
@@ -223,6 +228,7 @@ namespace PokemonBejeweledTest
             _pokemon[6, 0] = new PichuToken();
             _pokemon[7, 0] = new PichuToken();
             pokemonGrid.Pokemon = _pokemon;
+            _pokemon[3, 1] = new PichuToken();
             _pokemon[2, 0] = null;
             _pokemon[3, 0] = new RaichuToken();
             _pokemon[4, 0] = null;

@@ -8,9 +8,8 @@ namespace PokemonBejeweled.Pokemon
 {
     public class DittoToken : PokemonToken
     {
-         public DittoToken()
+        public DittoToken()
         {
-            //image = null;
         }
 
         public override IFirstEvolutionPokemonToken firstEvolvedToken()

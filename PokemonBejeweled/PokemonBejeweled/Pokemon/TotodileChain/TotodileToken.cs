@@ -10,17 +10,8 @@ namespace PokemonBejeweled.Pokemon
     {
         public TotodileToken()
         {
-        
-        }
-
-        public override IFirstEvolutionPokemonToken firstEvolvedToken()
-        {
-            return new CroconawToken();
-        }
-
-        public override ISecondEvolutionPokemonToken secondEvolvedToken()
-        {
-            return new FeraligatorToken();
+            firstEvolution = typeof(CroconawToken);
+            secondEvolution = typeof(FeraligatorToken);
         }
     }
 }

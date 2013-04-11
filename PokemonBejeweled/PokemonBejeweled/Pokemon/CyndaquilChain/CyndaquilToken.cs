@@ -10,18 +10,8 @@ namespace PokemonBejeweled.Pokemon
     {
         public CyndaquilToken()
         {
-
+            firstEvolution = typeof(QuilavaToken);
+            secondEvolution = typeof(TyphlosionToken);
         }
-
-        public override IFirstEvolutionPokemonToken firstEvolvedToken()
-        {
-            return new QuilavaToken();
-        }
-
-        public override ISecondEvolutionPokemonToken secondEvolvedToken()
-        {
-            return new TyphlosionToken();
-        }
-
     }
 }
