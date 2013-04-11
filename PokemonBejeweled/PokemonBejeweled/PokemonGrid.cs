@@ -229,7 +229,7 @@ namespace PokemonBejeweled
                 {
                     if (_pokemon[row, col] == null)
                     {
-                        _pokemon[row, col] = new CharmanderToken(); // Cause charmander rocks!
+                        _pokemon[row, col] = generateNewPokemon(); // Cause charmander rocks!
                     }
                 }
             }
