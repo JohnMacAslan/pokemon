@@ -48,22 +48,10 @@ namespace PokemonBejeweled
                 for(int c = 0; c < PokemonGrid.gridSize; c++)
                 {
                     GridButton newButton = new GridButton(r, c);
-                    //for now this is just filling the board with something
-                    Brush color;
-                    if((c+(r%2))%2 == 0)
-                    {
-                       color = Brushes.Yellow;
-                    }
-                    else
-                    {
-                       color = Brushes.SkyBlue;
-                    }
-                    Console.Out.WriteLine(gameState.Grid.Pokemon[r, c].GetType());
                     newButton.setBackgroundColor(tokenColors[gameState.Grid.Pokemon[r,c].GetType()]);
                     newButton.Height = gridBoard.Height / PokemonGrid.gridSize;
                     newButton.Width = gridBoard.Width / PokemonGrid.gridSize;
-
-                   gridBoard.Children.Add(newButton);
+                    gridBoard.Children.Add(newButton);
                 }
             }
             
