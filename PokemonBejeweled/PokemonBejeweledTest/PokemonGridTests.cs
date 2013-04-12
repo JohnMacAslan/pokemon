@@ -518,13 +518,17 @@ namespace PokemonBejeweledTest
         public void PullDownTokens_NoError_NoNullsLeftInGrid()
         {
             _pokemon[0, 0] = null;
+            _pokemon[2, 3] = new PichuToken();
             _pokemon[3, 3] = null;
             _pokemon[7, 7] = null;
-            _pokemonGrid.Pokemon = _pokemon;
+            _pokemon[6, 7] = new PichuToken();
+            _pokemonGrid.NewPokemon = _pokemon;
             _pokemonGrid.pullDownTokens();
+            PokemonGrid.printGrid(_pokemon);
+            PokemonGrid.printGrid(_pokemonGrid.Pokemon);
             Assert.IsNotNull(_pokemonGrid.Pokemon[0, 0]);
-            Assert.AreEqual(_pokemon[2, 3], _pokemonGrid.NewPokemon[3,3]);
-            Assert.AreEqual(_pokemon[6, 7], _pokemonGrid.NewPokemon[7,7]);
+            Assert.AreEqual(_pokemon[2, 3], _pokemonGrid.Pokemon[3,3]);
+            Assert.AreEqual(_pokemon[6, 7], _pokemonGrid.Pokemon[7,7]);
         }
     }
 }

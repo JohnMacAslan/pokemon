@@ -28,12 +28,8 @@ namespace PokemonBejeweled
             newGame();
         }
 
-        public void makePlay(Point start, Point end)
+        public void makePlay(int rowStart, int colStart, int rowEnd, int colEnd)
         {
-
-            // convert points to rows and columns
-
-
         }
 
         public void newGame()

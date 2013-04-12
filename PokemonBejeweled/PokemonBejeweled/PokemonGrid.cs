@@ -62,6 +62,70 @@ namespace PokemonBejeweled
                 }
             }
             copyGrid(_pokemon, _newPokemon);
+            updateAllColumns();
+            updateAllRows();
+            pullDownTokens();
+
+            while (!haveGridsStabilized())
+            {
+                copyGrid(_pokemon, _newPokemon);
+                updateAllColumns();
+                updateAllRows();
+                pullDownTokens();
+            }
+        }
+
+        public static void printGrid(IBasicPokemonToken[,] grid)
+        {
+            Dictionary<Type, int> dict = new Dictionary<Type, int>();
+
+            dict.Add(typeof(BulbasaurToken), 1);
+            dict.Add(typeof(CharmanderToken), 2);
+            dict.Add(typeof(ChikoritaToken), 3);
+            dict.Add(typeof(CyndaquilToken), 4);
+            dict.Add(typeof(PichuToken), 5);
+            dict.Add(typeof(SquirtleToken), 6);
+            dict.Add(typeof(TotodileToken), 7);
+            Console.Out.WriteLine("--------");
+            for (int row = 0; row < gridSize; row++)
+            {
+                for (int col = 0; col < gridSize; col++)
+                {
+                    if (null == grid[row, col])
+                    {
+                        Console.Out.Write(" ");
+                    }
+                    else if (dict.ContainsKey(grid[row, col].GetType()))
+                    {
+                        Console.Out.Write(dict[grid[row, col].GetType()]);
+                    }
+                    else
+                    {
+                        Console.Out.Write("F");
+                    }
+                }
+                Console.Out.WriteLine();
+            }
+            Console.Out.WriteLine("--------");
+        }
+
+        private bool haveGridsStabilized()
+        {
+            for (int row = 0; row < gridSize; row++)
+            {
+                for (int col = 0; col < gridSize; col++)
+                {
+                    if (null == _pokemon[row, col] || null == _newPokemon[row, col])
+                    {
+                        return null == _pokemon[row, col] && null == _newPokemon[row, col];
+                    }
+                    if (!_pokemon[row, col].Equals(_newPokemon[row, col]))
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
         }
 
         public void updateBoard(int row1, int col1, int row2, int col2)
@@ -73,14 +137,12 @@ namespace PokemonBejeweled
                 updateSingleColumn(row1, col1, row2, col2);
                 updateSingleColumn(row2, col2, row1, col1);
                 pullDownTokens();
-                addNewTokens();
                 while (_newPokemon != _pokemon)
                 {
                     copyGrid(_newPokemon, _pokemon);
                     updateAllColumns();
                     updateAllRows();
                     pullDownTokens();
-                    addNewTokens();
                 }
             }
         }
@@ -251,6 +313,7 @@ namespace PokemonBejeweled
                     else
                     {
                         currentToken = _pokemon[row, col];
+                        numberOfSameTokens = 1;
                     }
                 }
                 if (3 <= numberOfSameTokens)
@@ -284,6 +347,7 @@ namespace PokemonBejeweled
                     else
                     {
                         currentToken = _pokemon[row, col];
+                        numberOfSameTokens = 1;
                     }
                 }
                 if (3 <= numberOfSameTokens)
@@ -296,28 +360,31 @@ namespace PokemonBejeweled
 
         internal void pullDownTokens()
         {
+            copyGrid(_newPokemon, _pokemon);
+            int numberOfTokensToPullDown;
             for (int col = 0; col < gridSize; col++)
             {
-                for (int row = gridSize - 1; row > 0; row--)
+                for (int row = gridSize - 1; row >= 0; row--)
                 {
-                    if (_pokemon[row, col] == null)
+                    if (null == _pokemon[row, col])
                     {
-                        _pokemon[row, col] = _pokemon[row - 1, col];
-                        _pokemon[row - 1, col] = null;
-                    }
-                }
-            }
-        }
-
-        private void addNewTokens()
-        {
-            for (int row = 0; row < gridSize; row++)
-            {
-                for (int col = 0; col < gridSize; col++)
-                {
-                    if (_pokemon[row, col] == null)
-                    {
-                        _pokemon[row, col] = generateNewPokemon(); // Cause charmander rocks!
+                        numberOfTokensToPullDown = 0;
+                        while (row >= numberOfTokensToPullDown && null == _pokemon[row - numberOfTokensToPullDown, col])
+                        {
+                            numberOfTokensToPullDown++;
+                        }
+                        if (row >= numberOfTokensToPullDown)
+                        {
+                            _pokemon[row, col] = _pokemon[row - numberOfTokensToPullDown, col];
+                            _pokemon[row - numberOfTokensToPullDown, col] = null;
+                        }
+                        else
+                        {
+                            while (numberOfTokensToPullDown > 0)
+                            {
+                                _pokemon[--numberOfTokensToPullDown, col] = generateNewPokemon();
+                            }
+                        }
                     }
                 }
             }
