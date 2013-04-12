@@ -154,10 +154,48 @@ namespace PokemonBejeweledTest
         }
 
         [Test]
+        public void MarkSurroundingTokensNull_IndexOnEdge_SurroundingTokensMarkedNull()
+        {
+            int row = 4;
+            int col = 0;
+            _newPokemon[row - 1, col] = null;
+            _newPokemon[row - 1, col + 1] = null;
+            _newPokemon[row, col + 1] = null;
+            _newPokemon[row + 1, col] = null;
+            _newPokemon[row + 1, col + 1] = null;
+            pokemonGrid.markSurroundingTokensNull(row, col);
+            Assert.AreEqual(_newPokemon, pokemonGrid.NewPokemon);
+        }
+
+        [Test]
         [ExpectedException(typeof(IndexOutOfRangeException))]
         public void MarkSurroundingTokensNull_IndexOutOfRange_ThrowIndexOutOfRangeException()
         {
             pokemonGrid.markSurroundingTokensNull(-12, -12);
+        }
+
+        [Test]
+        public void MarkFullColumnAndRowAsNull_IndicesWithinRange_RowAndColumnMarkedAsNull()
+        {
+            int row = 4;
+            int col = 4;
+            for (int currentRow = 0; currentRow < PokemonGrid.gridSize; currentRow++)
+            {
+                _newPokemon[currentRow, col] = null;
+            }
+            for (int currentCol = 0; currentCol < PokemonGrid.gridSize; currentCol++)
+            {
+                _newPokemon[row, currentCol] = null;
+            }
+            pokemonGrid.markFullRowAndColumnAsNull(row, col);
+            Assert.AreEqual(_newPokemon, pokemonGrid.NewPokemon);            
+        }
+
+        [Test]
+        [ExpectedException(typeof(IndexOutOfRangeException))]
+        public void MarkFullColumnAndRowAsNull_IndexOutOfRange_ThrowIndexOutOfRangeException()
+        {
+            pokemonGrid.markFullRowAndColumnAsNull(-12, -12);
         }
 
         //[Test]
