@@ -9,6 +9,7 @@ namespace PokemonBejeweledTest
     public class PokemonGridTests
     {
         private PokemonToken[,] _pokemon = new PokemonToken[PokemonGrid.gridSize, PokemonGrid.gridSize];
+        private PokemonToken[,] _newPokemon = new PokemonToken[PokemonGrid.gridSize, PokemonGrid.gridSize];
         private PokemonGrid pokemonGrid;
 
         [SetUp]
@@ -16,14 +17,20 @@ namespace PokemonBejeweledTest
         {
             pokemonGrid = new PokemonGrid();
             for (int i = 0; i < 8; i+=2) {
-                for(int j = 0; j < 8; j+=2) {
-                    _pokemon[i,j] = new BulbasaurToken();
-                    _pokemon[i+1,j] = new CharmanderToken();
-                    _pokemon[i+1,j+1] = new BulbasaurToken();
-                    _pokemon[i,j+1] = new CharmanderToken();
+                for (int j = 0; j < 8; j += 2)
+                {
+                    _pokemon[i, j] = new BulbasaurToken();
+                    _newPokemon[i, j] = new BulbasaurToken();
+                    _pokemon[i + 1, j] = new CharmanderToken();
+                    _newPokemon[i + 1, j] = new CharmanderToken();
+                    _pokemon[i + 1, j + 1] = new BulbasaurToken();
+                    _newPokemon[i + 1, j + 1] = new BulbasaurToken();
+                    _pokemon[i, j + 1] = new CharmanderToken();
+                    _newPokemon[i, j + 1] = new CharmanderToken();
                 }
             }
             pokemonGrid.Pokemon = _pokemon;
+            pokemonGrid.NewPokemon = _newPokemon;
         }
 
         [Test]
@@ -37,6 +44,13 @@ namespace PokemonBejeweledTest
                     Assert.NotNull(pokemonGrid.Pokemon[row, col]);
                 }
             }
+        }
+
+        [Test]
+        public void PokemonGrid_NoError_PokemonAndNewPokemonAreEqual()
+        {
+            pokemonGrid = new PokemonGrid();
+            Assert.AreEqual(pokemonGrid.Pokemon, pokemonGrid.NewPokemon);
         }
 
         [Test]
@@ -70,6 +84,56 @@ namespace PokemonBejeweledTest
         public void PiecesAreAdjacent_PiecesAreNotAdjacent_ReturnFalse()
         {
             Assert.IsFalse(pokemonGrid.piecesAreAdjacent(1, 1, 2, 2));
+        }
+
+        [Test]
+        public void MarkNullRow_NumberOfSameTokensLessThan3_PokemonGridUnchanged()
+        {
+            pokemonGrid.markNullRow(0, 0, 0);
+            Assert.AreEqual(_newPokemon, pokemonGrid.NewPokemon);
+        }
+
+        [Test]
+        public void MarkNullRow_NumberOfSameTokensGreaterThan3_RowMarkNull()
+        {
+            _newPokemon[0, 0] = null;
+            _newPokemon[0, 1] = null;
+            _newPokemon[0, 2] = null;
+            _newPokemon[0, 3] = null;
+            pokemonGrid.markNullRow(0, 0, 4);
+            Assert.AreEqual(_newPokemon, pokemonGrid.NewPokemon);
+        }
+
+        [Test]
+        [ExpectedException(typeof(IndexOutOfRangeException))]
+        public void MarkNullRow_IndexOutOfRange_ThrowIndexOutOfRangeException()
+        {
+            pokemonGrid.markNullRow(-1, 0, 4);
+        }
+
+        [Test]
+        public void MarkNullColumn_NumberOfSameTokensLessThan3_PokemonGridUnchanged()
+        {
+            pokemonGrid.markNullColumn(0, 0, 0);
+            Assert.AreEqual(_newPokemon, pokemonGrid.NewPokemon);
+        }
+
+        [Test]
+        public void MarkNullColumn_NumberOfSameTokensGreaterThan3_RowMarkNull()
+        {
+            _newPokemon[0, 0] = null;
+            _newPokemon[1, 0] = null;
+            _newPokemon[2, 0] = null;
+            _newPokemon[3, 0] = null;
+            pokemonGrid.markNullColumn(0, 0, 4);
+            Assert.AreEqual(_newPokemon, pokemonGrid.NewPokemon);
+        }
+
+        [Test]
+        [ExpectedException(typeof(IndexOutOfRangeException))]
+        public void MarkNullColumn_IndexOutOfRange_ThrowIndexOutOfRangeException()
+        {
+            pokemonGrid.markNullColumn(-1, 0, 4);
         }
 
         //[Test]
