@@ -136,6 +136,30 @@ namespace PokemonBejeweledTest
             pokemonGrid.markNullColumn(-1, 0, 4);
         }
 
+        [Test]
+        public void MarkSurroundingTokensNull_IndicesWithinRange_SurroundingTokensMarkedNull()
+        {
+            int row = 4;
+            int col = 4;
+            _newPokemon[row - 1, col] = null;
+            _newPokemon[row - 1, col - 1] = null;
+            _newPokemon[row - 1, col + 1] = null;
+            _newPokemon[row, col - 1] = null;
+            _newPokemon[row, col + 1] = null;
+            _newPokemon[row + 1, col] = null;
+            _newPokemon[row + 1, col - 1] = null;
+            _newPokemon[row + 1, col + 1] = null;
+            pokemonGrid.markSurroundingTokensNull(row, col);
+            Assert.AreEqual(_newPokemon, pokemonGrid.NewPokemon);
+        }
+
+        [Test]
+        [ExpectedException(typeof(IndexOutOfRangeException))]
+        public void MarkSurroundingTokensNull_IndexOutOfRange_ThrowIndexOutOfRangeException()
+        {
+            pokemonGrid.markSurroundingTokensNull(-12, -12);
+        }
+
         //[Test]
         //public void UpdateBoard_ColumnOfThreeOnTopEdge_ColumnMarkedAsNull()
         //{
