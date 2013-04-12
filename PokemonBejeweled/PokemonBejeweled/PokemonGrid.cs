@@ -12,6 +12,7 @@ namespace PokemonBejeweled
         public static int gridSize = 8;
         private Dictionary<int, Type> dict = new Dictionary<int, Type>();
         public int GamePlayScore { get; set; }
+        private Random rand = new Random();
         private IBasicPokemonToken[,] _pokemon = new IBasicPokemonToken[gridSize, gridSize];
         private IBasicPokemonToken[,] _newPokemon = new IBasicPokemonToken[gridSize, gridSize];
         internal IBasicPokemonToken[,] NewPokemon
@@ -293,7 +294,7 @@ namespace PokemonBejeweled
             }
         }
 
-        private void pullDownTokens()
+        internal void pullDownTokens()
         {
             for (int col = 0; col < gridSize; col++)
             {
@@ -324,7 +325,6 @@ namespace PokemonBejeweled
 
         private IBasicPokemonToken generateNewPokemon()
         {
-            Random rand = new Random();
             int pokeNumber = rand.Next(1, 8);
             return (IBasicPokemonToken)Activator.CreateInstance(dict[pokeNumber]);
         }

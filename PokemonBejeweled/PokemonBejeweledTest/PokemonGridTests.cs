@@ -278,6 +278,7 @@ namespace PokemonBejeweledTest
         [Test]
         public void MarkSpecials_SpecialOfSix_MarkAllTokensOfSameTypeAsNullCalled()
         {
+            _mockGrid.Pokemon = _pokemon;
             _mockGrid.Expect(g => g.markAllTokensOfSameTypeAsNull(_pokemon[0, 0].GetType()));
             _mockGrid.Replay();
             _mockGrid.markSpecials(0, 0, 6);
@@ -511,6 +512,19 @@ namespace PokemonBejeweledTest
         {
             _pokemonGrid.updateSingleRow(1, 0, 0, 0);
             Assert.AreEqual(_pokemon, _pokemonGrid.NewPokemon);
+        }
+
+        [Test]
+        public void PullDownTokens_NoError_NoNullsLeftInGrid()
+        {
+            _pokemon[0, 0] = null;
+            _pokemon[3, 3] = null;
+            _pokemon[7, 7] = null;
+            _pokemonGrid.Pokemon = _pokemon;
+            _pokemonGrid.pullDownTokens();
+            Assert.IsNotNull(_pokemonGrid.Pokemon[0, 0]);
+            Assert.AreEqual(_pokemon[2, 3], _pokemonGrid.NewPokemon[3,3]);
+            Assert.AreEqual(_pokemon[6, 7], _pokemonGrid.NewPokemon[7,7]);
         }
     }
 }

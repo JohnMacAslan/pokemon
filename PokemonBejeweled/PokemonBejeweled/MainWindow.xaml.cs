@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using PokemonBejeweled.Pokemon;
 
 namespace PokemonBejeweled
 {
@@ -23,23 +24,25 @@ namespace PokemonBejeweled
 
         private GameState gameState;
         private System.Windows.Controls.Primitives.UniformGrid gridBoard;
+        private Dictionary<Type, Brush> tokenColors = new Dictionary<Type,Brush>();
         
         public MainWindow()
         {
             InitializeComponent();
+            tokenColors.Add(typeof(BulbasaurToken), Brushes.MediumSeaGreen);
+            tokenColors.Add(typeof(CharmanderToken), Brushes.Orange);
+            tokenColors.Add(typeof(SquirtleToken), Brushes.SkyBlue);
+            tokenColors.Add(typeof(PichuToken), Brushes.Yellow);
+            tokenColors.Add(typeof(TotodileToken), Brushes.CadetBlue);
+            tokenColors.Add(typeof(ChikoritaToken), Brushes.LightGreen);
+            tokenColors.Add(typeof(CyndaquilToken), Brushes.OrangeRed);
             gameState = new GameState();
             gridBoard = this.GridBoard;
             setUpGridBoard();
             NewGameButton.Click += delegate { gameState.newGame(); };
         }
-
-
-
-        
-
         public void setUpGridBoard()
         {
-            
             for(int r = 0; r < PokemonGrid.gridSize; r++)
             {
                 for(int c = 0; c < PokemonGrid.gridSize; c++)
@@ -55,7 +58,8 @@ namespace PokemonBejeweled
                     {
                        color = Brushes.SkyBlue;
                     }
-                    newButton.setBackgroundColor(color);
+                    Console.Out.WriteLine(gameState.Grid.Pokemon[r, c].GetType());
+                    newButton.setBackgroundColor(tokenColors[gameState.Grid.Pokemon[r,c].GetType()]);
                     newButton.Height = gridBoard.Height / PokemonGrid.gridSize;
                     newButton.Width = gridBoard.Width / PokemonGrid.gridSize;
 
