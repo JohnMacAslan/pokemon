@@ -2,6 +2,7 @@
 using PokemonBejeweled.Pokemon;
 using PokemonBejeweled;
 using NUnit.Framework;
+using Rhino.Mocks;
 
 namespace PokemonBejeweledTest
 {
@@ -198,121 +199,192 @@ namespace PokemonBejeweledTest
             pokemonGrid.markFullRowAndColumnAsNull(-12, -12);
         }
 
+        [Test]
+        public void MarkAllTokensOfTheSameTypeAsNull_ValidTokenType_TokensMarkedAsNull()
+        {
+            Type type = typeof(BulbasaurToken);
+            for (int row = 0; row < PokemonGrid.gridSize; row++)
+            {
+                for (int col = 0; col < PokemonGrid.gridSize; col++)
+                {
+                    if (_pokemon[row, col].GetType() == type)
+                    {
+                        _newPokemon[row, col] = null;
+                    }
+                }
+            }
+            pokemonGrid.markAllTokensOfSameTypeAsNull(type);
+            Assert.AreEqual(_newPokemon, pokemonGrid.NewPokemon);
+        }
+
+        [Test]
+        public void MarkAllTokensOfTheSameTypeAsNull_NoTokensOfGivenType_BoardUnchanged()
+        {
+            Type type = typeof(PichuToken);
+            pokemonGrid.markAllTokensOfSameTypeAsNull(type);
+            Assert.AreEqual(_newPokemon, pokemonGrid.NewPokemon);
+        }
+
+        [Test]
+        public void MarkSpecials_SpecialOfFour_TokenReplacedWithFirstEvolution()
+        {
+            _pokemon[0, 0] = new PichuToken();
+            pokemonGrid.Pokemon = _pokemon;
+            _newPokemon[0, 0] = new PikachuToken();
+            pokemonGrid.markSpecials(0, 0, 4);
+            Assert.AreEqual(_newPokemon[0,0], pokemonGrid.NewPokemon[0,0]);
+        }
+
+        [Test]
+        public void MarkSpecials_SpecialOfFour_MarkSurroundingTokensNullCalled()
+        {
+            MockRepository mocks = new MockRepository();
+            PokemonGrid mockGrid = mocks.PartialMock<PokemonGrid>();
+            mockGrid.Expect(g => g.markSurroundingTokensNull(0, 0));
+            mockGrid.Replay();
+            mockGrid.markSpecials(0, 0, 4);
+            mockGrid.VerifyAllExpectations();
+        }
+
+        [Test]
+        public void MarkSpecials_SpecialOfFive_TokenReplacedWithDitto()
+        {
+            _newPokemon[0, 0] = new DittoToken();
+            pokemonGrid.markSpecials(0, 0, 5);
+            Assert.AreEqual(_newPokemon[0, 0], pokemonGrid.NewPokemon[0, 0]);
+        }
+
+        [Test]
+        public void MarkSpecials_SpecialOfFive_MarkFullRowAndColumnAsNullCalled()
+        {
+            MockRepository mocks = new MockRepository();
+            PokemonGrid mockGrid = mocks.PartialMock<PokemonGrid>();
+            mockGrid.Expect(g => g.markFullRowAndColumnAsNull(0, 0));
+            mockGrid.Replay();
+            mockGrid.markSpecials(0, 0, 5);
+            mockGrid.VerifyAllExpectations();
+        }
+
+        [Test]
+        public void MarkSpecials_SpecialOfSix_TokenReplacedWithSecondEvolution()
+        {
+            _pokemon[0, 0] = new PichuToken();
+            pokemonGrid.Pokemon = _pokemon;
+            _newPokemon[0, 0] = new RaichuToken();
+            pokemonGrid.markSpecials(0, 0, 6);
+            Assert.AreEqual(_newPokemon[0, 0], pokemonGrid.NewPokemon[0, 0]);
+        }
+
+        [Test]
+        public void MarkSpecials_SpecialOfSix_MarkAllTokensOfSameTypeAsNullCalled()
+        {
+            MockRepository mocks = new MockRepository();
+            PokemonGrid mockGrid = mocks.PartialMock<PokemonGrid>();
+            mockGrid.Expect(g => g.markAllTokensOfSameTypeAsNull(_newPokemon[0,0].GetType()));
+            mockGrid.Replay();
+            mockGrid.markSpecials(0, 0, 6);
+            mockGrid.VerifyAllExpectations();
+        }
+
+        [Test]
+        public void UpdateAllColumns_ColumnOfThreeOnTopEdge_ColumnMarkedAsNull()
+        {
+            _pokemon[0, 0] = new PichuToken();
+            _pokemon[1, 0] = new PichuToken();
+            _pokemon[2, 0] = new PichuToken();
+            pokemonGrid.Pokemon = _pokemon;
+            _pokemon[0, 0] = null;
+            _pokemon[1, 0] = null;
+            _pokemon[2, 0] = null;
+            pokemonGrid.updateAllColumns();
+            Assert.AreEqual(_pokemon, pokemonGrid.Pokemon);
+        }
+
+        [Test]
+        public void UpdateAllColumns_ColumnOfThreeOnBottomEdge_ColumnMarkedAsNull()
+        {
+            _pokemon[5, 0] = new PichuToken();
+            _pokemon[6, 0] = new PichuToken();
+            _pokemon[7, 0] = new PichuToken();
+            pokemonGrid.Pokemon = _pokemon;
+            _pokemon[5, 0] = null;
+            _pokemon[6, 0] = null;
+            _pokemon[7, 0] = null;
+            pokemonGrid.updateAllColumns();
+            Assert.AreEqual(_pokemon, pokemonGrid.Pokemon);
+        }
+
+        [Test]
+        public void UpdateAllColumns_ColumnOfThreeInMiddle_ColumnMarkedAsNull()
+        {
+            _pokemon[3, 0] = new PichuToken();
+            _pokemon[4, 0] = new PichuToken();
+            _pokemon[5, 0] = new PichuToken();
+            pokemonGrid.Pokemon = _pokemon;
+            _pokemon[3, 0] = null;
+            _pokemon[4, 0] = null;
+            _pokemon[5, 0] = null;
+            pokemonGrid.updateAllColumns();
+            Assert.AreEqual(_pokemon, pokemonGrid.Pokemon);
+        }
+
+        [Test]
+        public void UpdateAllRows_RowOfThreeOnLeftEdge_RowMarkedAsNull()
+        {
+            _pokemon[0, 0] = new PichuToken();
+            _pokemon[0, 1] = new PichuToken();
+            _pokemon[0, 2] = new PichuToken();
+            pokemonGrid.Pokemon = _pokemon;
+            _pokemon[0, 0] = null;
+            _pokemon[0, 1] = null;
+            _pokemon[0, 2] = null;
+            pokemonGrid.updateAllRows();
+            Assert.AreEqual(_pokemon, pokemonGrid.Pokemon);
+        }
+
+        [Test]
+        public void UpdateAllRows_RowOfThreeOnRightEdge_RowMarkedAsNull()
+        {
+            _pokemon[0, 5] = new PichuToken();
+            _pokemon[0, 6] = new PichuToken();
+            _pokemon[0, 7] = new PichuToken();
+            pokemonGrid.Pokemon = _pokemon;
+            _pokemon[0, 5] = null;
+            _pokemon[0, 6] = null;
+            _pokemon[0, 7] = null;
+            pokemonGrid.updateAllRows();
+            Assert.AreEqual(_pokemon, pokemonGrid.Pokemon);
+        }
+
+        [Test]
+        public void UpdateAllRows_RowOfThreeInMiddle_RowMarkedAsNull()
+        {
+            _pokemon[0, 3] = new PichuToken();
+            _pokemon[0, 4] = new PichuToken();
+            _pokemon[0, 5] = new PichuToken();
+            pokemonGrid.Pokemon = _pokemon;
+            _pokemon[0, 3] = null;
+            _pokemon[0, 4] = null;
+            _pokemon[0, 5] = null;
+            pokemonGrid.updateAllRows();
+            Assert.AreEqual(_pokemon, pokemonGrid.Pokemon);
+        }
+
         //[Test]
-        //public void UpdateBoard_ColumnOfThreeOnTopEdge_ColumnMarkedAsNull()
+        //public void UpdateAllRows_RowOfFour_LeftMostTokenReplacedByFirstEvolutionAndNullsSetCorrectly()
         //{
         //    _pokemon[0, 0] = new PichuToken();
-        //    _pokemon[1, 0] = new PichuToken();
-        //    _pokemon[2, 0] = new PichuToken();
+        //    _pokemon[0, 1] = new PichuToken();
+        //    _pokemon[0, 2] = new PichuToken();
+        //    _pokemon[0, 3] = new PichuToken();
         //    pokemonGrid.Pokemon = _pokemon;
-        //    _pokemon[0, 0] = null;
-        //    _pokemon[1, 0] = null;
-        //    _pokemon[2, 0] = null;
-        //    pokemonGrid.updateBoard(0, 0, 0, 0);
-        //    Assert.AreEqual(_pokemon, pokemonGrid.Pokemon);
-        //}
-
-        //[Test]
-        //public void UpdateBoard_ColumnOfThreeOnBottomEdge_ColumnMarkedAsNull()
-        //{
-        //    _pokemon[5, 0] = new DittoToken();
-        //    _pokemon[6, 0] = new DittoToken();
-        //    _pokemon[7, 0] = new DittoToken();
-        //    pokemonGrid.Pokemon = _pokemon;
-        //    _pokemon[5, 0] = null;
-        //    _pokemon[6, 0] = null;
-        //    _pokemon[7, 0] = null;
-        //    pokemonGrid.updateBoard(0, 0, 0, 0);
-        //    Assert.AreEqual(_pokemon, pokemonGrid.Pokemon);
-        //}
-
-        //[Test]
-        //public void UpdateBoard_ColumnOfThreeInMiddle_ColumnMarkedAsNull()
-        //{
-        //    _pokemon[3, 0] = new DittoToken();
-        //    _pokemon[4, 0] = new DittoToken();
-        //    _pokemon[5, 0] = new DittoToken();
-        //    pokemonGrid.Pokemon = _pokemon;
-        //    _pokemon[3, 0] = null;
-        //    _pokemon[4, 0] = null;
-        //    _pokemon[5, 0] = null;
-        //    pokemonGrid.updateBoard(0, 0, 0, 0);
-        //    Assert.AreEqual(_pokemon, pokemonGrid.Pokemon);
-        //}
-
-        //[Test]
-        //public void UpdateBoard_RowOfThreeOnLeftEdge_RowMarkedAsNull()
-        //{
-        //    _pokemon[0, 0] = new DittoToken();
-        //    _pokemon[0, 1] = new DittoToken();
-        //    _pokemon[0, 2] = new DittoToken();
-        //    pokemonGrid.Pokemon = _pokemon;
-        //    _pokemon[0, 0] = null;
+        //    _pokemon[0, 0] = new PikachuToken();
         //    _pokemon[0, 1] = null;
         //    _pokemon[0, 2] = null;
-        //    pokemonGrid.updateBoard(0, 0, 0, 0);
-        //    Assert.AreEqual(_pokemon, pokemonGrid.Pokemon);
-        //}
-
-        //[Test]
-        //public void UpdateBoard_RowOfThreeOnRightEdge_RowMarkedAsNull()
-        //{
-        //    _pokemon[0, 5] = new DittoToken();
-        //    _pokemon[0, 6] = new DittoToken();
-        //    _pokemon[0, 7] = new DittoToken();
-        //    pokemonGrid.Pokemon = _pokemon;
-        //    _pokemon[0, 5] = null;
-        //    _pokemon[0, 6] = null;
-        //    _pokemon[0, 7] = null;
-        //    pokemonGrid.updateBoard(0, 0, 0, 0);
-        //    Assert.AreEqual(_pokemon, pokemonGrid.Pokemon);
-        //}
-
-        //[Test]
-        //public void UpdateBoard_RowOfThreeInMiddle_RowMarkedAsNull()
-        //{
-        //    _pokemon[0, 3] = new DittoToken();
-        //    _pokemon[0, 4] = new DittoToken();
-        //    _pokemon[0, 5] = new DittoToken();
-        //    pokemonGrid.Pokemon = _pokemon;
         //    _pokemon[0, 3] = null;
-        //    _pokemon[0, 4] = null;
-        //    _pokemon[0, 5] = null;
-        //    pokemonGrid.updateBoard(0, 0, 0, 0);
-        //    Assert.AreEqual(_pokemon, pokemonGrid.Pokemon);
-        //}
-
-        //[Test]
-        //public void UpdateBoard_RowOfFour_MovedTokenReplacedByFirstEvolution()
-        //{
-        //    _pokemon[0, 3] = new PichuToken();
-        //    _pokemon[0, 4] = new PichuToken();
-        //    _pokemon[0, 5] = new PichuToken();
-        //    _pokemon[0, 6] = new PichuToken();
-        //    pokemonGrid.Pokemon = _pokemon;
-        //    _pokemon[1, 3] = new PichuToken();
-        //    _pokemon[0, 3] = new PikachuToken();
-        //    _pokemon[0, 4] = null;
-        //    _pokemon[0, 5] = null;
-        //    _pokemon[0, 6] = null;
-        //    pokemonGrid.updateBoard(0, 3, 1, 3);
-        //    Assert.AreEqual(_pokemon, pokemonGrid.Pokemon);
-        //}
-
-        //[Test]
-        //public void UpdateBoard_ColumnOfFour_MovedTokenReplacedByFirstEvolution()
-        //{
-        //    _pokemon[3, 0] = new PichuToken();
-        //    _pokemon[4, 0] = new PichuToken();
-        //    _pokemon[5, 0] = new PichuToken();
-        //    _pokemon[6, 0] = new PichuToken();
-        //    pokemonGrid.Pokemon = _pokemon;
-        //    _pokemon[3, 1] = new PichuToken();
-        //    _pokemon[3, 0] = new PikachuToken();
-        //    _pokemon[4, 0] = null;
-        //    _pokemon[5, 0] = null;
-        //    _pokemon[6, 0] = null;
-        //    pokemonGrid.updateBoard(3, 0, 3, 1);
+        //    _pokemon[1, 0] = null;
+        //    _pokemon[1, 1] = null;
+        //    pokemonGrid.updateAllRows();
         //    Assert.AreEqual(_pokemon, pokemonGrid.Pokemon);
         //}
 
@@ -336,25 +408,6 @@ namespace PokemonBejeweledTest
         //}
 
         //[Test]
-        //public void UpdateBoard_ColumnOfFive_MovedTokenReplacedByDitto()
-        //{
-        //    _pokemon[3, 0] = new PichuToken();
-        //    _pokemon[4, 0] = new PichuToken();
-        //    _pokemon[5, 0] = new PichuToken();
-        //    _pokemon[6, 0] = new PichuToken();
-        //    _pokemon[7, 0] = new PichuToken();
-        //    pokemonGrid.Pokemon = _pokemon;
-        //    _pokemon[3, 1] = new PichuToken();
-        //    _pokemon[3, 0] = new DittoToken();
-        //    _pokemon[4, 0] = null;
-        //    _pokemon[5, 0] = null;
-        //    _pokemon[6, 0] = null;
-        //    _pokemon[7, 0] = null;
-        //    pokemonGrid.updateBoard(3, 0, 3, 1);
-        //    Assert.AreEqual(_pokemon[0,0], pokemonGrid.Pokemon[0,0]);
-        //}
-
-        //[Test]
         //public void UpdateBoard_RowOfSix_MovedTokenReplacedBySecondEvolution()
         //{
         //    _pokemon[0, 2] = new PichuToken();
@@ -373,6 +426,42 @@ namespace PokemonBejeweledTest
         //    _pokemon[0, 7] = null;
         //    pokemonGrid.updateBoard(0, 3, 1, 3);
         //    Assert.AreEqual(_pokemon, pokemonGrid.Pokemon);
+        //}
+
+        //[Test]
+        //public void UpdateBoard_ColumnOfFour_MovedTokenReplacedByFirstEvolution()
+        //{
+        //    _pokemon[3, 0] = new PichuToken();
+        //    _pokemon[4, 0] = new PichuToken();
+        //    _pokemon[5, 0] = new PichuToken();
+        //    _pokemon[6, 0] = new PichuToken();
+        //    pokemonGrid.Pokemon = _pokemon;
+        //    _pokemon[3, 1] = new PichuToken();
+        //    _pokemon[3, 0] = new PikachuToken();
+        //    _pokemon[4, 0] = null;
+        //    _pokemon[5, 0] = null;
+        //    _pokemon[6, 0] = null;
+        //    pokemonGrid.updateBoard(3, 0, 3, 1);
+        //    Assert.AreEqual(_pokemon, pokemonGrid.Pokemon);
+        //}
+
+        //[Test]
+        //public void UpdateBoard_ColumnOfFive_MovedTokenReplacedByDitto()
+        //{
+        //    _pokemon[3, 0] = new PichuToken();
+        //    _pokemon[4, 0] = new PichuToken();
+        //    _pokemon[5, 0] = new PichuToken();
+        //    _pokemon[6, 0] = new PichuToken();
+        //    _pokemon[7, 0] = new PichuToken();
+        //    pokemonGrid.Pokemon = _pokemon;
+        //    _pokemon[3, 1] = new PichuToken();
+        //    _pokemon[3, 0] = new DittoToken();
+        //    _pokemon[4, 0] = null;
+        //    _pokemon[5, 0] = null;
+        //    _pokemon[6, 0] = null;
+        //    _pokemon[7, 0] = null;
+        //    pokemonGrid.updateBoard(3, 0, 3, 1);
+        //    Assert.AreEqual(_pokemon[0, 0], pokemonGrid.Pokemon[0, 0]);
         //}
 
         //[Test]
