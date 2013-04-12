@@ -10,7 +10,6 @@ namespace PokemonBejeweledTest
     public class PokemonGridTests
     {
         private PokemonToken[,] _pokemon = new PokemonToken[PokemonGrid.gridSize, PokemonGrid.gridSize];
-        private PokemonToken[,] _newPokemon = new PokemonToken[PokemonGrid.gridSize, PokemonGrid.gridSize];
         private PokemonGrid pokemonGrid;
 
         [SetUp]
@@ -21,17 +20,13 @@ namespace PokemonBejeweledTest
                 for (int j = 0; j < 8; j += 2)
                 {
                     _pokemon[i, j] = new BulbasaurToken();
-                    _newPokemon[i, j] = new BulbasaurToken();
                     _pokemon[i + 1, j] = new CharmanderToken();
-                    _newPokemon[i + 1, j] = new CharmanderToken();
                     _pokemon[i + 1, j + 1] = new BulbasaurToken();
-                    _newPokemon[i + 1, j + 1] = new BulbasaurToken();
                     _pokemon[i, j + 1] = new CharmanderToken();
-                    _newPokemon[i, j + 1] = new CharmanderToken();
                 }
             }
             pokemonGrid.Pokemon = _pokemon;
-            pokemonGrid.NewPokemon = _newPokemon;
+            pokemonGrid.NewPokemon = _pokemon;
         }
 
         [Test]
@@ -91,18 +86,18 @@ namespace PokemonBejeweledTest
         public void MarkNullRow_NumberOfSameTokensLessThan3_PokemonGridUnchanged()
         {
             pokemonGrid.markNullRow(0, 0, 0);
-            Assert.AreEqual(_newPokemon, pokemonGrid.NewPokemon);
+            Assert.AreEqual(_pokemon, pokemonGrid.NewPokemon);
         }
 
         [Test]
         public void MarkNullRow_NumberOfSameTokensGreaterThan3_RowMarkNull()
         {
-            _newPokemon[0, 0] = null;
-            _newPokemon[0, 1] = null;
-            _newPokemon[0, 2] = null;
-            _newPokemon[0, 3] = null;
+            _pokemon[0, 0] = null;
+            _pokemon[0, 1] = null;
+            _pokemon[0, 2] = null;
+            _pokemon[0, 3] = null;
             pokemonGrid.markNullRow(0, 0, 4);
-            Assert.AreEqual(_newPokemon, pokemonGrid.NewPokemon);
+            Assert.AreEqual(_pokemon, pokemonGrid.NewPokemon);
         }
 
         [Test]
@@ -116,18 +111,18 @@ namespace PokemonBejeweledTest
         public void MarkNullColumn_NumberOfSameTokensLessThan3_PokemonGridUnchanged()
         {
             pokemonGrid.markNullColumn(0, 0, 0);
-            Assert.AreEqual(_newPokemon, pokemonGrid.NewPokemon);
+            Assert.AreEqual(_pokemon, pokemonGrid.NewPokemon);
         }
 
         [Test]
         public void MarkNullColumn_NumberOfSameTokensGreaterThan3_RowMarkNull()
         {
-            _newPokemon[0, 0] = null;
-            _newPokemon[1, 0] = null;
-            _newPokemon[2, 0] = null;
-            _newPokemon[3, 0] = null;
+            _pokemon[0, 0] = null;
+            _pokemon[1, 0] = null;
+            _pokemon[2, 0] = null;
+            _pokemon[3, 0] = null;
             pokemonGrid.markNullColumn(0, 0, 4);
-            Assert.AreEqual(_newPokemon, pokemonGrid.NewPokemon);
+            Assert.AreEqual(_pokemon, pokemonGrid.NewPokemon);
         }
 
         [Test]
@@ -142,16 +137,16 @@ namespace PokemonBejeweledTest
         {
             int row = 4;
             int col = 4;
-            _newPokemon[row - 1, col] = null;
-            _newPokemon[row - 1, col - 1] = null;
-            _newPokemon[row - 1, col + 1] = null;
-            _newPokemon[row, col - 1] = null;
-            _newPokemon[row, col + 1] = null;
-            _newPokemon[row + 1, col] = null;
-            _newPokemon[row + 1, col - 1] = null;
-            _newPokemon[row + 1, col + 1] = null;
+            _pokemon[row - 1, col] = null;
+            _pokemon[row - 1, col - 1] = null;
+            _pokemon[row - 1, col + 1] = null;
+            _pokemon[row, col - 1] = null;
+            _pokemon[row, col + 1] = null;
+            _pokemon[row + 1, col] = null;
+            _pokemon[row + 1, col - 1] = null;
+            _pokemon[row + 1, col + 1] = null;
             pokemonGrid.markSurroundingTokensNull(row, col);
-            Assert.AreEqual(_newPokemon, pokemonGrid.NewPokemon);
+            Assert.AreEqual(_pokemon, pokemonGrid.NewPokemon);
         }
 
         [Test]
@@ -159,13 +154,13 @@ namespace PokemonBejeweledTest
         {
             int row = 4;
             int col = 0;
-            _newPokemon[row - 1, col] = null;
-            _newPokemon[row - 1, col + 1] = null;
-            _newPokemon[row, col + 1] = null;
-            _newPokemon[row + 1, col] = null;
-            _newPokemon[row + 1, col + 1] = null;
+            _pokemon[row - 1, col] = null;
+            _pokemon[row - 1, col + 1] = null;
+            _pokemon[row, col + 1] = null;
+            _pokemon[row + 1, col] = null;
+            _pokemon[row + 1, col + 1] = null;
             pokemonGrid.markSurroundingTokensNull(row, col);
-            Assert.AreEqual(_newPokemon, pokemonGrid.NewPokemon);
+            Assert.AreEqual(_pokemon, pokemonGrid.NewPokemon);
         }
 
         [Test]
@@ -182,14 +177,14 @@ namespace PokemonBejeweledTest
             int col = 4;
             for (int currentRow = 0; currentRow < PokemonGrid.gridSize; currentRow++)
             {
-                _newPokemon[currentRow, col] = null;
+                _pokemon[currentRow, col] = null;
             }
             for (int currentCol = 0; currentCol < PokemonGrid.gridSize; currentCol++)
             {
-                _newPokemon[row, currentCol] = null;
+                _pokemon[row, currentCol] = null;
             }
             pokemonGrid.markFullRowAndColumnAsNull(row, col);
-            Assert.AreEqual(_newPokemon, pokemonGrid.NewPokemon);            
+            Assert.AreEqual(_pokemon, pokemonGrid.NewPokemon);            
         }
 
         [Test]
@@ -209,12 +204,12 @@ namespace PokemonBejeweledTest
                 {
                     if (_pokemon[row, col].GetType() == type)
                     {
-                        _newPokemon[row, col] = null;
+                        _pokemon[row, col] = null;
                     }
                 }
             }
             pokemonGrid.markAllTokensOfSameTypeAsNull(type);
-            Assert.AreEqual(_newPokemon, pokemonGrid.NewPokemon);
+            Assert.AreEqual(_pokemon, pokemonGrid.NewPokemon);
         }
 
         [Test]
@@ -222,7 +217,7 @@ namespace PokemonBejeweledTest
         {
             Type type = typeof(PichuToken);
             pokemonGrid.markAllTokensOfSameTypeAsNull(type);
-            Assert.AreEqual(_newPokemon, pokemonGrid.NewPokemon);
+            Assert.AreEqual(_pokemon, pokemonGrid.NewPokemon);
         }
 
         [Test]
@@ -230,9 +225,9 @@ namespace PokemonBejeweledTest
         {
             _pokemon[0, 0] = new PichuToken();
             pokemonGrid.Pokemon = _pokemon;
-            _newPokemon[0, 0] = new PikachuToken();
+            _pokemon[0, 0] = new PikachuToken();
             pokemonGrid.markSpecials(0, 0, 4);
-            Assert.AreEqual(_newPokemon[0,0], pokemonGrid.NewPokemon[0,0]);
+            Assert.AreEqual(_pokemon[0, 0], pokemonGrid.NewPokemon[0, 0]);
         }
 
         [Test]
@@ -249,9 +244,9 @@ namespace PokemonBejeweledTest
         [Test]
         public void MarkSpecials_SpecialOfFive_TokenReplacedWithDitto()
         {
-            _newPokemon[0, 0] = new DittoToken();
+            _pokemon[0, 0] = new DittoToken();
             pokemonGrid.markSpecials(0, 0, 5);
-            Assert.AreEqual(_newPokemon[0, 0], pokemonGrid.NewPokemon[0, 0]);
+            Assert.AreEqual(_pokemon[0, 0], pokemonGrid.NewPokemon[0, 0]);
         }
 
         [Test]
@@ -270,9 +265,9 @@ namespace PokemonBejeweledTest
         {
             _pokemon[0, 0] = new PichuToken();
             pokemonGrid.Pokemon = _pokemon;
-            _newPokemon[0, 0] = new RaichuToken();
+            _pokemon[0, 0] = new RaichuToken();
             pokemonGrid.markSpecials(0, 0, 6);
-            Assert.AreEqual(_newPokemon[0, 0], pokemonGrid.NewPokemon[0, 0]);
+            Assert.AreEqual(_pokemon[0, 0], pokemonGrid.NewPokemon[0, 0]);
         }
 
         [Test]
@@ -280,7 +275,7 @@ namespace PokemonBejeweledTest
         {
             MockRepository mocks = new MockRepository();
             PokemonGrid mockGrid = mocks.PartialMock<PokemonGrid>();
-            mockGrid.Expect(g => g.markAllTokensOfSameTypeAsNull(_newPokemon[0,0].GetType()));
+            mockGrid.Expect(g => g.markAllTokensOfSameTypeAsNull(_pokemon[0, 0].GetType()));
             mockGrid.Replay();
             mockGrid.markSpecials(0, 0, 6);
             mockGrid.VerifyAllExpectations();
@@ -297,7 +292,7 @@ namespace PokemonBejeweledTest
             _pokemon[1, 0] = null;
             _pokemon[2, 0] = null;
             pokemonGrid.updateAllColumns();
-            Assert.AreEqual(_pokemon, pokemonGrid.Pokemon);
+            Assert.AreEqual(_pokemon, pokemonGrid.NewPokemon);
         }
 
         [Test]
@@ -311,7 +306,7 @@ namespace PokemonBejeweledTest
             _pokemon[6, 0] = null;
             _pokemon[7, 0] = null;
             pokemonGrid.updateAllColumns();
-            Assert.AreEqual(_pokemon, pokemonGrid.Pokemon);
+            Assert.AreEqual(_pokemon, pokemonGrid.NewPokemon);
         }
 
         [Test]
@@ -325,7 +320,7 @@ namespace PokemonBejeweledTest
             _pokemon[4, 0] = null;
             _pokemon[5, 0] = null;
             pokemonGrid.updateAllColumns();
-            Assert.AreEqual(_pokemon, pokemonGrid.Pokemon);
+            Assert.AreEqual(_pokemon, pokemonGrid.NewPokemon);
         }
 
         [Test]
@@ -339,7 +334,7 @@ namespace PokemonBejeweledTest
             _pokemon[0, 1] = null;
             _pokemon[0, 2] = null;
             pokemonGrid.updateAllRows();
-            Assert.AreEqual(_pokemon, pokemonGrid.Pokemon);
+            Assert.AreEqual(_pokemon, pokemonGrid.NewPokemon);
         }
 
         [Test]
@@ -353,7 +348,7 @@ namespace PokemonBejeweledTest
             _pokemon[0, 6] = null;
             _pokemon[0, 7] = null;
             pokemonGrid.updateAllRows();
-            Assert.AreEqual(_pokemon, pokemonGrid.Pokemon);
+            Assert.AreEqual(_pokemon, pokemonGrid.NewPokemon);
         }
 
         [Test]
@@ -367,7 +362,7 @@ namespace PokemonBejeweledTest
             _pokemon[0, 4] = null;
             _pokemon[0, 5] = null;
             pokemonGrid.updateAllRows();
-            Assert.AreEqual(_pokemon, pokemonGrid.Pokemon);
+            Assert.AreEqual(_pokemon, pokemonGrid.NewPokemon);
         }
 
         //[Test]
