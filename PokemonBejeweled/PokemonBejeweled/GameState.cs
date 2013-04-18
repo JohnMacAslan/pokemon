@@ -11,8 +11,9 @@ namespace PokemonBejeweled
     public class GameState
     {
         public Timer countdown = new Timer(1000);
-        double timeLeft;
-        int score;
+        private double timeLeft;
+        private int NO_TIME_LIMIT = -1;
+        private int score;
         private PokemonGrid _grid;
         public PokemonGrid Grid
         {
@@ -21,28 +22,23 @@ namespace PokemonBejeweled
                 return _grid;
             }
         }
-        int NO_TIME_LIMIT;
 
         public GameState()
         {
             newGame();
         }
 
-        public void makePlay(Point start, Point end)
+        public void makePlay(int rowStart, int colStart, int rowEnd, int colEnd)
         {
-
-            // convert points to rows and columns
-
-
         }
 
         public void newGame()
         {
             _grid = new PokemonGrid();
-            NO_TIME_LIMIT = -1;
             score = 0;
             timeLeft = 120000; // Default
-            Console.Out.WriteLine("a new game was made");
+            Console.Out.WriteLine("a new game");
+            _grid.generateGrid();
         }
 
         public void setScore(int value)
