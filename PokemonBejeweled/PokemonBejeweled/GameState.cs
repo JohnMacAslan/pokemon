@@ -37,7 +37,8 @@ namespace PokemonBejeweled
             _grid = new PokemonGrid();
             score = 0;
             timeLeft = 120000; // Default
-            Console.Out.WriteLine("a new game was made");
+            Console.Out.WriteLine("a new game");
+            _grid.generateGrid();
         }
 
         public void setScore(int value)

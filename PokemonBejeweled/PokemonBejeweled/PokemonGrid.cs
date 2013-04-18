@@ -51,7 +51,7 @@ namespace PokemonBejeweled
             generateGrid();
         }
 
-        private void generateGrid()
+        public void generateGrid()
         {
             _pokemon = new IBasicPokemonToken[gridSize, gridSize];
             for (int row = 0; row < gridSize; row++)
