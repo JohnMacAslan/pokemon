@@ -65,7 +65,6 @@ namespace PokemonBejeweled
             updateAllColumns();
             updateAllRows();
             pullDownTokens();
-
             while (!haveGridsStabilized())
             {
                 copyGrid(_pokemon, _newPokemon);
@@ -363,7 +362,10 @@ namespace PokemonBejeweled
                     }
                 }
             }
+            System.Threading.Thread.Sleep(1000);
         }
+
+        //public event pullDown;
 
         private IBasicPokemonToken generateNewPokemon()
         {
