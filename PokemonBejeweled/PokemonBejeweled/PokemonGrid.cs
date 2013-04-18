@@ -103,9 +103,9 @@ namespace PokemonBejeweled
                 updateSingleColumn(row1, col1, row2, col2);
                 updateSingleColumn(row2, col2, row1, col1);
                 pullDownTokens();
-                while (_newPokemon != _pokemon)
+                while (!haveGridsStabilized())
                 {
-                    copyGrid(_newPokemon, _pokemon);
+                    copyGrid(_pokemon, _newPokemon);
                     updateAllColumns();
                     updateAllRows();
                     pullDownTokens();
