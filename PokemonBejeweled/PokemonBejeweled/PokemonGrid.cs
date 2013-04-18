@@ -51,7 +51,7 @@ namespace PokemonBejeweled
             generateGrid();
         }
 
-        private void generateGrid()
+        public void generateGrid()
         {
             _pokemon = new IBasicPokemonToken[gridSize, gridSize];
             for (int row = 0; row < gridSize; row++)
@@ -65,7 +65,6 @@ namespace PokemonBejeweled
             updateAllColumns();
             updateAllRows();
             pullDownTokens();
-
             while (!haveGridsStabilized())
             {
                 copyGrid(_pokemon, _newPokemon);
@@ -73,40 +72,6 @@ namespace PokemonBejeweled
                 updateAllRows();
                 pullDownTokens();
             }
-        }
-
-        public static void printGrid(IBasicPokemonToken[,] grid)
-        {
-            Dictionary<Type, int> dict = new Dictionary<Type, int>();
-
-            dict.Add(typeof(BulbasaurToken), 1);
-            dict.Add(typeof(CharmanderToken), 2);
-            dict.Add(typeof(ChikoritaToken), 3);
-            dict.Add(typeof(CyndaquilToken), 4);
-            dict.Add(typeof(PichuToken), 5);
-            dict.Add(typeof(SquirtleToken), 6);
-            dict.Add(typeof(TotodileToken), 7);
-            Console.Out.WriteLine("--------");
-            for (int row = 0; row < gridSize; row++)
-            {
-                for (int col = 0; col < gridSize; col++)
-                {
-                    if (null == grid[row, col])
-                    {
-                        Console.Out.Write(" ");
-                    }
-                    else if (dict.ContainsKey(grid[row, col].GetType()))
-                    {
-                        Console.Out.Write(dict[grid[row, col].GetType()]);
-                    }
-                    else
-                    {
-                        Console.Out.Write("F");
-                    }
-                }
-                Console.Out.WriteLine();
-            }
-            Console.Out.WriteLine("--------");
         }
 
         private bool haveGridsStabilized()
@@ -137,9 +102,9 @@ namespace PokemonBejeweled
                 updateSingleColumn(row1, col1, row2, col2);
                 updateSingleColumn(row2, col2, row1, col1);
                 pullDownTokens();
-                while (_newPokemon != _pokemon)
+                while (!haveGridsStabilized())
                 {
-                    copyGrid(_newPokemon, _pokemon);
+                    copyGrid(_pokemon, _newPokemon);
                     updateAllColumns();
                     updateAllRows();
                     pullDownTokens();
@@ -177,7 +142,7 @@ namespace PokemonBejeweled
                 numberOfSameTokens++;
                 currentCol++;
             }
-            markSpecials(rowEnd, currentCol - numberOfSameTokens, numberOfSameTokens);
+            markSpecials(rowEnd, currentCol, numberOfSameTokens);
             markNullRow(rowEnd, currentCol - numberOfSameTokens, numberOfSameTokens);
         }
 
@@ -210,7 +175,7 @@ namespace PokemonBejeweled
                 numberOfSameTokens++;
                 currentRow++;
             }
-            markSpecials(currentRow - numberOfSameTokens, colEnd, numberOfSameTokens);
+            markSpecials(currentRow, colEnd, numberOfSameTokens);
             markNullColumn(currentRow - numberOfSameTokens, colEnd, numberOfSameTokens);
         }
 
@@ -232,17 +197,26 @@ namespace PokemonBejeweled
             switch (numberOfSameTokens)
             {
                 case 4:
-                    markSurroundingTokensNull(row, col);
                     _newPokemon[row, col] = movedToken.firstEvolvedToken();
                     break;
                 case 5:
-                    markFullRowAndColumnAsNull(row, col);
                     _newPokemon[row, col] = new DittoToken();
                     break;
                 case 6:
-                    markAllTokensOfSameTypeAsNull(_pokemon[row, col].GetType());
                     _newPokemon[row, col] = movedToken.secondEvolvedToken();
                     break;
+            }
+            if (movedToken.GetType().GetInterfaces().Contains(typeof(IFirstEvolutionPokemonToken)))
+            {
+                markSurroundingTokensNull(row, col);
+            }
+            else if (movedToken.GetType() == typeof(DittoToken))
+            {
+                markAllTokensOfSameTypeAsNull(_pokemon[row, col].GetType());
+            }
+            else if (movedToken.GetType().GetInterfaces().Contains(typeof(ISecondEvolutionPokemonToken)))
+            {
+                markFullRowAndColumnAsNull(row, col);
             }
         }
 
@@ -388,7 +362,10 @@ namespace PokemonBejeweled
                     }
                 }
             }
+            System.Threading.Thread.Sleep(1000);
         }
+
+        //public event pullDown;
 
         private IBasicPokemonToken generateNewPokemon()
         {
@@ -405,6 +382,40 @@ namespace PokemonBejeweled
                     gridDestination[row, col] = gridToCopy[row, col];
                 }
             }
+        }
+
+        public static void printGrid(IBasicPokemonToken[,] grid)
+        {
+            Dictionary<Type, int> dict = new Dictionary<Type, int>();
+
+            dict.Add(typeof(BulbasaurToken), 1);
+            dict.Add(typeof(CharmanderToken), 2);
+            dict.Add(typeof(ChikoritaToken), 3);
+            dict.Add(typeof(CyndaquilToken), 4);
+            dict.Add(typeof(PichuToken), 5);
+            dict.Add(typeof(SquirtleToken), 6);
+            dict.Add(typeof(TotodileToken), 7);
+            Console.Out.WriteLine("--------");
+            for (int row = 0; row < gridSize; row++)
+            {
+                for (int col = 0; col < gridSize; col++)
+                {
+                    if (null == grid[row, col])
+                    {
+                        Console.Out.Write(" ");
+                    }
+                    else if (dict.ContainsKey(grid[row, col].GetType()))
+                    {
+                        Console.Out.Write(dict[grid[row, col].GetType()]);
+                    }
+                    else
+                    {
+                        Console.Out.Write("F");
+                    }
+                }
+                Console.Out.WriteLine();
+            }
+            Console.Out.WriteLine("--------");
         }
     }
 }
