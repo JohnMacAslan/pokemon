@@ -230,7 +230,7 @@ namespace PokemonBejeweledTest
         }
 
         [Test]
-        public void MarkSpecials_SpecialOfFour_TokenReplacedWithFirstEvolution()
+        public void MarkSpecials_RowOfFour_TokenReplacedWithFirstEvolution()
         {
             _pokemon[0, 0] = new PichuToken();
             _pokemonGrid.Pokemon = _pokemon;
@@ -240,16 +240,7 @@ namespace PokemonBejeweledTest
         }
 
         [Test]
-        public void MarkSpecials_SpecialOfFour_MarkSurroundingTokensNullCalled()
-        {
-            _mockGrid.Expect(g => g.markSurroundingTokensNull(0, 0));
-            _mockGrid.Replay();
-            _mockGrid.markSpecials(0, 0, 4);
-            _mockGrid.VerifyAllExpectations();
-        }
-
-        [Test]
-        public void MarkSpecials_SpecialOfFive_TokenReplacedWithDitto()
+        public void MarkSpecials_RowOfFive_TokenReplacedWithDitto()
         {
             _pokemon[0, 0] = new DittoToken();
             _pokemonGrid.markSpecials(0, 0, 5);
@@ -257,16 +248,7 @@ namespace PokemonBejeweledTest
         }
 
         [Test]
-        public void MarkSpecials_SpecialOfFive_MarkFullRowAndColumnAsNullCalled()
-        {
-            _mockGrid.Expect(g => g.markFullRowAndColumnAsNull(0, 0));
-            _mockGrid.Replay();
-            _mockGrid.markSpecials(0, 0, 5);
-            _mockGrid.VerifyAllExpectations();
-        }
-
-        [Test]
-        public void MarkSpecials_SpecialOfSix_TokenReplacedWithSecondEvolution()
+        public void MarkSpecials_RowOfSix_TokenReplacedWithSecondEvolution()
         {
             _pokemon[0, 0] = new PichuToken();
             _pokemonGrid.Pokemon = _pokemon;
@@ -276,12 +258,35 @@ namespace PokemonBejeweledTest
         }
 
         [Test]
-        public void MarkSpecials_SpecialOfSix_MarkAllTokensOfSameTypeAsNullCalled()
+        public void MarkSpecials_FirstEvolutionToken_MarkSurroundingTokensNullCalled()
         {
+            _pokemon[0, 0] = new PikachuToken();
+            _mockGrid.Pokemon = _pokemon;
+            _mockGrid.Expect(g => g.markSurroundingTokensNull(0, 0));
+            _mockGrid.Replay();
+            _mockGrid.markSpecials(0, 0, 0);
+            _mockGrid.VerifyAllExpectations();
+        }
+
+        [Test]
+        public void MarkSpecials_SecondEvolutionToken_MarkFullRowAndColumnAsNullCalled()
+        {
+            _pokemon[0, 0] = new RaichuToken();
+            _mockGrid.Pokemon = _pokemon;
+            _mockGrid.Expect(g => g.markFullRowAndColumnAsNull(0, 0));
+            _mockGrid.Replay();
+            _mockGrid.markSpecials(0, 0, 0);
+            _mockGrid.VerifyAllExpectations();
+        }
+
+        [Test]
+        public void MarkSpecials_DittoToken_MarkAllTokensOfSameTypeAsNullCalled()
+        {
+            _pokemon[0, 0] = new DittoToken();
             _mockGrid.Pokemon = _pokemon;
             _mockGrid.Expect(g => g.markAllTokensOfSameTypeAsNull(_pokemon[0, 0].GetType()));
             _mockGrid.Replay();
-            _mockGrid.markSpecials(0, 0, 6);
+            _mockGrid.markSpecials(0, 0, 0);
             _mockGrid.VerifyAllExpectations();
         }
 
@@ -475,7 +480,7 @@ namespace PokemonBejeweledTest
             _mockGrid.Expect(g => g.markNullRow(0, 0, 3));
             _mockGrid.Expect(g => g.markSpecials(0, 0, 3));
             _mockGrid.Replay();
-            _mockGrid.updateSingleRow(0, 1, 0, 0);
+            _mockGrid.updateSingleRow(1, 0, 0, 0);
             _mockGrid.VerifyAllExpectations();
         }
 
