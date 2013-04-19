@@ -9,6 +9,8 @@ namespace PokemonBejeweled
 {
     public class PokemonGrid
     {
+        public delegate void PullDownTokensEventHandler(object source);
+        public event PullDownTokensEventHandler PullDownTokens;
         public static int gridSize = 8;
         private Dictionary<int, Type> dict = new Dictionary<int, Type>();
         public int GamePlayScore { get; set; }
@@ -64,13 +66,12 @@ namespace PokemonBejeweled
             copyGrid(_pokemon, _newPokemon);
             updateAllColumns();
             updateAllRows();
-            pullDownTokens();
             while (!haveGridsStabilized())
             {
+                pullDownTokens();
                 copyGrid(_pokemon, _newPokemon);
                 updateAllColumns();
                 updateAllRows();
-                pullDownTokens();
             }
         }
 
@@ -80,11 +81,7 @@ namespace PokemonBejeweled
             {
                 for (int col = 0; col < gridSize; col++)
                 {
-                    if (null == _pokemon[row, col] || null == _newPokemon[row, col])
-                    {
-                        return null == _pokemon[row, col] && null == _newPokemon[row, col];
-                    }
-                    if (!_pokemon[row, col].Equals(_newPokemon[row, col]))
+                    if (null == _pokemon[row, col] || null == _newPokemon[row, col] || !_pokemon[row, col].Equals(_newPokemon[row, col]))
                     {
                         return false;
                     }
@@ -97,17 +94,22 @@ namespace PokemonBejeweled
         {
             if (piecesAreAdjacent(row1, col1, row2, col2))
             {
+                IBasicPokemonToken firstToken = _pokemon[row1, col1];
+                IBasicPokemonToken secondToken = _pokemon[row2, col2];
+                _pokemon[row1, col1] = secondToken;
+                _pokemon[row2, col2] = firstToken;
                 updateSingleRow(row1, col1, row2, col2);
                 updateSingleRow(row2, col2, row1, col1);
                 updateSingleColumn(row1, col1, row2, col2);
                 updateSingleColumn(row2, col2, row1, col1);
-                pullDownTokens();
+                _pokemon[row1, col1] = firstToken;
+                _pokemon[row2, col2] = secondToken;
                 while (!haveGridsStabilized())
                 {
+                    pullDownTokens();
                     copyGrid(_pokemon, _newPokemon);
                     updateAllColumns();
                     updateAllRows();
-                    pullDownTokens();
                 }
             }
         }
@@ -127,23 +129,28 @@ namespace PokemonBejeweled
 
         public virtual void updateSingleRow(int rowStart, int colStart, int rowEnd, int colEnd)
         {
-            Type tokenType = _pokemon[rowStart, colStart].GetType();
+            IBasicPokemonToken startToken = _pokemon[rowStart, colStart];
             int numberOfSameTokens = 1;
 
-            int currentCol = colEnd - 1;
-            while (currentCol >= 0 && tokenType == _pokemon[rowEnd, currentCol].GetType())
+            int currentCol = colStart - 1;
+            while (currentCol >= 0 && startToken.isSameSpecies(_pokemon[rowStart, currentCol]))
             {
                 numberOfSameTokens++;
                 currentCol--;
             }
-            currentCol = colEnd + 1;
-            while (currentCol < gridSize && tokenType == _pokemon[rowEnd, currentCol].GetType())
+            currentCol = colStart + 1;
+            while (currentCol < gridSize && startToken.isSameSpecies(_pokemon[rowStart, currentCol]))
             {
                 numberOfSameTokens++;
                 currentCol++;
             }
-            markSpecials(rowEnd, currentCol, numberOfSameTokens);
-            markNullRow(rowEnd, currentCol - numberOfSameTokens, numberOfSameTokens);
+            if (3 <= numberOfSameTokens)
+            {
+                _newPokemon[rowStart, colStart] = _pokemon[rowStart, colStart];
+                _newPokemon[rowEnd, colEnd] = _pokemon[rowEnd, colEnd];
+                markNullRow(rowStart, currentCol - numberOfSameTokens, numberOfSameTokens);
+                markSpecials(rowStart, --currentCol, numberOfSameTokens);
+            }
         }
 
         public virtual void markNullRow(int rowStart, int colStart, int numberOfSameTokens)
@@ -160,23 +167,28 @@ namespace PokemonBejeweled
 
         public virtual void updateSingleColumn(int rowStart, int colStart, int rowEnd, int colEnd)
         {
-            Type tokenType = _pokemon[rowStart, colStart].GetType();
+            IBasicPokemonToken startToken = _pokemon[rowStart, colStart];
             int numberOfSameTokens = 1;
 
-            int currentRow = rowEnd - 1;
-            while (currentRow >= 0 && tokenType == _pokemon[currentRow, colEnd].GetType())
+            int currentRow = rowStart - 1;
+            while (currentRow >= 0 && startToken.isSameSpecies(_pokemon[currentRow, colStart]))
             {
                 numberOfSameTokens++;
                 currentRow--;
             }
-            currentRow = rowEnd + 1;
-            while (currentRow < gridSize && tokenType == _pokemon[currentRow, colEnd].GetType())
+            currentRow = rowStart + 1;
+            while (currentRow < gridSize && startToken.isSameSpecies(_pokemon[currentRow, colStart]))
             {
                 numberOfSameTokens++;
                 currentRow++;
             }
-            markSpecials(currentRow, colEnd, numberOfSameTokens);
-            markNullColumn(currentRow - numberOfSameTokens, colEnd, numberOfSameTokens);
+            if (3 <= numberOfSameTokens)
+            {
+                _newPokemon[rowStart, colStart] = _pokemon[rowStart, colStart];
+                _newPokemon[rowEnd, colEnd] = _pokemon[rowEnd, colEnd];
+                markNullColumn(currentRow - numberOfSameTokens, colStart, numberOfSameTokens);
+                markSpecials(--currentRow, colStart, numberOfSameTokens);
+            }
         }
 
         public virtual void markNullColumn(int rowStart, int colStart, int numberOfSameTokens)
@@ -194,18 +206,6 @@ namespace PokemonBejeweled
         public virtual void markSpecials(int row, int col, int numberOfSameTokens)
         {
             IBasicPokemonToken movedToken = _pokemon[row, col];
-            switch (numberOfSameTokens)
-            {
-                case 4:
-                    _newPokemon[row, col] = movedToken.firstEvolvedToken();
-                    break;
-                case 5:
-                    _newPokemon[row, col] = new DittoToken();
-                    break;
-                case 6:
-                    _newPokemon[row, col] = movedToken.secondEvolvedToken();
-                    break;
-            }
             if (movedToken.GetType().GetInterfaces().Contains(typeof(IFirstEvolutionPokemonToken)))
             {
                 markSurroundingTokensNull(row, col);
@@ -217,6 +217,18 @@ namespace PokemonBejeweled
             else if (movedToken.GetType().GetInterfaces().Contains(typeof(ISecondEvolutionPokemonToken)))
             {
                 markFullRowAndColumnAsNull(row, col);
+            }
+            switch (numberOfSameTokens)
+            {
+                case 4:
+                    _newPokemon[row, col] = movedToken.firstEvolvedToken();
+                    break;
+                case 5:
+                    _newPokemon[row, col] = new DittoToken();
+                    break;
+                case 6:
+                    _newPokemon[row, col] = movedToken.secondEvolvedToken();
+                    break;
             }
         }
 
@@ -274,7 +286,7 @@ namespace PokemonBejeweled
                 numberOfSameTokens = 1;
                 for (int col = 1; col < gridSize; col++)
                 {
-                    if (currentToken.GetType() == _pokemon[row, col].GetType())
+                    if (currentToken.isSameSpecies(_pokemon[row, col]))
                     {
                         numberOfSameTokens++;
                     }
@@ -308,7 +320,7 @@ namespace PokemonBejeweled
                 numberOfSameTokens = 1;
                 for (int row = 1; row < gridSize; row++)
                 {
-                    if (currentToken.GetType() == _pokemon[row, col].GetType())
+                    if (currentToken.isSameSpecies(_pokemon[row, col]))
                     {
                         numberOfSameTokens++;
                     }
@@ -335,6 +347,7 @@ namespace PokemonBejeweled
         internal void pullDownTokens()
         {
             copyGrid(_newPokemon, _pokemon);
+            printGrid(_pokemon);
             int numberOfTokensToPullDown;
             for (int col = 0; col < gridSize; col++)
             {
@@ -362,10 +375,9 @@ namespace PokemonBejeweled
                     }
                 }
             }
-            System.Threading.Thread.Sleep(1000);
+            if (PullDownTokens != null) PullDownTokens(this);
+            printGrid(_pokemon);
         }
-
-        //public event pullDown;
 
         private IBasicPokemonToken generateNewPokemon()
         {
