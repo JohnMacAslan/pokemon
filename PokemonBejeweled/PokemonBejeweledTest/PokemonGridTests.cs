@@ -69,7 +69,7 @@ namespace PokemonBejeweledTest
         [Test]
         public void UpdateBoard_NoRowsOrColumnsOfThree_GridUnchanged()
         {
-            _pokemonGrid.updateBoard(0, 0, 0, 0);
+            _pokemonGrid.makePlay(0, 0, 0, 0);
             Assert.AreEqual(_pokemon, _pokemonGrid.Pokemon);
         }
 

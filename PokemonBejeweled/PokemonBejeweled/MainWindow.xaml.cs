@@ -55,16 +55,21 @@ namespace PokemonBejeweled
             tokenColors.Add(typeof(TyphlosionToken), Brushes.OrangeRed);
             tokenColors.Add(typeof(DittoToken), Brushes.Pink);
             gameState = new GameState();
-            gameState.Grid.PullDownTokens += delegate
-            {
-                updateGridBoard();
-            };
             gridBoard = this.GridBoard;
             inMove = false;
             previousColumn = 0;
             previousRow = 0;
             setUpGridBoard();
-            NewGameButton.Click += delegate { gameState.newGame(); updateGridBoard(); };
+            NewGameButton.Click += delegate
+            {
+                inMove = false;
+                gameState.newGame();
+                gameState.Grid.PullDownTokens += delegate
+                {
+                    updateGridBoard();
+                };
+                updateGridBoard();
+            };
             QuitGameButton.Click += delegate { this.Close(); };
         }
 
@@ -88,7 +93,13 @@ namespace PokemonBejeweled
                         else
                         {
                             inMove = false;
-                            gameState.Grid.updateBoard(newButton.row, newButton.column, previousRow, previousColumn);
+                            gameState.Grid.makePlay(newButton.row, newButton.column, previousRow, previousColumn);
+                            updateGridBoard();
+                            while (!gameState.Grid.haveGridsStabilized())
+                            {
+                                gameState.Grid.updateBoard();
+                                updateGridBoard();
+                            }
                         }
                     };
                     gridBoard.Children.Add(newButton);
@@ -110,6 +121,11 @@ namespace PokemonBejeweled
                     currentButton.setBackgroundColor(tokenColors[gameState.Grid.Pokemon[r, c].GetType()]);
                 }
             }
+            
+            DependencyObject scope = FocusManager.GetFocusScope(this);
+            FocusManager.SetFocusedElement(scope, this);
+            gridBoard.Dispatcher.Invoke(delegate() { }, System.Windows.Threading.DispatcherPriority.Render);
+            System.Threading.Thread.Sleep(500);
         }
        
     }

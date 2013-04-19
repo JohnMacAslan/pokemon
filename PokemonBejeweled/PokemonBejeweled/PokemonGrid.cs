@@ -75,7 +75,7 @@ namespace PokemonBejeweled
             }
         }
 
-        private bool haveGridsStabilized()
+        public bool haveGridsStabilized()
         {
             for (int row = 0; row < gridSize; row++)
             {
@@ -90,7 +90,7 @@ namespace PokemonBejeweled
             return true;
         }
 
-        public void updateBoard(int row1, int col1, int row2, int col2)
+        public void makePlay(int row1, int col1, int row2, int col2)
         {
             if (piecesAreAdjacent(row1, col1, row2, col2))
             {
@@ -102,15 +102,21 @@ namespace PokemonBejeweled
                 updateSingleRow(row2, col2, row1, col1);
                 updateSingleColumn(row1, col1, row2, col2);
                 updateSingleColumn(row2, col2, row1, col1);
+                swapDitto(row1, col1, row2, col2);
                 _pokemon[row1, col1] = firstToken;
                 _pokemon[row2, col2] = secondToken;
-                while (!haveGridsStabilized())
-                {
-                    pullDownTokens();
-                    copyGrid(_pokemon, _newPokemon);
-                    updateAllColumns();
-                    updateAllRows();
-                }
+                updateBoard();
+            }
+        }
+
+        public void updateBoard()
+        {
+            if (!haveGridsStabilized())
+            {
+                pullDownTokens();
+                copyGrid(_pokemon, _newPokemon);
+                updateAllColumns();
+                updateAllRows();
             }
         }
 
@@ -125,6 +131,20 @@ namespace PokemonBejeweled
                 return true;
             }
             return false;
+        }
+
+        public virtual void swapDitto(int row1, int col1, int row2, int col2)
+        {
+            if (_pokemon[row1, col1].GetType() == typeof(DittoToken))
+            {
+                markAllTokensOfSameTypeAsNull(_pokemon[row2, col2].GetType());
+                _newPokemon[row1, col1] = null;
+            }
+            else if (_pokemon[row2, col2].GetType() == typeof(DittoToken))
+            {
+                markAllTokensOfSameTypeAsNull(_pokemon[row1, col1].GetType());
+                _newPokemon[row2, col2] = null;
+            }
         }
 
         public virtual void updateSingleRow(int rowStart, int colStart, int rowEnd, int colEnd)
@@ -149,7 +169,7 @@ namespace PokemonBejeweled
                 _newPokemon[rowStart, colStart] = _pokemon[rowStart, colStart];
                 _newPokemon[rowEnd, colEnd] = _pokemon[rowEnd, colEnd];
                 markNullRow(rowStart, currentCol - numberOfSameTokens, numberOfSameTokens);
-                markSpecials(rowStart, --currentCol, numberOfSameTokens);
+                markSpecials(rowStart, colStart, numberOfSameTokens);
             }
         }
 
@@ -187,7 +207,7 @@ namespace PokemonBejeweled
                 _newPokemon[rowStart, colStart] = _pokemon[rowStart, colStart];
                 _newPokemon[rowEnd, colEnd] = _pokemon[rowEnd, colEnd];
                 markNullColumn(currentRow - numberOfSameTokens, colStart, numberOfSameTokens);
-                markSpecials(--currentRow, colStart, numberOfSameTokens);
+                markSpecials(rowStart, colStart, numberOfSameTokens);
             }
         }
 
@@ -209,10 +229,6 @@ namespace PokemonBejeweled
             if (movedToken.GetType().GetInterfaces().Contains(typeof(IFirstEvolutionPokemonToken)))
             {
                 markSurroundingTokensNull(row, col);
-            }
-            else if (movedToken.GetType() == typeof(DittoToken))
-            {
-                markAllTokensOfSameTypeAsNull(_pokemon[row, col].GetType());
             }
             else if (movedToken.GetType().GetInterfaces().Contains(typeof(ISecondEvolutionPokemonToken)))
             {
