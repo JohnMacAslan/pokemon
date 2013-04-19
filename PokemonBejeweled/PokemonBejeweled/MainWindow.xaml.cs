@@ -55,12 +55,15 @@ namespace PokemonBejeweled
             tokenColors.Add(typeof(TyphlosionToken), Brushes.OrangeRed);
             tokenColors.Add(typeof(DittoToken), Brushes.Pink);
             gameState = new GameState();
+            gameState.Grid.PullDownTokens += delegate
+            {
+                updateGridBoard();
+            };
             gridBoard = this.GridBoard;
-            setUpGridBoard();
             inMove = false;
             previousColumn = 0;
             previousRow = 0;
-            updateGridBoard();
+            setUpGridBoard();
             NewGameButton.Click += delegate { gameState.newGame(); updateGridBoard(); };
         }
 
@@ -85,12 +88,12 @@ namespace PokemonBejeweled
                         {
                             inMove = false;
                             gameState.Grid.updateBoard(newButton.row, newButton.column, previousRow, previousColumn);
-                            updateGridBoard();
                         }
                     };
                     gridBoard.Children.Add(newButton);
                 }
             }
+            updateGridBoard();
         }
 
         public void updateGridBoard()
