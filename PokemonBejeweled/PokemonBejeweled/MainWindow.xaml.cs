@@ -65,6 +65,7 @@ namespace PokemonBejeweled
             previousRow = 0;
             setUpGridBoard();
             NewGameButton.Click += delegate { gameState.newGame(); updateGridBoard(); };
+            QuitGameButton.Click += delegate { this.Close(); };
         }
 
         public void setUpGridBoard()
