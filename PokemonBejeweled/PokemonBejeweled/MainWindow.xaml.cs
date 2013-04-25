@@ -55,6 +55,10 @@ namespace PokemonBejeweled
             tokenColors.Add(typeof(TyphlosionToken), Brushes.OrangeRed);
             tokenColors.Add(typeof(DittoToken), Brushes.Pink);
             gameState = new GameState();
+            gameState.Grid.BoardDirtied += new BoardDirtiedEventHandler(delegate
+            {
+                updateGridBoard();
+            });
             gridBoard = this.GridBoard;
             inMove = false;
             previousColumn = 0;
@@ -64,10 +68,6 @@ namespace PokemonBejeweled
             {
                 inMove = false;
                 gameState.newGame();
-                gameState.Grid.PullDownTokens += delegate
-                {
-                    updateGridBoard();
-                };
                 updateGridBoard();
             };
             QuitGameButton.Click += delegate { this.Close(); };
@@ -94,11 +94,9 @@ namespace PokemonBejeweled
                         {
                             inMove = false;
                             gameState.Grid.makePlay(newButton.row, newButton.column, previousRow, previousColumn);
-                            updateGridBoard();
                             while (!gameState.Grid.haveGridsStabilized())
                             {
                                 gameState.Grid.updateBoard();
-                                updateGridBoard();
                             }
                         }
                     };
@@ -118,7 +116,14 @@ namespace PokemonBejeweled
                 {
                     buttonEnumerator.MoveNext();
                     currentButton = (GridButton)buttonEnumerator.Current;
-                    currentButton.setBackgroundColor(tokenColors[gameState.Grid.Pokemon[r, c].GetType()]);
+                    if (null == gameState.Grid.Pokemon[r, c])
+                    {
+                        currentButton.setBackgroundColor(Brushes.Black);
+                    }
+                    else
+                    {
+                        currentButton.setBackgroundColor(tokenColors[gameState.Grid.Pokemon[r, c].GetType()]);
+                    }
                 }
             }
             

@@ -7,10 +7,11 @@ using PokemonBejeweled.Pokemon;
 
 namespace PokemonBejeweled
 {
+    public delegate void BoardDirtiedEventHandler(object source);
+
     public class PokemonGrid
     {
-        public delegate void PullDownTokensEventHandler(object source);
-        public event PullDownTokensEventHandler PullDownTokens;
+        public event BoardDirtiedEventHandler BoardDirtied;
         public static int gridSize = 8;
         private Dictionary<int, Type> dict = new Dictionary<int, Type>();
         public int GamePlayScore { get; set; }
@@ -174,6 +175,40 @@ namespace PokemonBejeweled
             }
         }
 
+        public virtual void updateAllRows()
+        {
+            int numberOfSameTokens;
+            IBasicPokemonToken currentToken;
+            for (int row = 0; row < gridSize; row++)
+            {
+                currentToken = _pokemon[row, 0];
+                numberOfSameTokens = 1;
+                for (int col = 1; col < gridSize; col++)
+                {
+                    if (currentToken.isSameSpecies(_pokemon[row, col]))
+                    {
+                        numberOfSameTokens++;
+                    }
+                    else if (3 <= numberOfSameTokens)
+                    {
+                        markNullRow(row, col - numberOfSameTokens, numberOfSameTokens);
+                        evolveToken(row, col - numberOfSameTokens, numberOfSameTokens);
+                        numberOfSameTokens = 1;
+                    }
+                    else
+                    {
+                        currentToken = _pokemon[row, col];
+                        numberOfSameTokens = 1;
+                    }
+                }
+                if (3 <= numberOfSameTokens)
+                {
+                    markNullRow(row, gridSize - numberOfSameTokens, numberOfSameTokens);
+                    evolveToken(row, gridSize - numberOfSameTokens, numberOfSameTokens);
+                }
+            }
+        }
+
         public virtual void markNullRow(int row, int colStart, int numberOfSameTokens)
         {
             if (3 <= numberOfSameTokens)
@@ -213,61 +248,6 @@ namespace PokemonBejeweled
             updateSingleRow(colStart, rowStart, colEnd, rowEnd);
             copyGrid(invertPokemon(_pokemon), _pokemon);
             copyGrid(invertPokemon(_newPokemon), _newPokemon);
-            //IBasicPokemonToken startToken = _pokemon[rowStart, colStart];
-            //int numberOfSameTokens = 1;
-
-            //int currentRow = rowStart - 1;
-            //while (currentRow >= 0 && startToken.isSameSpecies(_pokemon[currentRow, colStart]))
-            //{
-            //    numberOfSameTokens++;
-            //    currentRow--;
-            //}
-            //currentRow = rowStart + 1;
-            //while (currentRow < gridSize && startToken.isSameSpecies(_pokemon[currentRow, colStart]))
-            //{
-            //    numberOfSameTokens++;
-            //    currentRow++;
-            //}
-            //if (3 <= numberOfSameTokens)
-            //{
-            //    _newPokemon[rowStart, colStart] = _pokemon[rowStart, colStart];
-            //    _newPokemon[rowEnd, colEnd] = _pokemon[rowEnd, colEnd];
-            //    markNullColumn(currentRow - numberOfSameTokens, colStart, numberOfSameTokens);
-            //    markColSpecials(currentRow - numberOfSameTokens, colStart, numberOfSameTokens);
-            //    evolveToken(rowStart, colStart, numberOfSameTokens);
-            //}
-        }
-
-        public virtual void markNullColumn(int rowStart, int col, int numberOfSameTokens)
-        {
-            if (3 <= numberOfSameTokens)
-            {
-                int row = rowStart;
-                while (row < rowStart + numberOfSameTokens)
-                {
-                    _newPokemon[row++, col] = null;
-                }
-            }
-        }
-
-        public virtual void markColSpecials(int rowStart, int col, int numberOfSameTokens)
-        {
-            if (3 <= numberOfSameTokens)
-            {
-                IBasicPokemonToken currentToken;
-                for (int i = 0; i < numberOfSameTokens; i++)
-                {
-                    currentToken = _pokemon[rowStart + i, col];
-                    if (currentToken.GetType().GetInterfaces().Contains(typeof(IFirstEvolutionPokemonToken)))
-                    {
-                        markSurroundingTokensNull(rowStart + i, col);
-                    }
-                    else if (currentToken.GetType().GetInterfaces().Contains(typeof(ISecondEvolutionPokemonToken)))
-                    {
-                        markFullRowAndColumnAsNull(rowStart + i, col);
-                    }
-                }
-            }
         }
 
         public virtual void evolveToken(int row, int col, int numberOfSameTokens)
@@ -331,40 +311,6 @@ namespace PokemonBejeweled
             }
         }
 
-        public virtual void updateAllRows()
-        {
-            int numberOfSameTokens;
-            IBasicPokemonToken currentToken;
-            for (int row = 0; row < gridSize; row++)
-            {
-                currentToken = _pokemon[row, 0];
-                numberOfSameTokens = 1;
-                for (int col = 1; col < gridSize; col++)
-                {
-                    if (currentToken.isSameSpecies(_pokemon[row, col]))
-                    {
-                        numberOfSameTokens++;
-                    }
-                    else if (3 <= numberOfSameTokens)
-                    {
-                        markNullRow(row, col - numberOfSameTokens, numberOfSameTokens);
-                        evolveToken(row, col - numberOfSameTokens, numberOfSameTokens);
-                        numberOfSameTokens = 1;
-                    }
-                    else
-                    {
-                        currentToken = _pokemon[row, col];
-                        numberOfSameTokens = 1;
-                    }
-                }
-                if (3 <= numberOfSameTokens)
-                {
-                    markNullRow(row, gridSize - numberOfSameTokens, numberOfSameTokens);
-                    evolveToken(row, gridSize - numberOfSameTokens, numberOfSameTokens);
-                }
-            }
-        }
-
         public virtual void updateAllColumns()
         {
             copyGrid(invertPokemon(_pokemon), _pokemon);
@@ -372,41 +318,12 @@ namespace PokemonBejeweled
             updateAllRows();
             copyGrid(invertPokemon(_pokemon), _pokemon);
             copyGrid(invertPokemon(_newPokemon), _newPokemon);
-            //int numberOfSameTokens;
-            //IBasicPokemonToken currentToken;
-            //for (int col = 0; col < gridSize; col++)
-            //{
-            //    currentToken = _pokemon[0, col];
-            //    numberOfSameTokens = 1;
-            //    for (int row = 1; row < gridSize; row++)
-            //    {
-            //        if (currentToken.isSameSpecies(_pokemon[row, col]))
-            //        {
-            //            numberOfSameTokens++;
-            //        }
-            //        else if (3 <= numberOfSameTokens)
-            //        {
-            //            markNullColumn(row - numberOfSameTokens, col, numberOfSameTokens);
-            //            evolveToken(row - numberOfSameTokens, col, numberOfSameTokens);
-            //            numberOfSameTokens = 1;
-            //        }
-            //        else
-            //        {
-            //            currentToken = _pokemon[row, col];
-            //            numberOfSameTokens = 1;
-            //        }
-            //    }
-            //    if (3 <= numberOfSameTokens)
-            //    {
-            //        markNullColumn(gridSize - numberOfSameTokens, col, numberOfSameTokens);
-            //        evolveToken(gridSize - numberOfSameTokens, col, numberOfSameTokens);
-            //    }
-            //}
         }
 
         internal void pullDownTokens()
         {
             copyGrid(_newPokemon, _pokemon);
+            OnBoardDirtied();
             printGrid(_pokemon);
             int numberOfTokensToPullDown;
             for (int col = 0; col < gridSize; col++)
@@ -435,8 +352,13 @@ namespace PokemonBejeweled
                     }
                 }
             }
-            if (PullDownTokens != null) PullDownTokens(this);
+            OnBoardDirtied();
             printGrid(_pokemon);
+        }
+
+        protected virtual void OnBoardDirtied()
+        {
+            if (BoardDirtied != null) BoardDirtied(this);
         }
 
         private IBasicPokemonToken generateNewPokemon()
