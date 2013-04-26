@@ -44,12 +44,11 @@ namespace PokemonBejeweled
 
         public virtual void generateGrid()
         {
-            IBasicPokemonToken[,] pokemon = new IBasicPokemonToken[gridSize, gridSize];
             for (int row = 0; row < gridSize; row++)
             {
                 for (int col = 0; col < gridSize; col++)
                 {
-                    pokemon[row, col] = generateNewPokemon();
+                    _pokemonGrid[row, col] = generateNewPokemon();
                 }
             }
             updateBoard();
@@ -208,11 +207,19 @@ namespace PokemonBejeweled
         {
             if (_pokemonGrid[row, col].GetType().GetInterfaces().Contains(typeof(IFirstEvolutionPokemonToken)))
             {
-                markSurroundingTokensNull(row, col);
+                if (null != _newPokemonGrid[row, col])
+                {
+                    _newPokemonGrid[row, col] = null;
+                    markSurroundingTokensNull(row, col);
+                }
             }
             else if (_pokemonGrid[row, col].GetType().GetInterfaces().Contains(typeof(ISecondEvolutionPokemonToken)))
             {
-                markFullRowAndColumnAsNull(row, col);
+                if (null != _newPokemonGrid[row, col])
+                {
+                    _newPokemonGrid[row, col] = null;
+                    markFullRowAndColumnAsNull(row, col);
+                }
             }
             _newPokemonGrid[row, col] = null;
             _gamePlayScore += 10;

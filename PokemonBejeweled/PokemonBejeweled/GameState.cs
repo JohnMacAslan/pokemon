@@ -10,6 +10,9 @@ namespace PokemonBejeweled
 {
     public class GameState
     {
+        private Boolean _inMove;
+        private int _previousRow;
+        private int _previousColumn;
         private Timer _countdown = new Timer(1000);
         public Timer Countdown
         {
@@ -54,8 +57,26 @@ namespace PokemonBejeweled
         {
             _grid = new PokemonBoard();
             _score = 0;
+            _inMove = false;
+            _previousColumn = 0;
+            _previousRow = 0;
             _timeLeft = 120000; // Default
             _countdown.Start();
+        }
+
+        public void makePlay(int row, int col)
+        {
+            if (!_inMove)
+            {
+                _inMove = true;
+                _previousRow = row;
+                _previousColumn = col;
+            }
+            else
+            {
+                _inMove = false;
+                _score += _grid.makePlay(row, col, _previousRow, _previousColumn);
+            }
         }
 
         public void decrementTime(object sender, ElapsedEventArgs e)

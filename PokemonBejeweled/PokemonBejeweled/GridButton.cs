@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 
 namespace PokemonBejeweled
@@ -15,7 +16,7 @@ namespace PokemonBejeweled
     public class GridButton : Button
     {
         private int _row;
-        public int row
+        public int Row
         {
             get
             {
@@ -23,25 +24,25 @@ namespace PokemonBejeweled
             }
         }
         private int _column;
-        public int column
+        public int Column
         {
             get
             {
                 return _column;
             }
         }
+        private GameState _gameState;
 
-        public GridButton(int row, int column)
+        public GridButton(GameState gameState, int row, int column)
         {
             this._row = row;
             this._column = column;
-
+            this._gameState = gameState;
         }
 
-        public void setBackgroundColor(Brush color)
+        protected override void OnClick()
         {
-            this.Background = color;
+            _gameState.makePlay(_row, _column);
         }
-
     }
 }
