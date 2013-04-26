@@ -54,22 +54,6 @@ namespace PokemonBejeweled.Pokemon
             }
         }
 
-        
-        public bool isEvolutionLevel(EvolutionLevel level)
-        {
-            switch (level)
-            {
-                case EvolutionLevel.SECOND:
-                    return this.GetType().GetInterfaces().Contains(typeof(ISecondEvolutionPokemonToken));
-                case EvolutionLevel.FIRST:
-                    return this.GetType().GetInterfaces().Contains(typeof(IFirstEvolutionPokemonToken));
-                case EvolutionLevel.BASIC:
-                    return this.GetType().GetInterfaces().Contains(typeof(IBasicPokemonToken));
-                default:
-                    return false;
-            }
-        }
-
         public ImageBrush getPokemonPicture()
         {
             Uri image = null;

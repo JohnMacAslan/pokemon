@@ -21,6 +21,7 @@ namespace PokemonBejeweled
     /// </summary>
     public partial class MainWindow : Window
     {
+        private int _score = 0;
         private GameState gameState;
         private System.Windows.Controls.Primitives.UniformGrid gridBoard;
         private Dictionary<Type, Brush> _tokenColors = tokenColors();
@@ -35,11 +36,13 @@ namespace PokemonBejeweled
             gridBoard = this.GridBoard;
             gameState.Grid.BoardDirtied += new BoardDirtiedEventHandler(delegate { updateGridBoard(); });
             inMove = false;
+            _score = 0;
             previousColumn = 0;
             previousRow = 0;
             setUpGridBoard();
             NewGameButton.Click += delegate
             {
+                _score = 0;
                 inMove = false;
                 gameState.newGame();
                 updateGridBoard();
@@ -50,13 +53,13 @@ namespace PokemonBejeweled
 
         public void setUpGridBoard()
         {
-            for(int r = 0; r < PokemonGrid.gridSize; r++)
+            for(int r = 0; r < PokemonBoard.gridSize; r++)
             {
-                for(int c = 0; c < PokemonGrid.gridSize; c++)
+                for(int c = 0; c < PokemonBoard.gridSize; c++)
                 {
                     GridButton newButton = new GridButton(r, c);
-                    newButton.Height = gridBoard.Height / PokemonGrid.gridSize;
-                    newButton.Width = gridBoard.Width / PokemonGrid.gridSize;
+                    newButton.Height = gridBoard.Height / PokemonBoard.gridSize;
+                    newButton.Width = gridBoard.Width / PokemonBoard.gridSize;
                     newButton.Click += delegate
                     {
                         if (!inMove)
@@ -68,7 +71,7 @@ namespace PokemonBejeweled
                         else
                         {
                             inMove = false;
-                            gameState.Grid.makePlay(newButton.row, newButton.column, previousRow, previousColumn);
+                            _score += gameState.Grid.makePlay(newButton.row, newButton.column, previousRow, previousColumn);
                         }
                     };
                     gridBoard.Children.Add(newButton);
@@ -81,19 +84,19 @@ namespace PokemonBejeweled
         {
             GridButton currentButton;
             System.Collections.IEnumerator buttonEnumerator = gridBoard.Children.GetEnumerator();
-            for (int r = 0; r < PokemonGrid.gridSize; r++)
+            for (int r = 0; r < PokemonBoard.gridSize; r++)
             {
-                for (int c = 0; c < PokemonGrid.gridSize; c++)
+                for (int c = 0; c < PokemonBoard.gridSize; c++)
                 {
                     buttonEnumerator.MoveNext();
                     currentButton = (GridButton)buttonEnumerator.Current;
-                    if (null == gameState.Grid.Pokemon[r, c])
+                    if (null == gameState.Grid.PokemonGrid[r, c])
                     {
                         currentButton.setBackgroundColor(Brushes.Black);
                     }
                     else
                     {
-                        currentButton.Background = (gameState.Grid.Pokemon[r, c].getPokemonPicture());
+                        currentButton.Background = (gameState.Grid.PokemonGrid[r, c].getPokemonPicture());
                         //currentButton.setBackgroundColor(tokenColors[gameState.Grid.Pokemon[r, c].GetType()]);
                     }
                 }

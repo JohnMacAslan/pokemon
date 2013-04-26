@@ -30,9 +30,14 @@ namespace PokemonBejeweled
             }
         }
         private int NO_TIME_LIMIT = -1;
-        private int score;
-        private PokemonGrid _grid;
-        public PokemonGrid Grid
+        private int _score = 0;
+        public int Score
+        {
+            get { return _score; }
+            set { }
+        }
+        private PokemonBoard _grid;
+        public PokemonBoard Grid
         {
             get
             {
@@ -47,26 +52,10 @@ namespace PokemonBejeweled
 
         public void newGame()
         {
-            _grid = new PokemonGrid();
-            score = 0;
+            _grid = new PokemonBoard();
+            _score = 0;
             _timeLeft = 120000; // Default
             _countdown.Start();
-            Console.Out.WriteLine("a new game");
-        }
-
-        public void setScore(int value)
-        {
-            score = value;
-        }
-
-        public void addToScore(int value)
-        {
-            score += value;
-        }
-
-        public int getScore()
-        {
-            return score;
         }
 
         public void decrementTime(object sender, ElapsedEventArgs e)
