@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace PokemonBejeweled.Pokemon
 {
@@ -12,6 +14,8 @@ namespace PokemonBejeweled.Pokemon
         {
             firstEvolution = typeof(QuilavaToken);
             secondEvolution = typeof(TyphlosionToken);
+
+            pictureLocation = "Pokemon/Pictures/cyndaquil.JPG";
         }
     }
 }

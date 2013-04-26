@@ -63,7 +63,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Copy of PokemonGrid.cs" />
-    <Compile Include="deletethis.cs" />
     <Compile Include="GameState.cs" />
     <Compile Include="GridButton.cs" />
     <Compile Include="MainWindow.xaml.cs">
@@ -73,6 +72,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="PokemonGrid.cs" />
+    <Compile Include="PokemonGridHistory.cs" />
     <Compile Include="Pokemon\BulbasaurChain\BulbasaurToken.cs" />
     <Compile Include="Pokemon\BulbasaurChain\IvysaurToken.cs" />
     <Compile Include="Pokemon\BulbasaurChain\VenusaurToken.cs" />

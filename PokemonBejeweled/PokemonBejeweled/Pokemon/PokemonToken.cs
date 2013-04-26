@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+
 
 namespace PokemonBejeweled.Pokemon
 {
@@ -10,12 +13,14 @@ namespace PokemonBejeweled.Pokemon
     {
         protected Type firstEvolution;
         protected Type secondEvolution;
+        protected String pictureLocation;
         public enum EvolutionLevel
         {
             BASIC,
             FIRST,
             SECOND
         };
+
 
         public virtual IFirstEvolutionPokemonToken firstEvolvedToken()
         {
@@ -48,6 +53,7 @@ namespace PokemonBejeweled.Pokemon
                 return this.GetType().BaseType;
             }
         }
+
         
         public bool isEvolutionLevel(EvolutionLevel level)
         {
@@ -63,5 +69,44 @@ namespace PokemonBejeweled.Pokemon
                     return false;
             }
         }
+
+        public ImageBrush getPokemonPicture()
+        {
+            Uri image = null;
+            Uri shader = null;
+            try
+            {
+                image = new Uri(System.Reflection.Assembly.GetEntryAssembly().Location);
+                shader = new Uri(image, pictureLocation);
+            }
+            catch (ArgumentNullException e)
+            {
+                System.Console.WriteLine(e.Message);
+            }
+            catch (UriFormatException f)
+            {
+                System.Console.WriteLine(f.Message);
+            }
+            catch
+            {
+                System.Console.WriteLine("whoah somethin different");
+            }
+
+
+            BitmapImage bitImage = null;
+            try
+            {
+                bitImage = new BitmapImage(shader);
+            }
+            catch (Exception e)
+            {
+                System.Console.WriteLine(e.Message);
+            }
+            ImageBrush background = new ImageBrush(bitImage);
+            return background;
+        }
+
+       
+
     }
 }

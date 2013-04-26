@@ -21,6 +21,7 @@ namespace PokemonBejeweled
             {
             }
         }
+  
         private double _timeLeft;
         public double TimeLeft
         {
@@ -29,7 +30,12 @@ namespace PokemonBejeweled
                 return _timeLeft;
             }
             set
-            {
+            { 
+                if (value < 0 && value != NO_TIME_LIMIT)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+                _timeLeft = value;
             }
         }
         private int NO_TIME_LIMIT = -1;
@@ -48,10 +54,6 @@ namespace PokemonBejeweled
             newGame();
         }
 
-        public void makePlay(int rowStart, int colStart, int rowEnd, int colEnd)
-        {
-        }
-
         public void newGame()
         {
             _grid = new PokemonGrid();
@@ -59,7 +61,7 @@ namespace PokemonBejeweled
           //  _timeLeft = 300; // Default (5 min)
             start();
            // testTimer.Tick += EventHandler
-            Console.Out.WriteLine("a new game");
+            _countdown.Start();
         }
 
         public void setScore(int value)
@@ -108,7 +110,7 @@ namespace PokemonBejeweled
 
         public void decrementTime(object sender, ElapsedEventArgs e)
         {
-            if (_timeLeft != 0)
+            if (_timeLeft != 0 && NO_TIME_LIMIT != _timeLeft)
             {
                 _timeLeft--;
             }
