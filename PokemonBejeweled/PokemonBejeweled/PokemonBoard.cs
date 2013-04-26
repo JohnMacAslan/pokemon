@@ -8,15 +8,16 @@ using PokemonBejeweled.Pokemon;
 namespace PokemonBejeweled
 {
     public delegate void BoardDirtiedEventHandler(object source);
+    public delegate void PointsAddedEventHandler(object source);
 
     public class PokemonBoard
     {
         public static int gridSize = 8;
-        private int _gamePlayScore = 0;
-        public int GamePlayScore
+        private int _pointsToAdd = 0;
+        public int PointsToAdd
         {
-            get { return _gamePlayScore; }
-            set { _gamePlayScore = value; }
+            get { return _pointsToAdd; }
+            set { _pointsToAdd = value; }
         }
         private IBasicPokemonToken[,] _pokemonGrid = new IBasicPokemonToken[gridSize, gridSize];
         internal IBasicPokemonToken[,] PokemonGrid
@@ -34,6 +35,7 @@ namespace PokemonBejeweled
         private Random rand = new Random();
         private static Dictionary<int, Type> dict = basicTokens();
         public event BoardDirtiedEventHandler BoardDirtied;
+        public event PointsAddedEventHandler PointsAdded;
 
         public PokemonBoard()
         {
@@ -209,6 +211,7 @@ namespace PokemonBejeweled
             {
                 if (null != _newPokemonGrid[row, col])
                 {
+                    OnPointsAdded(30);
                     _newPokemonGrid[row, col] = null;
                     markSurroundingTokensNull(row, col);
                 }
@@ -217,12 +220,22 @@ namespace PokemonBejeweled
             {
                 if (null != _newPokemonGrid[row, col])
                 {
+                    OnPointsAdded(30);
                     _newPokemonGrid[row, col] = null;
                     markFullRowAndColumnAsNull(row, col);
                 }
             }
             _newPokemonGrid[row, col] = null;
-            _gamePlayScore += 10;
+            OnPointsAdded(10);
+        }
+
+        private void OnPointsAdded(int pointsToAdd)
+        {
+            _pointsToAdd = pointsToAdd;
+            if (null != PointsAdded)
+            {
+                PointsAdded(this);
+            }
         }
 
         public virtual void evolveToken(int row, int col, int numberOfSameTokens)
@@ -231,23 +244,22 @@ namespace PokemonBejeweled
             switch (numberOfSameTokens)
             {
                 case 4:
-                    _gamePlayScore += 50;
+                    OnPointsAdded(50);
                     _newPokemonGrid[row, col] = movedToken.firstEvolvedToken();
                     break;
                 case 5:
-                    _gamePlayScore += 100;
+                    OnPointsAdded(100);
                     _newPokemonGrid[row, col] = new DittoToken();
                     break;
                 case 6:
-                    _gamePlayScore += 300;
+                    OnPointsAdded(300);
                     _newPokemonGrid[row, col] = movedToken.secondEvolvedToken();
                     break;
             }
         }
 
-        public int makePlay(int row1, int col1, int row2, int col2)
+        public void makePlay(int row1, int col1, int row2, int col2)
         {
-            _gamePlayScore = 0;
             if (piecesAreAdjacent(row1, col1, row2, col2))
             {
                 IBasicPokemonToken firstToken = _pokemonGrid[row1, col1];
@@ -263,7 +275,6 @@ namespace PokemonBejeweled
                 _pokemonGrid[row2, col2] = secondToken;
                 updateBoard();
             }
-            return _gamePlayScore;
         }
 
         public virtual bool piecesAreAdjacent(int row1, int col1, int row2, int col2)

@@ -8,6 +8,8 @@ using System.Windows;
 
 namespace PokemonBejeweled
 {
+    public delegate void ScoreUpdatedEventHandler(object source);
+
     public class GameState
     {
         private Boolean _inMove;
@@ -17,8 +19,7 @@ namespace PokemonBejeweled
         public Timer Countdown
         {
             get { return _countdown; }
-            set { }
-        }
+        } 
         private double _timeLeft;
         public double TimeLeft
         {
@@ -37,31 +38,33 @@ namespace PokemonBejeweled
         public int Score
         {
             get { return _score; }
-            set { }
         }
+        public ScoreUpdatedEventHandler ScoreUpdated;
         private PokemonBoard _grid;
         public PokemonBoard Grid
         {
-            get
-            {
-                return _grid;
-            }
+            get { return _grid; }
         }
 
         public GameState()
         {
             newGame();
+            _countdown.Elapsed += new ElapsedEventHandler(decrementTime);
+            _countdown.Start();
         }
 
         public void newGame()
         {
             _grid = new PokemonBoard();
+            _grid.PointsAdded += delegate
+            {
+                OnScoreUpdated();
+            };
             _score = 0;
             _inMove = false;
             _previousColumn = 0;
             _previousRow = 0;
             _timeLeft = 120000; // Default
-            _countdown.Start();
         }
 
         public void makePlay(int row, int col)
@@ -75,7 +78,19 @@ namespace PokemonBejeweled
             else
             {
                 _inMove = false;
-                _score += _grid.makePlay(row, col, _previousRow, _previousColumn);
+                if (TimeLeft != 0)
+                {
+                    _grid.makePlay(row, col, _previousRow, _previousColumn);
+                }
+            }
+        }
+
+        private void OnScoreUpdated()
+        {
+            _score += _grid.PointsToAdd;
+            if (null != ScoreUpdated)
+            {
+                ScoreUpdated(this);
             }
         }
 
