@@ -19,17 +19,19 @@
                 </Expander>
                 <Expander IsExpanded="True" Header="Settings">
                     <StackPanel Width="100" >
-                        <RadioButton GroupName="GameTime" Content="One Minute" TextElement.Foreground="YellowGreen"/>
-                        <RadioButton GroupName="GameTime" Content ="Five Minutes" TextElement.Foreground="YellowGreen" IsChecked="True"/>
-                        <RadioButton GroupName="GameTime" Content ="Ten Minutes" TextElement.Foreground="YellowGreen"/>
+                        <RadioButton GroupName="GameTime" Name="oneMinute" Content="One Minute" TextElement.Foreground="YellowGreen"/>
+                        <RadioButton GroupName="GameTime" Name="fiveMinute" Content ="Five Minutes" TextElement.Foreground="YellowGreen" IsChecked="True"/>
+                        <RadioButton GroupName="GameTime" Name="tenMinute" Content ="Ten Minutes" TextElement.Foreground="YellowGreen"/>
                     </StackPanel>
+                </Expander>
+                <Expander IsExpanded="True" Header="Scoreboard" TextElement.Foreground="YellowGreen">
+                    <Label Name="ScoreboardLabel" FontSize="25" TextElement.Foreground="Orange" HorizontalAlignment="Right">0</Label>
                 </Expander>
             </StackPanel>
             <StackPanel Background="Black" DockPanel.Dock="Bottom">
                 <Expander IsExpanded="True" Header="Time Left" TextElement.Foreground="YellowGreen">
                     <StackPanel Height="50">
-                        <TextBlock FontSize="40" TextElement.Foreground="YellowGreen" >5:00</TextBlock>
-                        
+                        <Label Name="TimerLabel" FontSize="40" TextElement.Foreground="YellowGreen" >5:00</Label>       
                     </StackPanel>
                 </Expander>
             </StackPanel>

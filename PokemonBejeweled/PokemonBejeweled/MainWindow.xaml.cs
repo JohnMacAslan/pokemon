@@ -24,13 +24,19 @@ namespace PokemonBejeweled
 
         private GameState gameState;
         private System.Windows.Controls.Primitives.UniformGrid gridBoard;
+        private System.Windows.Controls.Label timerLabel;
         private Dictionary<Type, Brush> tokenColors = new Dictionary<Type,Brush>();
         private Boolean inMove;
         private int previousRow;
         private int previousColumn;
+        private System.Windows.Threading.DispatcherTimer timer = new System.Windows.Threading.DispatcherTimer();
+        private System.Windows.Controls.RadioButton oneMin;
+        private System.Windows.Controls.RadioButton fiveMin;
+        private System.Windows.Controls.RadioButton tenMin;
+        private System.Windows.Controls.Label scoreboard;
         
         public MainWindow()
-        {
+           {
             InitializeComponent();
             tokenColors.Add(typeof(BulbasaurToken), Brushes.MediumSeaGreen);
             tokenColors.Add(typeof(IvysaurToken), Brushes.MediumSeaGreen);
@@ -56,6 +62,11 @@ namespace PokemonBejeweled
             tokenColors.Add(typeof(DittoToken), Brushes.Pink);
             gameState = new GameState();
             gridBoard = this.GridBoard;
+            timerLabel = this.TimerLabel;
+            oneMin = this.oneMinute;
+            fiveMin = this.fiveMinute;
+            tenMin = this.tenMinute;
+            scoreboard = this.ScoreboardLabel;
             inMove = false;
             previousColumn = 0;
             previousRow = 0;
@@ -64,17 +75,25 @@ namespace PokemonBejeweled
             {
                 inMove = false;
                 gameState.newGame();
+                resetTimer();
+                updateScore();
                 gameState.Grid.PullDownTokens += delegate
                 {
                     updateGridBoard();
                 };
                 updateGridBoard();
             };
+        //    gameState.Countdown.Elapsed += updateTimer;
+            timer.Tick += new EventHandler(updateTimer);
+            timer.Interval = new TimeSpan(0, 0, 1);
+            timer.Start();
+
             QuitGameButton.Click += delegate { this.Close(); };
         }
 
         public void setUpGridBoard()
         {
+            resetTimer();
             for(int r = 0; r < PokemonGrid.gridSize; r++)
             {
                 for(int c = 0; c < PokemonGrid.gridSize; c++)
@@ -111,6 +130,7 @@ namespace PokemonBejeweled
         public void updateGridBoard()
         {
             GridButton currentButton;
+            scoreboard.Content = gameState.getScore();
             System.Collections.IEnumerator buttonEnumerator = gridBoard.Children.GetEnumerator();
             for (int r = 0; r < PokemonGrid.gridSize; r++)
             {
@@ -127,6 +147,36 @@ namespace PokemonBejeweled
             gridBoard.Dispatcher.Invoke(delegate() { }, System.Windows.Threading.DispatcherPriority.Render);
             System.Threading.Thread.Sleep(500);
         }
-       
+
+        private void updateScore()
+        {
+            scoreboard.Content = gameState.getScore();
+            scoreboard.Dispatcher.Invoke(delegate() { }, System.Windows.Threading.DispatcherPriority.Render);
+        }
+
+        private void updateTimer(object sender, EventArgs e)
+        {
+            TimeSpan t = TimeSpan.FromSeconds(gameState.getTime());
+            timerLabel.Content = string.Format("{0}:{1:D2}", t.Minutes, t.Seconds);
+            CommandManager.InvalidateRequerySuggested();
+          //  timerLabel.Dispatcher.Invoke(delegate() { }, System.Windows.Threading.DispatcherPriority.Render);
+        }
+
+        private void resetTimer()
+        {
+            if ((bool) oneMin.IsChecked)
+            {
+                gameState.setTime(60);
+            }
+            else if ((bool) fiveMin.IsChecked)
+            {
+                gameState.setTime(300);
+            }
+            else
+            {
+                gameState.setTime(600);
+            }
+            timer.Tick += new EventHandler(updateTimer);
+        }
     }
 }

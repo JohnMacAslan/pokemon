@@ -10,8 +10,28 @@ namespace PokemonBejeweled
 {
     public class GameState
     {
-        public Timer countdown = new Timer(1000);
-        private double timeLeft;
+        private Timer _countdown = new Timer(1000); // each second
+        public Timer Countdown
+        {
+            get
+            {
+                return _countdown;
+            }
+            set
+            {
+            }
+        }
+        private double _timeLeft;
+        public double TimeLeft
+        {
+            get
+            {
+                return _timeLeft;
+            }
+            set
+            {
+            }
+        }
         private int NO_TIME_LIMIT = -1;
         private int score;
         private PokemonGrid _grid;
@@ -36,7 +56,9 @@ namespace PokemonBejeweled
         {
             _grid = new PokemonGrid();
             score = 0;
-            timeLeft = 120000; // Default
+          //  _timeLeft = 300; // Default (5 min)
+            start();
+           // testTimer.Tick += EventHandler
             Console.Out.WriteLine("a new game");
         }
 
@@ -45,14 +67,14 @@ namespace PokemonBejeweled
             score = value;
         }
 
-        public void addToScore(int value)
-        {
-            score += value;
-        }
+     //    public void addToScore(int value)
+     //   {
+     //       score += value;
+     //   }
 
         public int getScore()
         {
-            return score;
+            return _grid.GamePlayScore;
         }
 
         public void setTime(double time)
@@ -61,32 +83,34 @@ namespace PokemonBejeweled
             {
                 throw new ArgumentOutOfRangeException();
             }
-            timeLeft = time;
+            _timeLeft = time;
         }
 
         public double getTime()
         {
-            return timeLeft;
+            return _timeLeft;
         }
 
         public void start()
         {
-            if (NO_TIME_LIMIT != timeLeft)
+            if (NO_TIME_LIMIT != _timeLeft)
             {
-                countdown.Elapsed += decrementTime;
+                _countdown.Elapsed += new ElapsedEventHandler(decrementTime);
+                _countdown.Start();
             }
         }
 
         public void stop()
         {
-            countdown.Elapsed -= decrementTime;
+            _countdown.Stop();
+            _countdown.Elapsed -= decrementTime;
         }
 
         public void decrementTime(object sender, ElapsedEventArgs e)
         {
-            if (timeLeft == 0)
+            if (_timeLeft != 0)
             {
-                timeLeft--;
+                _timeLeft--;
             }
         }
     }

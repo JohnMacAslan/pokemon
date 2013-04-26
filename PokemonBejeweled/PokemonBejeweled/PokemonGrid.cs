@@ -105,6 +105,7 @@ namespace PokemonBejeweled
                 swapDitto(row1, col1, row2, col2);
                 _pokemon[row1, col1] = firstToken;
                 _pokemon[row2, col2] = secondToken;
+                GamePlayScore += 250;
                 updateBoard();
             }
         }
