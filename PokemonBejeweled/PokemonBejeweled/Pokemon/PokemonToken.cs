@@ -10,12 +10,6 @@ namespace PokemonBejeweled.Pokemon
     {
         protected Type firstEvolution;
         protected Type secondEvolution;
-        public enum EvolutionLevel
-        {
-            BASIC,
-            FIRST,
-            SECOND
-        };
 
         public virtual IFirstEvolutionPokemonToken firstEvolvedToken()
         {
@@ -46,21 +40,6 @@ namespace PokemonBejeweled.Pokemon
             else
             {
                 return this.GetType().BaseType;
-            }
-        }
-        
-        public bool isEvolutionLevel(EvolutionLevel level)
-        {
-            switch (level)
-            {
-                case EvolutionLevel.SECOND:
-                    return this.GetType().GetInterfaces().Contains(typeof(ISecondEvolutionPokemonToken));
-                case EvolutionLevel.FIRST:
-                    return this.GetType().GetInterfaces().Contains(typeof(IFirstEvolutionPokemonToken));
-                case EvolutionLevel.BASIC:
-                    return this.GetType().GetInterfaces().Contains(typeof(IBasicPokemonToken));
-                default:
-                    return false;
             }
         }
     }

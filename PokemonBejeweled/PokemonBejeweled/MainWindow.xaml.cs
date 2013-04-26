@@ -21,7 +21,7 @@ namespace PokemonBejeweled
     /// </summary>
     public partial class MainWindow : Window
     {
-
+        private List<IBasicPokemonToken[,]> _history;
         private GameState gameState;
         private System.Windows.Controls.Primitives.UniformGrid gridBoard;
         private Dictionary<Type, Brush> tokenColors = new Dictionary<Type,Brush>();
@@ -55,10 +55,6 @@ namespace PokemonBejeweled
             tokenColors.Add(typeof(TyphlosionToken), Brushes.OrangeRed);
             tokenColors.Add(typeof(DittoToken), Brushes.Pink);
             gameState = new GameState();
-            gameState.Grid.BoardDirtied += new BoardDirtiedEventHandler(delegate
-            {
-                updateGridBoard();
-            });
             gridBoard = this.GridBoard;
             inMove = false;
             previousColumn = 0;
@@ -69,6 +65,7 @@ namespace PokemonBejeweled
                 inMove = false;
                 gameState.newGame();
                 updateGridBoard();
+                gameState.Grid.BoardDirtied += new BoardDirtiedEventHandler(delegate { updateGridBoard(); });
             };
             QuitGameButton.Click += delegate { this.Close(); };
         }
@@ -94,10 +91,6 @@ namespace PokemonBejeweled
                         {
                             inMove = false;
                             gameState.Grid.makePlay(newButton.row, newButton.column, previousRow, previousColumn);
-                            while (!gameState.Grid.haveGridsStabilized())
-                            {
-                                gameState.Grid.updateBoard();
-                            }
                         }
                     };
                     gridBoard.Children.Add(newButton);

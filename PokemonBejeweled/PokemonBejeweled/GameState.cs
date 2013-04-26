@@ -10,8 +10,25 @@ namespace PokemonBejeweled
 {
     public class GameState
     {
-        public Timer countdown = new Timer(1000);
-        private double timeLeft;
+        private Timer _countdown = new Timer(1000);
+        public Timer Countdown
+        {
+            get { return _countdown; }
+            set { }
+        }
+        private double _timeLeft;
+        public double TimeLeft
+        {
+            get { return _timeLeft; }
+            set
+            {
+                if (value < 0 && value != NO_TIME_LIMIT)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+                _timeLeft = value;
+            }
+        }
         private int NO_TIME_LIMIT = -1;
         private int score;
         private PokemonGrid _grid;
@@ -28,15 +45,12 @@ namespace PokemonBejeweled
             newGame();
         }
 
-        public void makePlay(int rowStart, int colStart, int rowEnd, int colEnd)
-        {
-        }
-
         public void newGame()
         {
             _grid = new PokemonGrid();
             score = 0;
-            timeLeft = 120000; // Default
+            _timeLeft = 120000; // Default
+            _countdown.Start();
             Console.Out.WriteLine("a new game");
         }
 
@@ -55,38 +69,11 @@ namespace PokemonBejeweled
             return score;
         }
 
-        public void setTime(double time)
-        {
-            if (time < 0 && time != NO_TIME_LIMIT)
-            {
-                throw new ArgumentOutOfRangeException();
-            }
-            timeLeft = time;
-        }
-
-        public double getTime()
-        {
-            return timeLeft;
-        }
-
-        public void start()
-        {
-            if (NO_TIME_LIMIT != timeLeft)
-            {
-                countdown.Elapsed += decrementTime;
-            }
-        }
-
-        public void stop()
-        {
-            countdown.Elapsed -= decrementTime;
-        }
-
         public void decrementTime(object sender, ElapsedEventArgs e)
         {
-            if (timeLeft == 0)
+            if (_timeLeft != 0 && NO_TIME_LIMIT != _timeLeft)
             {
-                timeLeft--;
+                _timeLeft--;
             }
         }
     }
