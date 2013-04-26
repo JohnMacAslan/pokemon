@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace PokemonBejeweled.Pokemon
 {
@@ -13,5 +15,7 @@ namespace PokemonBejeweled.Pokemon
         bool isSameSpecies(IBasicPokemonToken pokemonToken);
         IFirstEvolutionPokemonToken firstEvolvedToken();
         ISecondEvolutionPokemonToken secondEvolvedToken();
+        ImageBrush getPokemonPicture();
+        
     }
 }

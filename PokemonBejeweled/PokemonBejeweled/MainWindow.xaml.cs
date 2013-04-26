@@ -119,6 +119,9 @@ namespace PokemonBejeweled
                     buttonEnumerator.MoveNext();
                     currentButton = (GridButton)buttonEnumerator.Current;
                     currentButton.setBackgroundColor(tokenColors[gameState.Grid.Pokemon[r, c].GetType()]);
+                    currentButton.Background = (gameState.Grid.Pokemon[r, c].getPokemonPicture());
+           
+                    
                 }
             }
             
