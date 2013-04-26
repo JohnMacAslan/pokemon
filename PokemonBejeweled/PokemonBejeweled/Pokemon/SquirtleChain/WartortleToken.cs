@@ -13,7 +13,7 @@ namespace PokemonBejeweled.Pokemon{
          public WartortleToken()
         {
 
-            pictureLocation = "Pokemon/Pictures/wartortle.jpg";            
+            pictureLocation = "Pokemon/Pictures/wartortle.JPG";            
         }
     }
 }

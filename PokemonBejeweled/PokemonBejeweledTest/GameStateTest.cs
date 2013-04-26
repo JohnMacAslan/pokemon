@@ -20,7 +20,7 @@ namespace PokemonBejeweledTest
             game = new GameState();
 
             Assert.AreEqual(0, game.getScore());
-            Assert.AreEqual(120000, game.getTime());
+            Assert.AreEqual(120000, game.TimeLeft);
             Assert.IsNotNull(game);
         }
 
@@ -77,33 +77,33 @@ namespace PokemonBejeweledTest
         }
 
         [Test()]
-        public void TestGetTime()
+        public void TestTimeLeftDefault()
         {
             game = new GameState();
-            Assert.AreEqual(120000, game.getTime());
+            Assert.AreEqual(120000, game.TimeLeft);
         }
 
         [Test()]
-        public void TestSetTime()
+        public void TestSetTimeLeft()
         {
             game = new GameState();
-            game.setTime(2000);
-            Assert.AreEqual(2000, game.getTime());
+            game.TimeLeft = 2000;
+            Assert.AreEqual(2000, game.TimeLeft);
         }
         [Test()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TestSetTimeWhenNegativeValue()
         {
             game = new GameState();
-            game.setTime(-100);
+            game.TimeLeft = -100;
         }
 
         [Test()]
         public void TestSetTimeThatExceptionNotThrownWhenNoTimeLimit()
         {
             game = new GameState();
-            game.setTime(-1); // When -1, no time limit for game
-            Assert.AreEqual(-1, game.getTime());
+            game.TimeLeft = -1; // When -1, no time limit for game
+            Assert.AreEqual(-1, game.TimeLeft);
         }
 
         [Test()]
@@ -112,13 +112,13 @@ namespace PokemonBejeweledTest
             game = new GameState();
 
             game.setScore(500);
-            game.setTime(1000);
+            game.TimeLeft = 1000;
             Assert.AreEqual(500, game.getScore());
-            Assert.AreEqual(1000, game.getTime());
+            Assert.AreEqual(1000, game.TimeLeft);
 
             game.newGame();
             Assert.AreEqual(0, game.getScore());
-            Assert.AreEqual(120000, game.getTime());
+            Assert.AreEqual(120000, game.TimeLeft);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace PokemonBejeweled.Pokemon
         public CharizardToken()
         {
 
-            pictureLocation = "Pokemon/Pictures/charizard.jpg";
+            pictureLocation = "Pokemon/Pictures/charizard.JPG";
             
         }
     }

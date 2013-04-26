@@ -21,6 +21,7 @@ namespace PokemonBejeweled.Pokemon
             SECOND
         };
 
+
         public virtual IFirstEvolutionPokemonToken firstEvolvedToken()
         {
             return (IFirstEvolutionPokemonToken)Activator.CreateInstance(firstEvolution);
@@ -52,6 +53,7 @@ namespace PokemonBejeweled.Pokemon
                 return this.GetType().BaseType;
             }
         }
+
         
         public bool isEvolutionLevel(EvolutionLevel level)
         {
@@ -105,5 +107,6 @@ namespace PokemonBejeweled.Pokemon
         }
 
        
+
     }
 }

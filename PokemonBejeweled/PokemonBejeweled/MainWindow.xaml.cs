@@ -21,7 +21,7 @@ namespace PokemonBejeweled
     /// </summary>
     public partial class MainWindow : Window
     {
-
+        private List<IBasicPokemonToken[,]> _history;
         private GameState gameState;
         private System.Windows.Controls.Primitives.UniformGrid gridBoard;
         private Dictionary<Type, Brush> tokenColors = new Dictionary<Type,Brush>();
@@ -64,11 +64,8 @@ namespace PokemonBejeweled
             {
                 inMove = false;
                 gameState.newGame();
-                gameState.Grid.PullDownTokens += delegate
-                {
-                    updateGridBoard();
-                };
                 updateGridBoard();
+                gameState.Grid.BoardDirtied += new BoardDirtiedEventHandler(delegate { updateGridBoard(); });
             };
             QuitGameButton.Click += delegate { this.Close(); };
         }
@@ -94,12 +91,6 @@ namespace PokemonBejeweled
                         {
                             inMove = false;
                             gameState.Grid.makePlay(newButton.row, newButton.column, previousRow, previousColumn);
-                            updateGridBoard();
-                            while (!gameState.Grid.haveGridsStabilized())
-                            {
-                                gameState.Grid.updateBoard();
-                                updateGridBoard();
-                            }
                         }
                     };
                     gridBoard.Children.Add(newButton);
@@ -118,10 +109,20 @@ namespace PokemonBejeweled
                 {
                     buttonEnumerator.MoveNext();
                     currentButton = (GridButton)buttonEnumerator.Current;
+
                     currentButton.setBackgroundColor(tokenColors[gameState.Grid.Pokemon[r, c].GetType()]);
                     currentButton.Background = (gameState.Grid.Pokemon[r, c].getPokemonPicture());
            
                     
+
+                    //if (null == gameState.Grid.Pokemon[r, c])
+                    //{
+                    //    currentButton.setBackgroundColor(Brushes.Black);
+                    //}
+                    //else
+                    //{
+                    //    currentButton.setBackgroundColor(tokenColors[gameState.Grid.Pokemon[r, c].GetType()]);
+                    //}
                 }
             }
             

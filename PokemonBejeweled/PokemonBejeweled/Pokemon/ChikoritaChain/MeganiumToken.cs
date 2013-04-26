@@ -13,7 +13,7 @@ namespace PokemonBejeweled.Pokemon
         public MeganiumToken()
         {
 
-            pictureLocation = "Pokemon/Pictures/meganium.jpg";            
+            pictureLocation = "Pokemon/Pictures/meganium.JPG";            
         }
     }
 }

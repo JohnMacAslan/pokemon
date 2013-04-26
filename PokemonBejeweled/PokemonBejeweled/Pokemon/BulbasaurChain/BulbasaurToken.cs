@@ -18,7 +18,7 @@ namespace PokemonBejeweled.Pokemon
         {
             firstEvolution = typeof(IvysaurToken);
             secondEvolution = typeof(VenusaurToken);
-            pictureLocation = "Pokemon/Pictures/bulbasaur.jpg";
+            pictureLocation = "Pokemon/Pictures/bulbasaur.JPG";
             
         }     
    

@@ -15,7 +15,7 @@ namespace PokemonBejeweled.Pokemon
             firstEvolution = typeof(QuilavaToken);
             secondEvolution = typeof(TyphlosionToken);
 
-            pictureLocation = "Pokemon/Pictures/cyndaquil.jpg";
+            pictureLocation = "Pokemon/Pictures/cyndaquil.JPG";
         }
     }
 }

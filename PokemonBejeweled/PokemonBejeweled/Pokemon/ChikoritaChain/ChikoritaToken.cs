@@ -16,7 +16,7 @@ namespace PokemonBejeweled.Pokemon
             secondEvolution = typeof(MeganiumToken);
 
 
-            pictureLocation = "Pokemon/Pictures/chikorita.jpg";          
+            pictureLocation = "Pokemon/Pictures/chikorita.JPG";          
         }
     }
 }

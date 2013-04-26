@@ -13,7 +13,7 @@ namespace PokemonBejeweled.Pokemon
         public FeraligatorToken()
         {
 
-            pictureLocation = "Pokemon/Pictures/feraligator.jpg";              
+            pictureLocation = "Pokemon/Pictures/feraligator.JPG";              
         }
     }
 }

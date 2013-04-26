@@ -14,7 +14,7 @@ namespace PokemonBejeweled.Pokemon
          public BlastoiseToken()
         {
 
-            pictureLocation = "Pokemon/Pictures/blastoise.jpg";            
+            pictureLocation = "Pokemon/Pictures/blastoise.JPG";            
         }
     }
 }
