@@ -23,13 +23,13 @@ namespace PokemonBejeweled
         internal IBasicPokemonToken[,] PokemonGrid
         {
             get { return _pokemonGrid; }
-            set { copyGrid(value, _pokemonGrid); }
+            set { GridOperations.copyGrid(value, _pokemonGrid); }
         }
         private IBasicPokemonToken[,] _newPokemonGrid = new IBasicPokemonToken[gridSize, gridSize];
         internal IBasicPokemonToken[,] NewPokemonGrid
         {
             get { return _newPokemonGrid; }
-            set { copyGrid(value, _newPokemonGrid); }
+            set { GridOperations.copyGrid(value, _newPokemonGrid); }
         }
         private PokemonGridHistory _pokemonHistory = new PokemonGridHistory();
         private Random rand = new Random();
@@ -89,7 +89,7 @@ namespace PokemonBejeweled
 
         public virtual void pullDownTokens()
         {
-            copyGrid(_newPokemonGrid, _pokemonGrid);
+            GridOperations.copyGrid(_newPokemonGrid, _pokemonGrid);
             OnBoardDirtied();
             int numberOfTokensToPullDown;
             for (int col = 0; col < gridSize; col++)
@@ -119,7 +119,7 @@ namespace PokemonBejeweled
                 }
             }
             _pokemonHistory.Add((IBasicPokemonToken[,])_pokemonGrid.Clone());
-            copyGrid(_pokemonGrid, _newPokemonGrid);
+            GridOperations.copyGrid(_pokemonGrid, _newPokemonGrid);
             OnBoardDirtied();
         }
 
@@ -159,33 +159,13 @@ namespace PokemonBejeweled
 
         public virtual void updateAllColumns()
         {
-            copyGrid(invertPokemon(_pokemonGrid), _pokemonGrid);
-            copyGrid(invertPokemon(_newPokemonGrid), _newPokemonGrid);
+            GridOperations.invertGrid(_pokemonGrid);
+            GridOperations.invertGrid(_newPokemonGrid);
             updateAllRows();
-            copyGrid(invertPokemon(_pokemonGrid), _pokemonGrid);
-            copyGrid(invertPokemon(_newPokemonGrid), _newPokemonGrid);
+            GridOperations.invertGrid(_pokemonGrid);
+            GridOperations.invertGrid(_newPokemonGrid);
         }
-
-        public static void copyGrid(IBasicPokemonToken[,] gridToCopy, IBasicPokemonToken[,] gridDestination)
-        {
-            int rowLength = gridToCopy.GetLength(0);
-            int colLength = gridToCopy.GetLength(1);
-            if (rowLength != gridDestination.GetLength(0) || colLength != gridDestination.GetLength(1))
-            {
-                throw new ArithmeticException("Dimensions of grid did not match dimensions of destination grid");
-            }
-            else
-            {
-                for (int row = 0; row < rowLength; row++)
-                {
-                    for (int col = 0; col < colLength; col++)
-                    {
-                        gridDestination[row, col] = gridToCopy[row, col];
-                    }
-                }
-            }
-        }
-
+        
         protected virtual void OnBoardDirtied()
         {
             if (BoardDirtied != null)
@@ -229,7 +209,7 @@ namespace PokemonBejeweled
             OnPointsAdded(10);
         }
 
-        private void OnPointsAdded(int pointsToAdd)
+        protected void OnPointsAdded(int pointsToAdd)
         {
             _pointsToAdd = pointsToAdd;
             if (null != PointsAdded)
@@ -318,11 +298,11 @@ namespace PokemonBejeweled
 
         public virtual void updateSingleColumn(int rowStart, int colStart, int rowEnd, int colEnd)
         {
-            copyGrid(invertPokemon(_pokemonGrid), _pokemonGrid);
-            copyGrid(invertPokemon(_newPokemonGrid), _newPokemonGrid);
+            GridOperations.invertGrid(_pokemonGrid);
+            GridOperations.invertGrid(_newPokemonGrid);
             updateSingleRow(colStart, rowStart, colEnd, rowEnd);
-            copyGrid(invertPokemon(_pokemonGrid), _pokemonGrid);
-            copyGrid(invertPokemon(_newPokemonGrid), _newPokemonGrid);
+            GridOperations.invertGrid(_pokemonGrid);
+            GridOperations.invertGrid(_newPokemonGrid);
         }
 
         public virtual void swapDitto(int row1, int col1, int row2, int col2)
@@ -380,63 +360,6 @@ namespace PokemonBejeweled
             for (int currentCol = 0; currentCol < gridSize; currentCol++)
             {
                 updateToken(row, currentCol);
-            }
-        }
-
-        public static void printGrid(IBasicPokemonToken[,] grid)
-        {
-            Dictionary<Type, int> dict = new Dictionary<Type, int>();
-
-            dict.Add(typeof(BulbasaurToken), 1);
-            dict.Add(typeof(CharmanderToken), 2);
-            dict.Add(typeof(ChikoritaToken), 3);
-            dict.Add(typeof(CyndaquilToken), 4);
-            dict.Add(typeof(PichuToken), 5);
-            dict.Add(typeof(SquirtleToken), 6);
-            dict.Add(typeof(TotodileToken), 7);
-            Console.Out.WriteLine("--------");
-            for (int row = 0; row < gridSize; row++)
-            {
-                for (int col = 0; col < gridSize; col++)
-                {
-                    if (null == grid[row, col])
-                    {
-                        Console.Out.Write(" ");
-                    }
-                    else if (dict.ContainsKey(grid[row, col].GetType()))
-                    {
-                        Console.Out.Write(dict[grid[row, col].GetType()]);
-                    }
-                    else
-                    {
-                        Console.Out.Write("F");
-                    }
-                }
-                Console.Out.WriteLine();
-            }
-            Console.Out.WriteLine("--------");
-        }
-
-        public static IBasicPokemonToken[,] invertPokemon(IBasicPokemonToken[,] _pokemonToInvert)
-        {
-            int rowLength = _pokemonToInvert.GetLength(0);
-            int colLength = _pokemonToInvert.GetLength(1);
-            if (rowLength != colLength)
-            {
-                throw new ArithmeticException("Grid is not square.");
-            }
-            else
-            {
-                IBasicPokemonToken[,] _invertedPokemon = new IBasicPokemonToken[rowLength, colLength];
-                copyGrid(_pokemonToInvert, _invertedPokemon);
-                for (int row = 0; row < rowLength; row++)
-                {
-                    for (int col = 0; col < colLength; col++)
-                    {
-                        _invertedPokemon[row, col] = _pokemonToInvert[col, row];
-                    }
-                }
-                return _invertedPokemon;
             }
         }
 

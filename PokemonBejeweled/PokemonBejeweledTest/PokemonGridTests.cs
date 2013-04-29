@@ -51,7 +51,7 @@ namespace PokemonBejeweledTest
             _pokemonToInvert[2, 0] = new BulbasaurToken();
             _pokemonToInvert[2, 1] = new BulbasaurToken();
             _pokemonToInvert[2, 2] = new BulbasaurToken();
-            IBasicPokemonToken[,] _invertedPokemon = PokemonBoard.invertPokemon(_pokemonToInvert);
+            IBasicPokemonToken[,] _invertedPokemon = PokemonBoard.invertGrid(_pokemonToInvert);
             _pokemonToInvert[0, 0] = new BulbasaurToken();
             _pokemonToInvert[0, 1] = new CharmanderToken();
             _pokemonToInvert[0, 2] = new BulbasaurToken();
