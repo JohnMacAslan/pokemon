@@ -28,6 +28,7 @@ namespace PokemonBejeweled
         private System.Windows.Controls.RadioButton oneMin;
         private System.Windows.Controls.RadioButton fiveMin;
         private System.Windows.Controls.RadioButton tenMin;
+        private System.Windows.Controls.RadioButton noTimeLimit;
         private System.Windows.Controls.Label scoreboard;
 
         public MainWindow()
@@ -38,6 +39,7 @@ namespace PokemonBejeweled
             oneMin = this.oneMinute;
             fiveMin = this.fiveMinute;
             tenMin = this.tenMinute;
+            noTimeLimit = this.unlimitedTime;
             scoreboard = this.ScoreboardLabel;
             setUpGridBoard();
             newGame();
@@ -116,6 +118,10 @@ namespace PokemonBejeweled
             {
                 timerLabel.Content = "GAME OVER";
             }
+            else if (GameState.NO_TIME_LIMIT == gameState.TimeLeft)
+            {
+                timerLabel.Content = "No time limit";
+            }
             else
             {
                 TimeSpan t = TimeSpan.FromSeconds(gameState.TimeLeft);
@@ -134,9 +140,17 @@ namespace PokemonBejeweled
             {
                 gameState.TimeLeft = 300;
             }
-            else
+            else if ((bool)tenMin.IsChecked)
             {
                 gameState.TimeLeft = 600;
+            }
+            else if ((bool)noTimeLimit.IsChecked)
+            {
+                gameState.TimeLeft = GameState.NO_TIME_LIMIT;
+            }
+            else
+            {
+                gameState.TimeLeft = 12000;
             }
         }
     }

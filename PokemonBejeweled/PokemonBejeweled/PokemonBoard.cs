@@ -341,16 +341,21 @@ namespace PokemonBejeweled
 
         public virtual void markAllTokensOfSameTypeAsNull(IBasicPokemonToken pokemon)
         {
+            int numTokensMarkedNull = 0;
             for (int row = 0; row < gridSize; row++)
             {
                 for (int col = 0; col < gridSize; col++)
                 {
                     if (_pokemonGrid[row, col].isSameSpecies(pokemon))
                     {
+                        numTokensMarkedNull++;
                         updateToken(row, col);
                     }
                 }
             }
+            int addPoints = (int)Math.Pow(2, numTokensMarkedNull);
+            addPoints = addPoints + 10 - addPoints % 10;
+            OnPointsAdded(addPoints);
         }
 
         public virtual void markSurroundingTokensNull(int row, int col)

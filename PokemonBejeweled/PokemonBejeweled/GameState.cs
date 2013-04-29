@@ -33,7 +33,7 @@ namespace PokemonBejeweled
                 _timeLeft = value;
             }
         }
-        private int NO_TIME_LIMIT = -1;
+        public static readonly int NO_TIME_LIMIT = -1;
         private int _score = 0;
         public int Score
         {

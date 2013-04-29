@@ -22,6 +22,7 @@
                         <RadioButton GroupName="GameTime" Name="oneMinute" Content="One Minute" TextElement.Foreground="YellowGreen"/>
                         <RadioButton GroupName="GameTime" Name="fiveMinute" Content ="Five Minutes" TextElement.Foreground="YellowGreen" IsChecked="True"/>
                         <RadioButton GroupName="GameTime" Name="tenMinute" Content ="Ten Minutes" TextElement.Foreground="YellowGreen"/>
+                        <RadioButton GroupName="GameTime" Name="unlimitedTime" Content ="OVER 9000!!!" TextElement.Foreground="YellowGreen"/>
                     </StackPanel>
                 </Expander>
                 <Expander IsExpanded="True" Header="Scoreboard" TextElement.Foreground="YellowGreen">
