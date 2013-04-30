@@ -12,7 +12,7 @@ namespace PokemonBejeweled
 
     public class GameState
     {
-        private Boolean _inMove;
+        private Boolean _justMadeMove;
         private int _previousRow;
         private int _previousColumn;
         private Timer _countdown = new Timer(1000);
@@ -40,10 +40,10 @@ namespace PokemonBejeweled
             get { return _score; }
         }
         public ScoreUpdatedEventHandler ScoreUpdated;
-        private PokemonBoard _grid;
-        public PokemonBoard Grid
+        private PokemonBoard _board;
+        public PokemonBoard Board
         {
-            get { return _grid; }
+            get { return _board; }
         }
 
         public GameState()
@@ -55,13 +55,10 @@ namespace PokemonBejeweled
 
         public void newGame()
         {
-            _grid = new PokemonBoard();
-            _grid.PointsAdded += delegate
-            {
-                OnScoreUpdated();
-            };
+            _board = new PokemonBoard();
+            _board.PointsAdded += delegate { OnScoreUpdated(); };
+            _board.BoardDirtied += delegate { _justMadeMove = true; };
             _score = 0;
-            _inMove = false;
             _previousColumn = 0;
             _previousRow = 0;
             _timeLeft = 120000; // Default
@@ -69,25 +66,21 @@ namespace PokemonBejeweled
 
         public void makePlay(int row, int col)
         {
-            if (!_inMove)
+            if (TimeLeft != 0 && !_justMadeMove)
             {
-                _inMove = true;
-                _previousRow = row;
-                _previousColumn = col;
+                _board.makePlay(row, col, _previousRow, _previousColumn);
             }
             else
             {
-                _inMove = false;
-                if (TimeLeft != 0)
-                {
-                    _grid.makePlay(row, col, _previousRow, _previousColumn);
-                }
+                _justMadeMove = false;
             }
+            _previousRow = row;
+            _previousColumn = col;
         }
 
         private void OnScoreUpdated()
         {
-            _score += _grid.PointsToAdd;
+            _score += _board.PointsToAdd;
             if (null != ScoreUpdated)
             {
                 ScoreUpdated(this);
