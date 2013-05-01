@@ -56,6 +56,7 @@ namespace PokemonBejeweled
         {
             _gameState.newGame();
             resetTimer();
+            updateScore();
             updateGridBoard();
             _gameState.Board.BoardDirtied += new BoardDirtiedEventHandler(delegate { updateGridBoard(); });
             _gameState.ScoreUpdated += new ScoreUpdatedEventHandler(delegate { updateScore(); });
