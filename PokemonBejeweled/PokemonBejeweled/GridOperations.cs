@@ -50,41 +50,5 @@ namespace PokemonBejeweled
                 copyGrid(invertedGrid, gridToInvert);
             }
         }
-
-        public static void printGrid(IBasicPokemonToken[,] grid)
-        {
-            int rowLength = grid.GetLength(0);
-            int colLength = grid.GetLength(1);
-            Dictionary<Type, int> dict = new Dictionary<Type, int>();
-
-            dict.Add(typeof(BulbasaurToken), 1);
-            dict.Add(typeof(CharmanderToken), 2);
-            dict.Add(typeof(ChikoritaToken), 3);
-            dict.Add(typeof(CyndaquilToken), 4);
-            dict.Add(typeof(PichuToken), 5);
-            dict.Add(typeof(SquirtleToken), 6);
-            dict.Add(typeof(TotodileToken), 7);
-            Console.Out.WriteLine("--------");
-            for (int row = 0; row < rowLength; row++)
-            {
-                for (int col = 0; col < colLength; col++)
-                {
-                    if (null == grid[row, col])
-                    {
-                        Console.Out.Write(" ");
-                    }
-                    else if (dict.ContainsKey(grid[row, col].GetType()))
-                    {
-                        Console.Out.Write(dict[grid[row, col].GetType()]);
-                    }
-                    else
-                    {
-                        Console.Out.Write("F");
-                    }
-                }
-                Console.Out.WriteLine();
-            }
-            Console.Out.WriteLine("--------");
-        }
     }
 }

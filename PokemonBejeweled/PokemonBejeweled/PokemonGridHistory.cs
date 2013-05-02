@@ -31,14 +31,7 @@ namespace PokemonBejeweled
 
         public IBasicPokemonToken[,] Last()
         {
-            if(1 >= _pokemonHistory.Count)
-            {
-                return _pokemonHistory[_pokemonHistory.Count - 1];
-            }
-            else
-            {
-                return _pokemonHistory[0];
-            }
+            return _pokemonHistory[_pokemonHistory.Count - 1];
         }
 
         public IBasicPokemonToken[,] NextToLast()
