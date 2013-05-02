@@ -86,10 +86,10 @@ namespace PokemonBejeweled
             _pokemonGrid[row2, col2] = firstToken;
             _newPokemonGrid[row1, col1] = secondToken;
             _newPokemonGrid[row2, col2] = firstToken;
-            madeMove |= updateSingleRow(row1, col1, row2, col2);
-            madeMove |= updateSingleRow(row2, col2, row1, col1);
-            madeMove |= updateSingleColumn(row1, col1, row2, col2);
-            madeMove |= updateSingleColumn(row2, col2, row1, col1);
+            madeMove |= updateSingleRow(row1, col1);
+            madeMove |= updateSingleRow(row2, col2);
+            madeMove |= updateSingleColumn(row1, col1);
+            madeMove |= updateSingleColumn(row2, col2);
             madeMove |= swapDitto(row1, col1, row2, col2);
             if (!madeMove)
             {
@@ -229,7 +229,7 @@ namespace PokemonBejeweled
             GridOperations.invertGrid(_newPokemonGrid);
         }
         
-        public virtual bool updateSingleRow(int rowStart, int colStart, int rowEnd, int colEnd)
+        public virtual bool updateSingleRow(int rowStart, int colStart)
         {
             IBasicPokemonToken startToken = _pokemonGrid[rowStart, colStart];
             int numberOfSameTokens = 1;
@@ -255,11 +255,11 @@ namespace PokemonBejeweled
             return false;
         }
 
-        public virtual bool updateSingleColumn(int rowStart, int colStart, int rowEnd, int colEnd)
+        public virtual bool updateSingleColumn(int rowStart, int colStart)
         {
             GridOperations.invertGrid(_pokemonGrid);
             GridOperations.invertGrid(_newPokemonGrid);
-            bool madeMove = updateSingleRow(colStart, rowStart, colEnd, rowEnd);
+            bool madeMove = updateSingleRow(colStart, rowStart);
             GridOperations.invertGrid(_pokemonGrid);
             GridOperations.invertGrid(_newPokemonGrid);
             return madeMove;
