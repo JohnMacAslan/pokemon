@@ -5,6 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using PokemonBejeweled;
+using System.Windows;
+using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows.Media;
+
 
 namespace PokemonBejeweledTest
 {
@@ -22,6 +27,5 @@ namespace PokemonBejeweledTest
             Assert.AreEqual(0, getRow);
         }
 
-        
     }
 }
