@@ -64,7 +64,7 @@ namespace PokemonBejeweled
             _timeLeft = 120000; // Default
         }
 
-        public void makePlay(int row, int col)
+        public virtual void makePlay(int row, int col)
         {
             if (TimeLeft != 0 && !_justMadeMove)
             {
