@@ -12,11 +12,9 @@ namespace PokemonBejeweled.Pokemon
     {
         public SquirtleToken()
         {
-            firstEvolution = typeof(WartortleToken);
-            secondEvolution = typeof(BlastoiseToken);
-
-            pictureLocation = "Pokemon/Pictures/squirtle.JPG";            
-        
+            _firstEvolution = typeof(WartortleToken);
+            _secondEvolution = typeof(BlastoiseToken);
+            _pictureLocation = "Pokemon/Pictures/squirtle.JPG";      
         }
     }
 }

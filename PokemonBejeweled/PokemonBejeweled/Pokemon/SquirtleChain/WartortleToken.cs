@@ -10,10 +10,9 @@ namespace PokemonBejeweled.Pokemon{
 
     public class WartortleToken : SquirtleToken, IFirstEvolutionPokemonToken
     {
-         public WartortleToken()
+        public WartortleToken()
         {
-
-            pictureLocation = "Pokemon/Pictures/wartortle.JPG";            
+            _pictureLocation = "Pokemon/Pictures/wartortle.JPG";            
         }
     }
 }

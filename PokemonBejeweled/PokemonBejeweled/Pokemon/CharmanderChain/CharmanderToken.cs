@@ -12,12 +12,9 @@ namespace PokemonBejeweled.Pokemon
     {
         public CharmanderToken()
         {
-            firstEvolution = typeof(CharmeleonToken);
-            secondEvolution = typeof(CharizardToken);
-
-            pictureLocation = "Pokemon/Pictures/charmander.JPG";
-            
-        
+            _firstEvolution = typeof(CharmeleonToken);
+            _secondEvolution = typeof(CharizardToken);
+            _pictureLocation = "Pokemon/Pictures/charmander.JPG";
         }
     }
 }

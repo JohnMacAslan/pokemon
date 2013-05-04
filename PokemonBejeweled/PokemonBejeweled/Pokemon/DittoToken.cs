@@ -12,17 +12,7 @@ namespace PokemonBejeweled.Pokemon
     {
         public DittoToken()
         {
-            pictureLocation = "Pokemon/Pictures/ditto.JPG";  
-        }
-
-        public override IFirstEvolutionPokemonToken firstEvolvedToken()
-        {
-            return null;
-        }
-
-        public override ISecondEvolutionPokemonToken secondEvolvedToken()
-        {
-            return null;
+            _pictureLocation = "Pokemon/Pictures/ditto.JPG";  
         }
     }
 }

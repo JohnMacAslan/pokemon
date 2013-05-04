@@ -12,9 +12,7 @@ namespace PokemonBejeweled.Pokemon
     {
         public CharmeleonToken()
         {
-
-            pictureLocation = "Pokemon/Pictures/charmeleon.JPG";
-            
+            _pictureLocation = "Pokemon/Pictures/charmeleon.JPG";
         }
     }
 }

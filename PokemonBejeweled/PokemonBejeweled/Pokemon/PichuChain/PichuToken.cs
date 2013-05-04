@@ -12,11 +12,9 @@ namespace PokemonBejeweled.Pokemon
     {
         public PichuToken()
         {
-            firstEvolution = typeof(PikachuToken);
-            secondEvolution = typeof(RaichuToken);
-
-
-            pictureLocation = "Pokemon/Pictures/pichu.JPG"; 
+            _firstEvolution = typeof(PikachuToken);
+            _secondEvolution = typeof(RaichuToken);
+            _pictureLocation = "Pokemon/Pictures/pichu.JPG"; 
         }
     }
 }

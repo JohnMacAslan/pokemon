@@ -12,10 +12,9 @@ namespace PokemonBejeweled.Pokemon
     {
         public TotodileToken()
         {
-            firstEvolution = typeof(CroconawToken);
-            secondEvolution = typeof(FeraligatorToken);
-
-            pictureLocation = "Pokemon/Pictures/totodile.JPG";              
+            _firstEvolution = typeof(CroconawToken);
+            _secondEvolution = typeof(FeraligatorToken);
+            _pictureLocation = "Pokemon/Pictures/totodile.JPG";              
         }
     }
 }

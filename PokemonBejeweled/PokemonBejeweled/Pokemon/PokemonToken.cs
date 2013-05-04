@@ -11,25 +11,18 @@ namespace PokemonBejeweled.Pokemon
 {
     public abstract class PokemonToken : IBasicPokemonToken
     {
-        protected Type firstEvolution;
-        protected Type secondEvolution;
-        protected String pictureLocation;
-        public enum EvolutionLevel
-        {
-            BASIC,
-            FIRST,
-            SECOND
-        };
+        protected Type _firstEvolution;
+        protected Type _secondEvolution;
+        protected String _pictureLocation;
 
-
-        public virtual IFirstEvolutionPokemonToken firstEvolvedToken()
+        public IFirstEvolutionPokemonToken firstEvolvedToken()
         {
-            return (IFirstEvolutionPokemonToken)Activator.CreateInstance(firstEvolution);
+            return (IFirstEvolutionPokemonToken)Activator.CreateInstance(_firstEvolution);
         }
 
-        public virtual ISecondEvolutionPokemonToken secondEvolvedToken()
+        public ISecondEvolutionPokemonToken secondEvolvedToken()
         {
-            return (ISecondEvolutionPokemonToken)Activator.CreateInstance(secondEvolution);
+            return (ISecondEvolutionPokemonToken)Activator.CreateInstance(_secondEvolution);
         }
 
         public override bool Equals(object obj)
@@ -61,7 +54,7 @@ namespace PokemonBejeweled.Pokemon
             try
             {
                 image = new Uri(System.Reflection.Assembly.GetEntryAssembly().Location);
-                shader = new Uri(image, pictureLocation);
+                shader = new Uri(image, _pictureLocation);
             }
             catch (ArgumentNullException e)
             {

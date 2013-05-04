@@ -8,13 +8,11 @@ using System.Windows.Media.Imaging;
 
 namespace PokemonBejeweled.Pokemon
 {
-    public class CharizardToken : CharmeleonToken, ISecondEvolutionPokemonToken
+    public class CharizardToken : CharmanderToken, ISecondEvolutionPokemonToken
     {
         public CharizardToken()
         {
-
-            pictureLocation = "Pokemon/Pictures/charizard.JPG";
-            
+            _pictureLocation = "Pokemon/Pictures/charizard.JPG";
         }
     }
 }

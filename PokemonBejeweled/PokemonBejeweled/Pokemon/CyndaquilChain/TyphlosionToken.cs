@@ -12,8 +12,7 @@ namespace PokemonBejeweled.Pokemon
     {
         public TyphlosionToken()
         {
-
-            pictureLocation = "Pokemon/Pictures/typhlosion.JPG";            
+            _pictureLocation = "Pokemon/Pictures/typhlosion.JPG";            
         }
     }
 }

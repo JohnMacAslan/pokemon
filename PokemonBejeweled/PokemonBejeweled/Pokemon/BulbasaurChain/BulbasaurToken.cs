@@ -6,22 +6,15 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-
-
 namespace PokemonBejeweled.Pokemon
 {
     public class BulbasaurToken : PokemonToken
     {
-      
-
         public BulbasaurToken()
         {
-            firstEvolution = typeof(IvysaurToken);
-            secondEvolution = typeof(VenusaurToken);
-            pictureLocation = "Pokemon/Pictures/bulbasaur.JPG";
-            
-        }     
-   
- 
+            _firstEvolution = typeof(IvysaurToken);
+            _secondEvolution = typeof(VenusaurToken);
+            _pictureLocation = "Pokemon/Pictures/bulbasaur.JPG";
+        }
     }
 }

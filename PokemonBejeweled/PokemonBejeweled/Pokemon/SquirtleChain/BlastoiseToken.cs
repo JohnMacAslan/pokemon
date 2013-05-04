@@ -10,11 +10,9 @@ namespace PokemonBejeweled.Pokemon
 {
     public class BlastoiseToken : SquirtleToken, ISecondEvolutionPokemonToken
     {
-
-         public BlastoiseToken()
+        public BlastoiseToken()
         {
-
-            pictureLocation = "Pokemon/Pictures/blastoise.JPG";            
+            _pictureLocation = "Pokemon/Pictures/blastoise.JPG";            
         }
     }
 }

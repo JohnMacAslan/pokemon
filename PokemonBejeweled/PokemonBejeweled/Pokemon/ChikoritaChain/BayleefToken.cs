@@ -12,9 +12,7 @@ namespace PokemonBejeweled.Pokemon
     {
         public BayleefToken()
         {
-
-            pictureLocation = "Pokemon/Pictures/bayleef.JPG";
-            
+            _pictureLocation = "Pokemon/Pictures/bayleef.JPG";
         }
     }
 }

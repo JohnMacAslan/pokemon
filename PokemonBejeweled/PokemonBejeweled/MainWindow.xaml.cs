@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -13,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using PokemonBejeweled.Pokemon;
+using PokemonBejeweled.Properties;
 
 namespace PokemonBejeweled
 {
@@ -21,6 +24,7 @@ namespace PokemonBejeweled
     /// </summary>
     public partial class MainWindow : Window
     {
+        private ResourceManager _resourceManager = new ResourceManager("PokemonBejeweled.jp-JP", Assembly.GetExecutingAssembly());
         private GameState _gameState = new GameState();
         private System.Windows.Threading.DispatcherTimer _countdown = new System.Windows.Threading.DispatcherTimer();
         private bool _paused = false;
@@ -28,8 +32,10 @@ namespace PokemonBejeweled
         public MainWindow()
         {
             InitializeComponent();
-            setUpGridBoard();
             newGame();
+            setUpGridBoard();
+            setLocalizedText();
+            setUpLanguageButtons();
             NewGameButton.Click += delegate { newGame(); };
             PauseButton.Click += delegate { pauseGame(); };
             UndoButton.Click += delegate { _gameState.Board.undoPlay(); };
@@ -43,7 +49,7 @@ namespace PokemonBejeweled
                 }
                 else
                 {
-                    HintButton.Content = "No moves!";
+                    HintButton.Content = _resourceManager.GetString("No_Moves");
                 }
             };
             QuitGameButton.Click += delegate { this.Close(); };
@@ -62,24 +68,6 @@ namespace PokemonBejeweled
             _gameState.ScoreUpdated += new ScoreUpdatedEventHandler(delegate { updateScore(); });
         }
 
-        private void pauseGame()
-        {
-            if (!_paused)
-            {
-                _paused = true;
-                _gameState.Countdown.Stop();
-                PauseButton.Content = "Unpause";
-                GridBoard.Visibility = System.Windows.Visibility.Hidden;
-            }
-            else
-            {
-                _paused = false;
-                _gameState.Countdown.Start();
-                PauseButton.Content = "Pause";
-                GridBoard.Visibility = System.Windows.Visibility.Visible;
-            }
-        }
-
         private void setUpGridBoard()
         {
             double buttonHeight = GridBoard.Height / PokemonBoard.gridSize;
@@ -94,6 +82,70 @@ namespace PokemonBejeweled
                     GridBoard.Children.Add(newButton);
                 }
             }
+        }
+
+        private void setLocalizedText()
+        {
+            try
+            {
+                this.Title = _resourceManager.GetString("Window_Title");
+                MainMenu.Header = _resourceManager.GetString("Main_Menu");
+                GameTitle.Text = _resourceManager.GetString("Game_Title");
+                NewGameButton.Content = _resourceManager.GetString("New_Game");
+                PauseButton.Content = _resourceManager.GetString("Pause");
+                HintButton.Content = _resourceManager.GetString("Hint");
+                UndoButton.Content = _resourceManager.GetString("Undo");
+                QuitGameButton.Content = _resourceManager.GetString("Quit");
+                OneMinuteRadio.Content = _resourceManager.GetString("One_Minute");
+                FiveMinuteRadio.Content = _resourceManager.GetString("Five_Minutes");
+                TenMinuteRadio.Content = _resourceManager.GetString("Ten_Minutes");
+                UnlimitedRadio.Content = _resourceManager.GetString("Unlimited");
+                ScoreboardExpander.Header = _resourceManager.GetString("Scoreboard");
+                TimeLeftExpander.Header = _resourceManager.GetString("Time_Left");
+                LanguageExpander.Header = _resourceManager.GetString("Language");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+
+        private void setUpLanguageButtons()
+        {
+            EnglishButton.Click += delegate
+            {
+                _resourceManager = new ResourceManager("PokemonBejeweled.en-US", Assembly.GetExecutingAssembly());
+                setLocalizedText();
+            };
+            JapaneseButton.Click += delegate
+            {
+                _resourceManager = new ResourceManager("PokemonBejeweled.jp-JP", Assembly.GetExecutingAssembly());
+                setLocalizedText();
+            };
+        }
+
+        private void pauseGame()
+        {
+            if (!_paused)
+            {
+                _paused = true;
+                _gameState.Countdown.Stop();
+                PauseButton.Content = _resourceManager.GetString("Resume");
+                GridBoard.Visibility = System.Windows.Visibility.Hidden;
+            }
+            else
+            {
+                _paused = false;
+                _gameState.Countdown.Start();
+                PauseButton.Content = _resourceManager.GetString("Pause");
+                GridBoard.Visibility = System.Windows.Visibility.Visible;
+            }
+        }
+
+        private void updateScore()
+        {
+            ScoreboardLabel.Content = _gameState.Score;
+            ScoreboardLabel.Dispatcher.Invoke(delegate() { }, System.Windows.Threading.DispatcherPriority.Render);
         }
 
         private void updateGridBoard()
@@ -117,16 +169,34 @@ namespace PokemonBejeweled
                 }
             }
 
-            HintButton.Content = "Hint";
+            HintButton.Content = _resourceManager.GetString("Hint");
             DependencyObject scope = FocusManager.GetFocusScope(this);
             FocusManager.SetFocusedElement(scope, this);
             GridBoard.Dispatcher.Invoke(delegate() { System.Threading.Thread.Sleep(500); }, System.Windows.Threading.DispatcherPriority.Render);
         }
 
-        private void updateScore()
+        private void resetTimer()
         {
-            ScoreboardLabel.Content = _gameState.Score;
-            ScoreboardLabel.Dispatcher.Invoke(delegate() { }, System.Windows.Threading.DispatcherPriority.Render);
+            if ((bool)OneMinuteRadio.IsChecked)
+            {
+                _gameState.TimeLeft = 60;
+            }
+            else if ((bool)FiveMinuteRadio.IsChecked)
+            {
+                _gameState.TimeLeft = 300;
+            }
+            else if ((bool)TenMinuteRadio.IsChecked)
+            {
+                _gameState.TimeLeft = 600;
+            }
+            else if ((bool)UnlimitedRadio.IsChecked)
+            {
+                _gameState.TimeLeft = GameState.NO_TIME_LIMIT;
+            }
+            else
+            {
+                _gameState.TimeLeft = 600;
+            }
         }
 
         private void updateTimer(object sender, EventArgs e)
@@ -134,7 +204,7 @@ namespace PokemonBejeweled
             if (0 == _gameState.TimeLeft)
             {
                 TimerLabel.Foreground = Brushes.White;
-                TimerLabel.Content = "DONE!";
+                TimerLabel.Content = _resourceManager.GetString("Done");
             }
             else if (GameState.NO_TIME_LIMIT == _gameState.TimeLeft)
             {
@@ -158,30 +228,6 @@ namespace PokemonBejeweled
                 TimerLabel.Content = string.Format("{0}:{1:D2}", t.Minutes, t.Seconds);
             }
             CommandManager.InvalidateRequerySuggested();
-        }
-
-        private void resetTimer()
-        {
-            if ((bool)OneMinuteRadio.IsChecked)
-            {
-                _gameState.TimeLeft = 60;
-            }
-            else if ((bool)FiveMinuteRadio.IsChecked)
-            {
-                _gameState.TimeLeft = 300;
-            }
-            else if ((bool)TenMinuteRadio.IsChecked)
-            {
-                _gameState.TimeLeft = 600;
-            }
-            else if ((bool)UnlimitedRadio.IsChecked)
-            {
-                _gameState.TimeLeft = GameState.NO_TIME_LIMIT;
-            }
-            else
-            {
-                _gameState.TimeLeft = 12000;
-            }
         }
     }
 }

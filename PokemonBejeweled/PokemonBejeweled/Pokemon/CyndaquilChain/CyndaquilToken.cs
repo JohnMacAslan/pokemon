@@ -12,10 +12,9 @@ namespace PokemonBejeweled.Pokemon
     {
         public CyndaquilToken()
         {
-            firstEvolution = typeof(QuilavaToken);
-            secondEvolution = typeof(TyphlosionToken);
-
-            pictureLocation = "Pokemon/Pictures/cyndaquil.JPG";
+            _firstEvolution = typeof(QuilavaToken);
+            _secondEvolution = typeof(TyphlosionToken);
+            _pictureLocation = "Pokemon/Pictures/cyndaquil.JPG";
         }
     }
 }

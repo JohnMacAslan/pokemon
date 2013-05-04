@@ -10,13 +10,9 @@ namespace PokemonBejeweled.Pokemon
 {
     public class IvysaurToken : BulbasaurToken, IFirstEvolutionPokemonToken
     {
-         
-        
-         public IvysaurToken()
+        public IvysaurToken()
         {
-
-            pictureLocation = "Pokemon/Pictures/ivysaur.JPG";
-            
-        }     
+            _pictureLocation = "Pokemon/Pictures/ivysaur.JPG";
+        }
     }
 }
