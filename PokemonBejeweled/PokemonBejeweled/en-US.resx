@@ -129,6 +129,26 @@
   <data name="Hint" xml:space="preserve">
     <value>Hint</value>
   </data>
+  <data name="Instructions" xml:space="preserve">
+    <value>Instructions</value>
+  </data>
+  <data name="Instruction_Content" xml:space="preserve">
+    <value>The goal of the game is to accumulate points by making rows and columns of the same pokemon. This is accomplished by swapped adjacent pokemon to make rows or columns of three. Bonus points are awarded for rows or columns of more than three. Once a row or column is made, those pokemon will be captured and disappear. The pokemon above those will fall down and new ones will fall in from the top of the screen. 
+
+If a row or column of four is made, the swapped pokemon will evolve into its first evolutionary form. This pokemon can be used with other pokemon in its evolution chain. When used, it will capture all the pokemon surrounding it. 
+
+If a row or column of five is made, the swapped pokemon will become a Ditto. Ditto can be swapped at any time with any other pokemon. When this is done, all of the pokemon in the evolution chain of the pokemon that Ditto was swapped with will be captured. Increasingly more points are awarded as the number of pokemon captured by swapping a Ditto increases. 
+
+If a row or column of six is made, the left most (if a row) or upper most (if a column) pokemon will evolve into its second evolutionary form. This pokmeon can be used with other pokemon in its evolution chain. When used, it will capture all the pokemon in the same row and column of the board that it is in. 
+
+Begin a new game by clicking the new game button. This will reset your score and the timer. 
+
+The time limit can be set with the options at the left of the screen. 
+
+Pausing a game will pause the timer and hide the screen from view. The button can be clicked again to resume. 
+
+Asking for a hint will show a move if there are any moves left. This costs points, so use it wisely! If there are no moves left, the button will say so and no points will be deducted.</value>
+  </data>
   <data name="Language" xml:space="preserve">
     <value>Languages</value>
   </data>

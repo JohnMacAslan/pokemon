@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Resources;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using PokemonBejeweled.Pokemon;
 using PokemonBejeweled.Properties;
 
@@ -24,16 +27,19 @@ namespace PokemonBejeweled
     /// </summary>
     public partial class MainWindow : Window
     {
-        private ResourceManager _resourceManager = new ResourceManager("PokemonBejeweled.jp-JP", Assembly.GetExecutingAssembly());
+        private ResourceManager _resourceManager = new ResourceManager("PokemonBejeweled.en-US", Assembly.GetExecutingAssembly());
         private GameState _gameState = new GameState();
         private System.Windows.Threading.DispatcherTimer _countdown = new System.Windows.Threading.DispatcherTimer();
         private bool _paused = false;
+        private Window _instructionsWindow = new Window();
+        private TextBlock _instructionsText = new TextBlock();
 
         public MainWindow()
         {
             InitializeComponent();
-            newGame();
+            setUpInstructionWindow();
             setUpGridBoard();
+            newGame();
             setLocalizedText();
             setUpLanguageButtons();
             NewGameButton.Click += delegate { newGame(); };
@@ -53,19 +59,30 @@ namespace PokemonBejeweled
                 }
             };
             QuitGameButton.Click += delegate { this.Close(); };
+            Closing += delegate
+            {
+                _instructionsWindow.Closing -= new CancelEventHandler(HideInsteadOfClose);
+                _instructionsWindow.Close(); 
+            };
+            InstructionsButton.Click += delegate { openInstructions(); };
             _countdown.Tick += new EventHandler(updateTimer);
             _countdown.Interval = new TimeSpan(0, 0, 1);
             _countdown.Start();
         }
 
-        private void newGame()
+        private void setUpInstructionWindow()
         {
-            _gameState.newGame();
-            resetTimer();
-            updateScore();
-            updateGridBoard();
-            _gameState.Board.BoardDirtied += new BoardDirtiedEventHandler(delegate { updateGridBoard(); });
-            _gameState.ScoreUpdated += new ScoreUpdatedEventHandler(delegate { updateScore(); });
+            _instructionsText.TextWrapping = System.Windows.TextWrapping.Wrap;
+            _instructionsText.Text = _resourceManager.GetString("Instruction_Content");
+            _instructionsWindow.Closing += new CancelEventHandler(HideInsteadOfClose);
+            _instructionsWindow.Width = 450;
+            _instructionsWindow.Height = 563;
+        }
+
+        private void HideInsteadOfClose(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = true;
+            _instructionsWindow.Visibility = Visibility.Hidden;
         }
 
         private void setUpGridBoard()
@@ -84,6 +101,16 @@ namespace PokemonBejeweled
             }
         }
 
+        private void newGame()
+        {
+            _gameState.newGame();
+            resetTimer();
+            updateScore();
+            updateGridBoard();
+            _gameState.Board.BoardDirtied += new BoardDirtiedEventHandler(delegate { updateGridBoard(); });
+            _gameState.ScoreUpdated += new ScoreUpdatedEventHandler(delegate { updateScore(); });
+        }
+
         private void setLocalizedText()
         {
             try
@@ -96,6 +123,7 @@ namespace PokemonBejeweled
                 HintButton.Content = _resourceManager.GetString("Hint");
                 UndoButton.Content = _resourceManager.GetString("Undo");
                 QuitGameButton.Content = _resourceManager.GetString("Quit");
+                InstructionsButton.Content = _resourceManager.GetString("Instructions");
                 OneMinuteRadio.Content = _resourceManager.GetString("One_Minute");
                 FiveMinuteRadio.Content = _resourceManager.GetString("Five_Minutes");
                 TenMinuteRadio.Content = _resourceManager.GetString("Ten_Minutes");
@@ -103,6 +131,7 @@ namespace PokemonBejeweled
                 ScoreboardExpander.Header = _resourceManager.GetString("Scoreboard");
                 TimeLeftExpander.Header = _resourceManager.GetString("Time_Left");
                 LanguageExpander.Header = _resourceManager.GetString("Language");
+                _instructionsText.Text = _resourceManager.GetString("Instruction_Content");
             }
             catch (Exception e)
             {
@@ -131,21 +160,27 @@ namespace PokemonBejeweled
                 _paused = true;
                 _gameState.Countdown.Stop();
                 PauseButton.Content = _resourceManager.GetString("Resume");
-                GridBoard.Visibility = System.Windows.Visibility.Hidden;
+                GridBoard.Visibility = Visibility.Hidden;
             }
             else
             {
                 _paused = false;
                 _gameState.Countdown.Start();
                 PauseButton.Content = _resourceManager.GetString("Pause");
-                GridBoard.Visibility = System.Windows.Visibility.Visible;
+                GridBoard.Visibility = Visibility.Visible;
             }
+        }
+
+        private void openInstructions()
+        {
+            _instructionsWindow.Visibility = Visibility.Visible;
+            _instructionsWindow.Content = _instructionsText;
         }
 
         private void updateScore()
         {
             ScoreboardLabel.Content = _gameState.Score;
-            ScoreboardLabel.Dispatcher.Invoke(delegate() { }, System.Windows.Threading.DispatcherPriority.Render);
+            ScoreboardLabel.Dispatcher.Invoke(delegate() { }, DispatcherPriority.Render);
         }
 
         private void updateGridBoard()
@@ -172,7 +207,7 @@ namespace PokemonBejeweled
             HintButton.Content = _resourceManager.GetString("Hint");
             DependencyObject scope = FocusManager.GetFocusScope(this);
             FocusManager.SetFocusedElement(scope, this);
-            GridBoard.Dispatcher.Invoke(delegate() { System.Threading.Thread.Sleep(500); }, System.Windows.Threading.DispatcherPriority.Render);
+            GridBoard.Dispatcher.Invoke(delegate() { Thread.Sleep(500); }, DispatcherPriority.Render);
         }
 
         private void resetTimer()
