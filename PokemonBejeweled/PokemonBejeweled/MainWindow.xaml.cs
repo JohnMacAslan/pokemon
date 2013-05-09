@@ -33,6 +33,7 @@ namespace PokemonBejeweled
         private bool _paused = false;
         private Window _instructionsWindow = new Window();
         private TextBlock _instructionsText = new TextBlock();
+        private ImageBrush _pokeball = (new PokeballToken()).getPokemonPicture();
 
         public MainWindow()
         {
@@ -195,7 +196,7 @@ namespace PokemonBejeweled
                     currentButton = (GridButton)buttonEnumerator.Current;
                     if (null == _gameState.Board.PokemonGrid[r, c])
                     {
-                        currentButton.Background = Brushes.Black;
+                        currentButton.Background = _pokeball;
                     }
                     else
                     {

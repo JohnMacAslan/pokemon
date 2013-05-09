@@ -97,6 +97,7 @@
     <Compile Include="Pokemon\ChikoritaChain\BayleefToken.cs" />
     <Compile Include="Pokemon\ChikoritaChain\ChikoritaToken.cs" />
     <Compile Include="Pokemon\ChikoritaChain\MeganiumToken.cs" />
+    <Compile Include="Pokemon\PokeballToken.cs" />
     <Compile Include="Pokemon\CyndaquilChain\CyndaquilToken.cs" />
     <Compile Include="Pokemon\CyndaquilChain\QuilavaToken.cs" />
     <Compile Include="Pokemon\CyndaquilChain\TyphlosionToken.cs" />
@@ -159,9 +160,6 @@
     <None Include="Pokemon\Pictures\charmeleon.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Pokemon\Pictures\charzard.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="Pokemon\Pictures\chikorita.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -190,9 +188,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Pokemon\Pictures\quilava.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Pokemon\Pictures\richu.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Pokemon\Pictures\squirtle.jpg">
@@ -227,6 +222,15 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pokemon\Pictures\charizard.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Pokemon\Pictures\pokeball.JPG" />
+    <Resource Include="Pokemon\Pictures\raichu.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
