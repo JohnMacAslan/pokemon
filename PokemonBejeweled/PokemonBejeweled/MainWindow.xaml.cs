@@ -1,24 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Reflection;
 using System.Resources;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 using PokemonBejeweled.Pokemon;
-using PokemonBejeweled.Properties;
 
 namespace PokemonBejeweled
 {
@@ -29,8 +19,17 @@ namespace PokemonBejeweled
     {
         private ResourceManager _resourceManager = new ResourceManager("PokemonBejeweled.en-US", Assembly.GetExecutingAssembly());
         private GameState _gameState = new GameState();
+        public GameState GameState
+        {
+            get { return _gameState; }
+            set { _gameState = value; }
+        }
         private System.Windows.Threading.DispatcherTimer _countdown = new System.Windows.Threading.DispatcherTimer();
         private bool _paused = false;
+        public bool Paused
+        {
+            get { return _paused; }
+        }
         private Window _instructionsWindow = new Window();
         private TextBlock _instructionsText = new TextBlock();
         private ImageBrush _pokeball = (new PokeballToken()).getPokemonPicture();
@@ -40,32 +39,20 @@ namespace PokemonBejeweled
             InitializeComponent();
             setUpInstructionWindow();
             setUpGridBoard();
-            newGame();
+            newGame(this, null);
             setLocalizedText();
             setUpLanguageButtons();
-            NewGameButton.Click += delegate { newGame(); };
-            PauseButton.Click += delegate { pauseGame(); };
+            NewGameButton.Click += newGame;
+            PauseButton.Click += pauseGame;
             UndoButton.Click += delegate { _gameState.Board.undoPlay(); };
-            HintButton.Click += delegate
-            {
-                int rowHint;
-                int colHint;
-                if (_gameState.Board.areMovesLeft(out rowHint, out colHint))
-                {
-                    ((UIElement)GridBoard.Children[rowHint * 8 + colHint]).Focus();
-                }
-                else
-                {
-                    HintButton.Content = _resourceManager.GetString("No_Moves");
-                }
-            };
+            HintButton.Click += hint;
             QuitGameButton.Click += delegate { this.Close(); };
             Closing += delegate
             {
                 _instructionsWindow.Closing -= new CancelEventHandler(HideInsteadOfClose);
                 _instructionsWindow.Close(); 
             };
-            InstructionsButton.Click += delegate { openInstructions(); };
+            InstructionsButton.Click += openInstructions;
             _countdown.Tick += new EventHandler(updateTimer);
             _countdown.Interval = new TimeSpan(0, 0, 1);
             _countdown.Start();
@@ -78,12 +65,6 @@ namespace PokemonBejeweled
             _instructionsWindow.Closing += new CancelEventHandler(HideInsteadOfClose);
             _instructionsWindow.Width = 450;
             _instructionsWindow.Height = 563;
-        }
-
-        private void HideInsteadOfClose(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            e.Cancel = true;
-            _instructionsWindow.Visibility = Visibility.Hidden;
         }
 
         private void setUpGridBoard()
@@ -102,14 +83,31 @@ namespace PokemonBejeweled
             }
         }
 
-        private void newGame()
+        private void updateGridBoard()
         {
-            _gameState.newGame();
-            resetTimer();
-            updateScore();
-            updateGridBoard();
-            _gameState.Board.BoardDirtied += new BoardDirtiedEventHandler(delegate { updateGridBoard(); });
-            _gameState.ScoreUpdated += new ScoreUpdatedEventHandler(delegate { updateScore(); });
+            GridButton currentButton;
+            System.Collections.IEnumerator buttonEnumerator = GridBoard.Children.GetEnumerator();
+            for (int r = 0; r < PokemonBoard.gridSize; r++)
+            {
+                for (int c = 0; c < PokemonBoard.gridSize; c++)
+                {
+                    buttonEnumerator.MoveNext();
+                    currentButton = (GridButton)buttonEnumerator.Current;
+                    if (null == _gameState.Board.PokemonGrid[r, c])
+                    {
+                        currentButton.Background = _pokeball;
+                    }
+                    else
+                    {
+                        currentButton.Background = (_gameState.Board.PokemonGrid[r, c].getPokemonPicture());
+                    }
+                }
+            }
+
+            HintButton.Content = _resourceManager.GetString("Hint");
+            DependencyObject scope = FocusManager.GetFocusScope(this);
+            FocusManager.SetFocusedElement(scope, this);
+            GridBoard.Dispatcher.Invoke(delegate() { Thread.Sleep(500); }, DispatcherPriority.Render);
         }
 
         private void setLocalizedText()
@@ -154,64 +152,13 @@ namespace PokemonBejeweled
             };
         }
 
-        private void pauseGame()
-        {
-            if (!_paused)
-            {
-                _paused = true;
-                _gameState.Countdown.Stop();
-                PauseButton.Content = _resourceManager.GetString("Resume");
-                GridBoard.Visibility = Visibility.Hidden;
-            }
-            else
-            {
-                _paused = false;
-                _gameState.Countdown.Start();
-                PauseButton.Content = _resourceManager.GetString("Pause");
-                GridBoard.Visibility = Visibility.Visible;
-            }
-        }
-
-        private void openInstructions()
-        {
-            _instructionsWindow.Visibility = Visibility.Visible;
-            _instructionsWindow.Content = _instructionsText;
-        }
-
         private void updateScore()
         {
             ScoreboardLabel.Content = _gameState.Score;
             ScoreboardLabel.Dispatcher.Invoke(delegate() { }, DispatcherPriority.Render);
         }
 
-        private void updateGridBoard()
-        {
-            GridButton currentButton;
-            System.Collections.IEnumerator buttonEnumerator = GridBoard.Children.GetEnumerator();
-            for (int r = 0; r < PokemonBoard.gridSize; r++)
-            {
-                for (int c = 0; c < PokemonBoard.gridSize; c++)
-                {
-                    buttonEnumerator.MoveNext();
-                    currentButton = (GridButton)buttonEnumerator.Current;
-                    if (null == _gameState.Board.PokemonGrid[r, c])
-                    {
-                        currentButton.Background = _pokeball;
-                    }
-                    else
-                    {
-                        currentButton.Background = (_gameState.Board.PokemonGrid[r, c].getPokemonPicture());
-                    }
-                }
-            }
-
-            HintButton.Content = _resourceManager.GetString("Hint");
-            DependencyObject scope = FocusManager.GetFocusScope(this);
-            FocusManager.SetFocusedElement(scope, this);
-            GridBoard.Dispatcher.Invoke(delegate() { Thread.Sleep(500); }, DispatcherPriority.Render);
-        }
-
-        private void resetTimer()
+        public void resetTimer()
         {
             if ((bool)OneMinuteRadio.IsChecked)
             {
@@ -235,8 +182,62 @@ namespace PokemonBejeweled
             }
         }
 
+        private void newGame(object sender, RoutedEventArgs e)
+        {
+            _gameState.newGame();
+            resetTimer();
+            updateScore();
+            updateGridBoard();
+            _gameState.Board.BoardDirtied += new BoardDirtiedEventHandler(delegate { updateGridBoard(); });
+            _gameState.ScoreUpdated += new ScoreUpdatedEventHandler(delegate { updateScore(); });
+        }
+
+        public void pauseGame(object sender, RoutedEventArgs e)
+        {
+            if (!_paused)
+            {
+                _paused = true;
+                _gameState.Countdown.Stop();
+                PauseButton.Content = _resourceManager.GetString("Resume");
+                GridBoard.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                _paused = false;
+                _gameState.Countdown.Start();
+                PauseButton.Content = _resourceManager.GetString("Pause");
+                GridBoard.Visibility = Visibility.Visible;
+            }
+        }
+
+        public void hint(object sender, RoutedEventArgs e)
+        {
+            int rowHint, colHint;
+            if (_gameState.Board.areMovesLeft(out rowHint, out colHint))
+            {
+                ((UIElement)GridBoard.Children[rowHint * 8 + colHint]).Focus();
+            }
+            else
+            {
+                HintButton.Content = _resourceManager.GetString("No_Moves");
+            }
+        }
+
+        private void HideInsteadOfClose(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = true;
+            _instructionsWindow.Visibility = Visibility.Hidden;
+        }
+
+        private void openInstructions(object sender, RoutedEventArgs e)
+        {
+            _instructionsWindow.Visibility = Visibility.Visible;
+            _instructionsWindow.Content = _instructionsText;
+        }
+
         private void updateTimer(object sender, EventArgs e)
         {
+            TimerLabel.Foreground = Brushes.Green;
             if (0 == _gameState.TimeLeft)
             {
                 TimerLabel.Foreground = Brushes.White;
@@ -255,10 +256,6 @@ namespace PokemonBejeweled
                 else if (30 > _gameState.TimeLeft)
                 {
                     TimerLabel.Foreground = Brushes.Yellow;
-                }
-                else
-                {
-                    TimerLabel.Foreground = Brushes.Green;
                 }
                 TimeSpan t = TimeSpan.FromSeconds(_gameState.TimeLeft);
                 TimerLabel.Content = string.Format("{0}:{1:D2}", t.Minutes, t.Seconds);
