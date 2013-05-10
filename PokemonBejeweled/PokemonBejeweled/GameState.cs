@@ -44,6 +44,7 @@ namespace PokemonBejeweled
         public PokemonBoard Board
         {
             get { return _board; }
+            set { _board = value; }
         }
 
         public GameState()

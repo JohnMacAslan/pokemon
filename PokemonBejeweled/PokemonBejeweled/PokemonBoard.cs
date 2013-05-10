@@ -17,14 +17,12 @@ namespace PokemonBejeweled
         public event PointsAddedEventHandler PointsAdded;
         private bool _undoAllowed = true;
         private Random _rand = new Random();
-        private static Dictionary<int, Type> _tokenDict = basicTokens();
+        public static Dictionary<int, Type> TokenDict = basicTokens();
         private PokemonGridHistory _pokemonHistory = new PokemonGridHistory();
-        private int _pointsFromLastPlay = 0;
         private int _pointsToAdd = 0;
         internal int PointsToAdd
         {
             get { return _pointsToAdd; }
-            set { _pointsToAdd = value; }
         }
         private IBasicPokemonToken[,] _pokemonGrid = new IBasicPokemonToken[gridSize, gridSize];
         internal IBasicPokemonToken[,] PokemonGrid
@@ -61,7 +59,7 @@ namespace PokemonBejeweled
         private IBasicPokemonToken generateNewPokemon()
         {
             int pokeNumber = _rand.Next(1, 8);
-            return (IBasicPokemonToken)Activator.CreateInstance(_tokenDict[pokeNumber]);
+            return (IBasicPokemonToken)Activator.CreateInstance(TokenDict[pokeNumber]);
         }
 
         public virtual bool piecesAreAdjacent(int row1, int col1, int row2, int col2)
@@ -102,12 +100,13 @@ namespace PokemonBejeweled
 
         public virtual void makePlay(int row1, int col1, int row2, int col2)
         {
-            _pointsFromLastPlay = 0;
+            _pointsToAdd = 0;
             if (piecesAreAdjacent(row1, col1, row2, col2))
             {
                 startPlay(row1, col1, row2, col2);
                 updateBoard();
                 _pokemonHistory.Add((IBasicPokemonToken[,])_pokemonGrid.Clone());
+                OnPointsAdded();
                 _undoAllowed = true;
             }
         }
@@ -119,10 +118,9 @@ namespace PokemonBejeweled
                 GridOperations.copyGrid(_pokemonHistory.NextToLast(), _pokemonGrid);
                 GridOperations.copyGrid(_pokemonHistory.NextToLast(), _newPokemonGrid);
                 _pokemonHistory.RemoveAt(_pokemonHistory.PokemonHistory.Count - 1);
+                _pointsToAdd = -_pointsToAdd;
                 _undoAllowed = false;
-                OnPointsAdded(-_pointsFromLastPlay);
                 OnBoardDirtied();
-                _pointsFromLastPlay = 0;
             }
         }
 
@@ -288,7 +286,7 @@ namespace PokemonBejeweled
             {
                 if (null != _newPokemonGrid[row, col])
                 {
-                    OnPointsAdded(30);
+                    _pointsToAdd += 30;
                     _newPokemonGrid[row, col] = null;
                     markSurroundingTokensNull(row, col);
                 }
@@ -297,13 +295,13 @@ namespace PokemonBejeweled
             {
                 if (null != _newPokemonGrid[row, col])
                 {
-                    OnPointsAdded(30);
+                    _pointsToAdd += 60;
                     _newPokemonGrid[row, col] = null;
                     markFullRowAndColumnAsNull(row, col);
                 }
             }
             _newPokemonGrid[row, col] = null;
-            OnPointsAdded(10);
+            _pointsToAdd += 10;
         }
 
         public virtual void evolveToken(int row, int col, int numberOfSameTokens)
@@ -312,15 +310,15 @@ namespace PokemonBejeweled
             switch (numberOfSameTokens)
             {
                 case 4:
-                    OnPointsAdded(50);
+                    _pointsToAdd += 100;
                     _newPokemonGrid[row, col] = movedToken.firstEvolvedToken();
                     break;
                 case 5:
-                    OnPointsAdded(100);
+                    _pointsToAdd += 300;
                     _newPokemonGrid[row, col] = new DittoToken();
                     break;
                 case 6:
-                    OnPointsAdded(300);
+                    _pointsToAdd += 600;
                     _newPokemonGrid[row, col] = movedToken.secondEvolvedToken();
                     break;
             }
@@ -351,8 +349,7 @@ namespace PokemonBejeweled
                     }
                 }
             }
-            int addPoints = (int)Math.Pow(numTokensMarkedNull, 2) * 10;
-            OnPointsAdded(addPoints);
+            _pointsToAdd += (int)Math.Pow(numTokensMarkedNull, 2) * 10;
         }
 
         public virtual void markSurroundingTokensNull(int row, int col)
@@ -387,45 +384,27 @@ namespace PokemonBejeweled
 
         public virtual bool areMovesLeft(out int rowHint, out int colHint)
         {
+            bool isMove = false;
             for (int row = 0; row < gridSize; row++)
             {
                 for (int col = 0; col < gridSize - 1; col++)
                 {
-                    startPlay(row, col, row, col + 1);
-                    if (!haveGridsStabilized())
+                    isMove = testForMove(row, col);
+                    if (isMove)
                     {
                         rowHint = row;
                         colHint = col;
-                        OnPointsAdded(-_pointsFromLastPlay - 50);
-                        GridOperations.copyGrid(_pokemonGrid, _newPokemonGrid);
                         return true;
                     }
-                }
-            }
-            for (int col = 0; col < gridSize; col++)
-            {
-                for (int row = 0; row < gridSize - 1; row++)
-                {
-                    startPlay(row, col, row + 1, col);
-                    if (!haveGridsStabilized())
+                    GridOperations.invertGrid(_pokemonGrid);
+                    GridOperations.invertGrid(_newPokemonGrid);
+                    isMove = testForMove(row, col);
+                    GridOperations.invertGrid(_pokemonGrid);
+                    GridOperations.invertGrid(_newPokemonGrid);
+                    if (isMove)
                     {
-                        rowHint = row;
-                        colHint = col;
-                        OnPointsAdded(-_pointsFromLastPlay - 50);
-                        GridOperations.copyGrid(_pokemonGrid, _newPokemonGrid);
-                        return true;
-                    }
-                }
-            }
-            for (int row = 0; row < gridSize; row++)
-            {
-                for (int col = 0; col < gridSize; col++)
-                {
-                    if (_pokemonGrid[row, col].GetType() == typeof(DittoToken))
-                    {
-                        rowHint = row;
-                        colHint = col;
-                        OnPointsAdded(-_pointsFromLastPlay - 50);
+                        rowHint = col;
+                        colHint = row;
                         return true;
                     }
                 }
@@ -435,10 +414,23 @@ namespace PokemonBejeweled
             return false;
         }
 
-        protected virtual void OnPointsAdded(int pointsToAdd)
+        private bool testForMove(int row, int col)
         {
-            _pointsToAdd = pointsToAdd;
-            _pointsFromLastPlay += pointsToAdd;
+            int pointsFromLastPlay = _pointsToAdd;
+            startPlay(row, col, row, col + 1);
+            if (!haveGridsStabilized())
+            {
+                _pointsToAdd = -50;
+                OnPointsAdded();
+                _pointsToAdd = pointsFromLastPlay;
+                GridOperations.copyGrid(_pokemonGrid, _newPokemonGrid);
+                return true;
+            }
+            return false;
+        }
+
+        protected virtual void OnPointsAdded()
+        {
             if (null != PointsAdded)
             {
                 PointsAdded(this);
