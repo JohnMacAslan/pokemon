@@ -47,6 +47,9 @@ namespace PokemonBejeweled
             set { _board = value; }
         }
 
+        /// <summary>
+        /// Constructs the object that holds the current state of the game. 
+        /// </summary>
         public GameState()
         {
             newGame();
@@ -54,6 +57,9 @@ namespace PokemonBejeweled
             _countdown.Start();
         }
 
+        /// <summary>
+        /// Initializes all the fields to their initial values for a new game. 
+        /// </summary>
         public void newGame()
         {
             _board = new PokemonBoard();
@@ -65,11 +71,17 @@ namespace PokemonBejeweled
             _timeLeft = 120000; // Default
         }
 
+        /// <summary>
+        /// If a move has not just been made, attempts to swap the last token clicked
+        /// with the previously clicked token. 
+        /// </summary>
+        /// <param name="row">The row of the last token clicked. </param>
+        /// <param name="col">The column of the last token clicked. </param>
         public virtual void makePlay(int row, int col)
         {
             if (TimeLeft != 0 && !_justMadeMove)
             {
-                _board.makePlay(row, col, _previousRow, _previousColumn);
+                _board.startPlay(row, col, _previousRow, _previousColumn);
             }
             else
             {
@@ -79,6 +91,9 @@ namespace PokemonBejeweled
             _previousColumn = col;
         }
 
+        /// <summary>
+        /// Fired when the score is updated. 
+        /// </summary>
         private void OnScoreUpdated()
         {
             _score += _board.PointsToAdd;
@@ -88,6 +103,11 @@ namespace PokemonBejeweled
             }
         }
 
+        /// <summary>
+        /// Decrements the time every second, provided that the time has not reached zero and there is a time limit. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void decrementTime(object sender, ElapsedEventArgs e)
         {
             if (_timeLeft != 0 && NO_TIME_LIMIT != _timeLeft)

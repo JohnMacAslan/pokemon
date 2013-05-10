@@ -9,6 +9,11 @@ namespace PokemonBejeweled
 {
     class GridOperations
     {
+        /// <summary>
+        /// Copies a 2-d array of IBasicPokemonTokens to another 2-d array. 
+        /// </summary>
+        /// <param name="gridToCopy">The 2-d array from which to copy. </param>
+        /// <param name="gridDestination">The 2-d array to copy to. </param>
         public static void copyGrid(IBasicPokemonToken[,] gridToCopy, IBasicPokemonToken[,] gridDestination)
         {
             int rowLength = gridToCopy.GetLength(0);
@@ -29,6 +34,10 @@ namespace PokemonBejeweled
             }
         }
 
+        /// <summary>
+        /// Inverts a square 2-dimensional array of IBasicPokemonTokens. 
+        /// </summary>
+        /// <param name="gridToInvert">The 2-d array to invert. </param>
         public static void invertGrid(IBasicPokemonToken[,] gridToInvert)
         {
             int rowLength = gridToInvert.GetLength(0);

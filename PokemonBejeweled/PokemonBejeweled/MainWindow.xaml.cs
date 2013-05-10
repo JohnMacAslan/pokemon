@@ -34,6 +34,9 @@ namespace PokemonBejeweled
         private TextBlock _instructionsText = new TextBlock();
         private ImageBrush _pokeball = (new PokeballToken()).getPokemonPicture();
 
+        /// <summary>
+        /// Constructs the primary display for the PokemonBejeweled game. 
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
@@ -58,6 +61,9 @@ namespace PokemonBejeweled
             _countdown.Start();
         }
 
+        /// <summary>
+        /// Sets up the window for the game instructions. 
+        /// </summary>
         private void setUpInstructionWindow()
         {
             _instructionsText.TextWrapping = System.Windows.TextWrapping.Wrap;
@@ -67,6 +73,9 @@ namespace PokemonBejeweled
             _instructionsWindow.Height = 563;
         }
 
+        /// <summary>
+        /// Sets up the grid of buttons for the PokemonBoard. 
+        /// </summary>
         private void setUpGridBoard()
         {
             double buttonHeight = GridBoard.Height / PokemonBoard.gridSize;
@@ -83,6 +92,9 @@ namespace PokemonBejeweled
             }
         }
 
+        /// <summary>
+        /// Updates the images associated with the grid buttons for the PokemonBoard. 
+        /// </summary>
         private void updateGridBoard()
         {
             GridButton currentButton;
@@ -110,6 +122,9 @@ namespace PokemonBejeweled
             GridBoard.Dispatcher.Invoke(delegate() { Thread.Sleep(500); }, DispatcherPriority.Render);
         }
 
+        /// <summary>
+        /// Sets the GUI text based on the chosen language. 
+        /// </summary>
         private void setLocalizedText()
         {
             try
@@ -138,6 +153,9 @@ namespace PokemonBejeweled
             }
         }
 
+        /// <summary>
+        /// Sets up the logic for switching between languages. 
+        /// </summary>
         private void setUpLanguageButtons()
         {
             EnglishButton.Click += delegate
@@ -152,12 +170,18 @@ namespace PokemonBejeweled
             };
         }
 
+        /// <summary>
+        /// Updates the displayed score according to the score stored in the GameState. 
+        /// </summary>
         private void updateScore()
         {
             ScoreboardLabel.Content = _gameState.Score;
             ScoreboardLabel.Dispatcher.Invoke(delegate() { }, DispatcherPriority.Render);
         }
 
+        /// <summary>
+        /// Resets the timer according to the checked button. 
+        /// </summary>
         public void resetTimer()
         {
             if ((bool)OneMinuteRadio.IsChecked)
@@ -182,6 +206,9 @@ namespace PokemonBejeweled
             }
         }
 
+        /// <summary>
+        /// Starts a new game. 
+        /// </summary>
         private void newGame(object sender, RoutedEventArgs e)
         {
             _gameState.newGame();
@@ -192,6 +219,9 @@ namespace PokemonBejeweled
             _gameState.ScoreUpdated += new ScoreUpdatedEventHandler(delegate { updateScore(); });
         }
 
+        /// <summary>
+        /// Pauses the timer and hides the board from view. 
+        /// </summary>
         public void pauseGame(object sender, RoutedEventArgs e)
         {
             if (!_paused)
@@ -210,6 +240,9 @@ namespace PokemonBejeweled
             }
         }
 
+        /// <summary>
+        /// Searches the board for a valid play. If a play is found, the corresponding token flashes. 
+        /// </summary>
         public void hint(object sender, RoutedEventArgs e)
         {
             int rowHint, colHint;
@@ -223,18 +256,27 @@ namespace PokemonBejeweled
             }
         }
 
+        /// <summary>
+        /// Makes the instructions window simply hide instead of closing when closed. 
+        /// </summary>
         private void HideInsteadOfClose(object sender, System.ComponentModel.CancelEventArgs e)
         {
             e.Cancel = true;
             _instructionsWindow.Visibility = Visibility.Hidden;
         }
 
+        /// <summary>
+        /// Opens the instructions window. 
+        /// </summary>
         private void openInstructions(object sender, RoutedEventArgs e)
         {
             _instructionsWindow.Visibility = Visibility.Visible;
             _instructionsWindow.Content = _instructionsText;
         }
 
+        /// <summary>
+        /// Updates the timer according to the time left stored in the GameState. 
+        /// </summary>
         private void updateTimer(object sender, EventArgs e)
         {
             TimerLabel.Foreground = Brushes.Green;

@@ -84,7 +84,7 @@ namespace PokemonBejeweledTest
             _mockBoard.PokemonGrid = _pokemonGrid;
             _mockBoard.Expect(g => g.updateSingleRow(rowOne, colOne)).Return(false);
             _mockBoard.Replay();
-            _mockBoard.startPlay(rowOne, colOne, rowTwo, colTwo);
+            _mockBoard.makePlay(rowOne, colOne, rowTwo, colTwo);
             _mockBoard.VerifyAllExpectations();
         }
 
@@ -98,7 +98,7 @@ namespace PokemonBejeweledTest
             _mockBoard.PokemonGrid = _pokemonGrid;
             _mockBoard.Expect(g => g.updateSingleRow(rowTwo, colTwo)).Return(false);
             _mockBoard.Replay();
-            _mockBoard.startPlay(rowOne, colOne, rowTwo, colTwo);
+            _mockBoard.makePlay(rowOne, colOne, rowTwo, colTwo);
             _mockBoard.VerifyAllExpectations();
         }
 
@@ -112,7 +112,7 @@ namespace PokemonBejeweledTest
             _mockBoard.PokemonGrid = _pokemonGrid;
             _mockBoard.Expect(g => g.updateSingleColumn(rowOne, colOne)).Return(false);
             _mockBoard.Replay();
-            _mockBoard.startPlay(rowOne, colOne, rowTwo, colTwo);
+            _mockBoard.makePlay(rowOne, colOne, rowTwo, colTwo);
             _mockBoard.VerifyAllExpectations();
         }
 
@@ -126,7 +126,7 @@ namespace PokemonBejeweledTest
             _mockBoard.PokemonGrid = _pokemonGrid;
             _mockBoard.Expect(g => g.updateSingleColumn(rowTwo, colTwo)).Return(false);
             _mockBoard.Replay();
-            _mockBoard.startPlay(rowOne, colOne, rowTwo, colTwo);
+            _mockBoard.makePlay(rowOne, colOne, rowTwo, colTwo);
             _mockBoard.VerifyAllExpectations();
         }
 
@@ -138,9 +138,9 @@ namespace PokemonBejeweledTest
             int rowTwo = 1;
             int colTwo = 1;
             _mockBoard.PokemonGrid = _pokemonGrid;
-            _mockBoard.Expect(g => g.swapDitto(rowOne, colOne, rowTwo, colTwo)).Return(false);
+            _mockBoard.Expect(g => g.markDittoNulls(rowOne, colOne, rowTwo, colTwo)).Return(false);
             _mockBoard.Replay();
-            _mockBoard.startPlay(rowOne, colOne, rowTwo, colTwo);
+            _mockBoard.makePlay(rowOne, colOne, rowTwo, colTwo);
             _mockBoard.VerifyAllExpectations();
         }
 
@@ -154,9 +154,9 @@ namespace PokemonBejeweledTest
             _mockBoard.PokemonGrid = _pokemonGrid;
             _mockBoard.Expect(g => g.updateSingleRow(rowOne, colOne)).IgnoreArguments().Return(false);
             _mockBoard.Expect(g => g.updateSingleColumn(rowOne, colOne)).IgnoreArguments().Return(false);
-            _mockBoard.Expect(g => g.swapDitto(rowOne, colOne, rowTwo, colTwo)).IgnoreArguments().Return(false);
+            _mockBoard.Expect(g => g.markDittoNulls(rowOne, colOne, rowTwo, colTwo)).IgnoreArguments().Return(false);
             _mockBoard.Replay();
-            _mockBoard.startPlay(rowOne, colOne, rowTwo, colTwo);
+            _mockBoard.makePlay(rowOne, colOne, rowTwo, colTwo);
             Assert.AreEqual(_pokemonGrid[rowOne, colOne], _mockBoard.NewPokemonGrid[rowOne, colOne]);
             Assert.AreEqual(_pokemonGrid[rowTwo, colTwo], _mockBoard.NewPokemonGrid[rowTwo, colTwo]);
         }
@@ -171,7 +171,7 @@ namespace PokemonBejeweledTest
             _mockBoard.PokemonGrid = _pokemonGrid;
             _mockBoard.Expect(g => g.updateSingleRow(rowOne, rowTwo)).Return(true);
             _mockBoard.Replay();
-            _mockBoard.startPlay(rowOne, colOne, rowTwo, colTwo);
+            _mockBoard.makePlay(rowOne, colOne, rowTwo, colTwo);
             Assert.AreEqual(_pokemonGrid[rowOne, colOne], _mockBoard.NewPokemonGrid[rowTwo, colTwo]);
             Assert.AreEqual(_pokemonGrid[rowTwo, colTwo], _mockBoard.NewPokemonGrid[rowOne, colOne]);
         }
@@ -186,7 +186,7 @@ namespace PokemonBejeweledTest
             _mockBoard.PokemonGrid = _pokemonGrid;
             _mockBoard.Expect(g => g.piecesAreAdjacent(rowOne, colOne, rowTwo, colTwo)).Return(false);
             _mockBoard.Replay();
-            _mockBoard.makePlay(rowOne, colOne, rowTwo, colTwo);
+            _mockBoard.startPlay(rowOne, colOne, rowTwo, colTwo);
             _mockBoard.VerifyAllExpectations();
         }
 
@@ -199,9 +199,9 @@ namespace PokemonBejeweledTest
             int colTwo = 1;
             _mockBoard.PokemonGrid = _pokemonGrid;
             _mockBoard.Expect(g => g.piecesAreAdjacent(rowOne, colOne, rowTwo, colTwo)).Return(true);
-            _mockBoard.Expect(g => g.startPlay(rowOne, colOne, rowTwo, colTwo));
+            _mockBoard.Expect(g => g.makePlay(rowOne, colOne, rowTwo, colTwo));
             _mockBoard.Replay();
-            _mockBoard.makePlay(rowOne, colOne, rowTwo, colTwo);
+            _mockBoard.startPlay(rowOne, colOne, rowTwo, colTwo);
             _mockBoard.VerifyAllExpectations();
         }
 
@@ -216,14 +216,14 @@ namespace PokemonBejeweledTest
             _mockBoard.Expect(g => g.piecesAreAdjacent(rowOne, colOne, rowTwo, colTwo)).Return(true);
             _mockBoard.Expect(g => g.updateBoard());
             _mockBoard.Replay();
-            _mockBoard.makePlay(rowOne, colOne, rowTwo, colTwo);
+            _mockBoard.startPlay(rowOne, colOne, rowTwo, colTwo);
             _mockBoard.VerifyAllExpectations();
         }
 
         [Test]
         public void UpdateBoard_NoRowsOrColumnsOfThree_GridUnchanged()
         {
-            _pokemonBoard.makePlay(0, 0, 0, 0);
+            _pokemonBoard.startPlay(0, 0, 0, 0);
             Assert.AreEqual(_pokemonGrid, _pokemonBoard.PokemonGrid);
         }
 
@@ -375,7 +375,7 @@ namespace PokemonBejeweledTest
             _mockBoard.PokemonGrid = _pokemonGrid;
             _mockBoard.Expect(g => g.markAllTokensOfSameTypeAsNull(_pokemonGrid[0, 1]));
             _mockBoard.Replay();
-            _mockBoard.swapDitto(0, 0, 0, 1);
+            _mockBoard.markDittoNulls(0, 0, 0, 1);
             _mockBoard.VerifyAllExpectations();
         }
 
@@ -386,7 +386,7 @@ namespace PokemonBejeweledTest
             _mockBoard.PokemonGrid = _pokemonGrid;
             _mockBoard.Expect(g => g.markAllTokensOfSameTypeAsNull(_pokemonGrid[0, 0]));
             _mockBoard.Replay();
-            _mockBoard.swapDitto(0, 0, 0, 1);
+            _mockBoard.markDittoNulls(0, 0, 0, 1);
             _mockBoard.VerifyAllExpectations();
         }
 

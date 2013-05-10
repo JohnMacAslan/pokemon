@@ -84,7 +84,7 @@ namespace PokemonBejeweledTest
         [Test]
         public void MakePlay_CanMakePlay_CallsBoardMakePlay()
         {
-            _mockBoard.Expect(g => g.makePlay(0, 0, 0, 0));
+            _mockBoard.Expect(g => g.startPlay(0, 0, 0, 0));
             _mockBoard.Replay();
             _gameState.makePlay(0, 0);
             _gameState.Board = _mockBoard;
