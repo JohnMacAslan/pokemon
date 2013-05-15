@@ -15,25 +15,23 @@ namespace PokemonBejeweledTest
         private PokemonBoard _mockBoard;
 
         [SetUp]
-        public void setupMocks()
-        {
-            _mocks = new MockRepository();
-            _mockBoard = _mocks.PartialMock<PokemonBoard>();
-        }
-
-        [SetUp]
-        public void resetPokemonGrid()
+        public void setUp()
         {
             int tokenToAdd = 0;
             _pokemonBoard = new PokemonBoard();
             for (int row = 0; row < PokemonBoard.gridSize; row++) {
                 for (int col = 0; col < PokemonBoard.gridSize; col++)
                 {
-                    _pokemonGrid[row, col] = (PokemonToken)Activator.CreateInstance(PokemonBoard.TokenList[tokenToAdd++ % 6 + 1]);
+                    _pokemonGrid[row, col] = (PokemonToken)Activator.CreateInstance(PokemonBoard.TokenList[tokenToAdd++ % 6]);
                 }
             }
             _pokemonBoard.PokemonGrid = _pokemonGrid;
             _pokemonBoard.NewPokemonGrid = _pokemonGrid;
+
+            _mocks = new MockRepository();
+            _mockBoard = _mocks.PartialMock<PokemonBoard>();
+            _mockBoard.PokemonGrid = _pokemonGrid;
+            _mockBoard.NewPokemonGrid = _pokemonGrid;
         }
 
         [Test]
@@ -57,25 +55,7 @@ namespace PokemonBejeweledTest
         }
 
         [Test]
-        public void PiecesAreAdjacent_PiecesAreHorizontallyAdjacent_ReturnTrue()
-        {
-            Assert.IsTrue(_pokemonBoard.piecesAreAdjacent(1, 1, 1, 2));
-        }
-
-        [Test]
-        public void PiecesAreAdjacent_PiecesAreVerticallyAdjacent_ReturnTrue()
-        {
-            Assert.IsTrue(_pokemonBoard.piecesAreAdjacent(1, 2, 1, 1));
-        }
-
-        [Test]
-        public void PiecesAreAdjacent_PiecesAreNotAdjacent_ReturnFalse()
-        {
-            Assert.IsFalse(_pokemonBoard.piecesAreAdjacent(1, 1, 2, 2));
-        }
-
-        [Test]
-        public void StartPlay_CallUpdateSingleRowOnFirstPoint()
+        public void MakePlay_CallUpdateSingleRowOnFirstPoint()
         {
             int rowOne = 0;
             int colOne = 0;
@@ -89,7 +69,7 @@ namespace PokemonBejeweledTest
         }
 
         [Test]
-        public void StartPlay_CallUpdateSingleRowOnSecondPoint()
+        public void MakePlay_CallUpdateSingleRowOnSecondPoint()
         {
             int rowOne = 0;
             int colOne = 0;
@@ -103,7 +83,7 @@ namespace PokemonBejeweledTest
         }
 
         [Test]
-        public void StartPlay_CallUpdateSingleColumnOnFirstPoint()
+        public void MakePlay_CallUpdateSingleColumnOnFirstPoint()
         {
             int rowOne = 0;
             int colOne = 0;
@@ -117,7 +97,7 @@ namespace PokemonBejeweledTest
         }
 
         [Test]
-        public void StartPlay_CallUpdateSingleColumnOnSecondPoint()
+        public void MakePlay_CallUpdateSingleColumnOnSecondPoint()
         {
             int rowOne = 0;
             int colOne = 0;
@@ -131,7 +111,7 @@ namespace PokemonBejeweledTest
         }
 
         [Test]
-        public void StartPlay_CallSwapDitto()
+        public void MakePlay_CallMakrDittoNulls()
         {
             int rowOne = 0;
             int colOne = 0;
@@ -145,7 +125,7 @@ namespace PokemonBejeweledTest
         }
 
         [Test]
-        public void StartPlay_InvalidMove_NewPokemonBoardUnchanged()
+        public void MakePlay_InvalidMove_NewPokemonBoardUnchanged()
         {
             int rowOne = 0;
             int colOne = 0;
@@ -162,7 +142,7 @@ namespace PokemonBejeweledTest
         }
 
         [Test]
-        public void StartPlay_ValidMove_FirstAndSecondPointSwappedOnNewPokemonBoard()
+        public void MakePlay_ValidMove_FirstAndSecondPointSwappedOnNewPokemonBoard()
         {
             int rowOne = 0;
             int colOne = 0;
@@ -177,53 +157,48 @@ namespace PokemonBejeweledTest
         }
 
         [Test]
-        public void MakePlay_CallArePiecesAdjacent()
+        public void TryPlay_PiecesAreNotAdjacent_MakePlayNotCalled()
         {
             int rowOne = 0;
             int colOne = 0;
             int rowTwo = 1;
             int colTwo = 1;
-            _mockBoard.PokemonGrid = _pokemonGrid;
-            _mockBoard.Expect(g => g.piecesAreAdjacent(rowOne, colOne, rowTwo, colTwo)).Return(false);
             _mockBoard.Replay();
-            _mockBoard.tryPlay(rowOne, colOne, rowTwo, colTwo);
-            _mockBoard.VerifyAllExpectations();
+            _mockBoard.tryPlay(_pokemonGrid, rowOne, colOne, rowTwo, colTwo);
+            _mockBoard.AssertWasNotCalled(g => g.makePlay(0,0,0,0), a => a.IgnoreArguments());
         }
 
         [Test]
-        public void MakePlay_PiecesAreAdjacent_CallStartPlay()
+        public void TryPlay_PiecesAreAdjacent_CallMakePlay()
         {
             int rowOne = 0;
             int colOne = 0;
-            int rowTwo = 1;
+            int rowTwo = 0;
             int colTwo = 1;
-            _mockBoard.PokemonGrid = _pokemonGrid;
-            _mockBoard.Expect(g => g.piecesAreAdjacent(rowOne, colOne, rowTwo, colTwo)).Return(true);
+            _mockBoard = _mocks.PartialMock<PokemonBoard>();
             _mockBoard.Expect(g => g.makePlay(rowOne, colOne, rowTwo, colTwo));
             _mockBoard.Replay();
-            _mockBoard.tryPlay(rowOne, colOne, rowTwo, colTwo);
+            _mockBoard.tryPlay(_pokemonGrid, rowOne, colOne, rowTwo, colTwo);
             _mockBoard.VerifyAllExpectations();
         }
 
         [Test]
-        public void MakePlay_PiecesAreAdjacent_CallUpdateBoard()
+        public void TryPlay_PiecesAreAdjacent_CallUpdateBoard()
         {
             int rowOne = 0;
             int colOne = 0;
-            int rowTwo = 1;
+            int rowTwo = 0;
             int colTwo = 1;
-            _mockBoard.PokemonGrid = _pokemonGrid;
-            _mockBoard.Expect(g => g.piecesAreAdjacent(rowOne, colOne, rowTwo, colTwo)).Return(true);
             _mockBoard.Expect(g => g.updateBoard());
             _mockBoard.Replay();
-            _mockBoard.tryPlay(rowOne, colOne, rowTwo, colTwo);
+            _mockBoard.tryPlay(_pokemonGrid, rowOne, colOne, rowTwo, colTwo);
             _mockBoard.VerifyAllExpectations();
         }
 
         [Test]
         public void UpdateBoard_NoRowsOrColumnsOfThree_GridUnchanged()
         {
-            _pokemonBoard.tryPlay(0, 0, 0, 0);
+            _pokemonBoard.tryPlay(_pokemonGrid, 0, 0, 0, 0);
             Assert.AreEqual(_pokemonGrid, _pokemonBoard.PokemonGrid);
         }
 
@@ -243,13 +218,6 @@ namespace PokemonBejeweledTest
             _pokemonGrid[0, 3] = null;
             _pokemonBoard.markNullRow(0, 0, 4);
             Assert.AreEqual(_pokemonGrid, _pokemonBoard.NewPokemonGrid);
-        }
-
-        [Test]
-        [ExpectedException(typeof(IndexOutOfRangeException))]
-        public void MarkNullRow_IndexOutOfRange_ThrowIndexOutOfRangeException()
-        {
-            _pokemonBoard.markNullRow(-1, 0, 4);
         }
 
         [Test]
@@ -284,13 +252,6 @@ namespace PokemonBejeweledTest
         }
 
         [Test]
-        [ExpectedException(typeof(IndexOutOfRangeException))]
-        public void MarkSurroundingTokensNull_IndexOutOfRange_ThrowIndexOutOfRangeException()
-        {
-            _pokemonBoard.markSurroundingTokensNull(-12, -12);
-        }
-
-        [Test]
         public void MarkFullColumnAndRowAsNull_IndicesWithinRange_RowAndColumnMarkedAsNull()
         {
             int row = 4;
@@ -305,13 +266,6 @@ namespace PokemonBejeweledTest
             }
             _pokemonBoard.markFullRowAndColumnAsNull(row, col);
             Assert.AreEqual(_pokemonGrid, _pokemonBoard.NewPokemonGrid);            
-        }
-
-        [Test]
-        [ExpectedException(typeof(IndexOutOfRangeException))]
-        public void MarkFullColumnAndRowAsNull_IndexOutOfRange_ThrowIndexOutOfRangeException()
-        {
-            _pokemonBoard.markFullRowAndColumnAsNull(-12, -12);
         }
 
         [Test]
@@ -369,7 +323,7 @@ namespace PokemonBejeweledTest
         }
 
         [Test]
-        public void SwapDitto_DittoIsFirstToken_MarkAllTokensOfSameTypeAsNullCalled()
+        public void MarkDittoNulls_DittoIsFirstToken_MarkAllTokensOfSameTypeAsNullCalled()
         {
             _pokemonGrid[0, 0] = new DittoToken();
             _mockBoard.PokemonGrid = _pokemonGrid;
@@ -380,7 +334,7 @@ namespace PokemonBejeweledTest
         }
 
         [Test]
-        public void SwapDitto_DittoIsSecondToken_MarkAllTokensOfSameTypeAsNullCalled()
+        public void MarkDittoNulls_DittoIsSecondToken_MarkAllTokensOfSameTypeAsNullCalled()
         {
             _pokemonGrid[0, 1] = new DittoToken();
             _mockBoard.PokemonGrid = _pokemonGrid;
@@ -565,7 +519,6 @@ namespace PokemonBejeweledTest
             _pokemonGrid[0, 0] = new TotodileToken();
             _pokemonGrid[0, 1] = new TotodileToken();
             _pokemonGrid[0, 2] = new TotodileToken();
-            int pointsAdded = 0;
             _mockBoard.PokemonGrid = _pokemonGrid;
             _mockBoard.Expect(g => g.markNullRow(0, 0, 3));
             _mockBoard.Expect(g => g.evolveToken(0, 2, 3));
@@ -611,8 +564,7 @@ namespace PokemonBejeweledTest
         {
             int row;
             int col;
-            _pokemonBoard.PokemonGrid = _pokemonGrid;
-            Assert.IsFalse(_pokemonBoard.areMovesLeft(out row, out col));
+            Assert.IsFalse(_pokemonBoard.areMovesLeft(_pokemonGrid, out row, out col));
         }
 
         [Test]
@@ -620,22 +572,80 @@ namespace PokemonBejeweledTest
         {
             int row;
             int col;
-            _pokemonGrid[0,0] = new PichuToken();
+            _pokemonGrid[0, 0] = new PichuToken();
             _pokemonGrid[0, 1] = new TotodileToken();
             _pokemonGrid[0, 2] = new TotodileToken();
-            _pokemonGrid[0, 1] = new TotodileToken();
+            _pokemonGrid[1, 0] = new TotodileToken();
             _pokemonBoard.PokemonGrid = _pokemonGrid;
-            Assert.IsTrue(_pokemonBoard.areMovesLeft(out row, out col));
+            Assert.IsTrue(_pokemonBoard.areMovesLeft(_pokemonGrid, out row, out col));
             Assert.AreEqual(0, row);
             Assert.AreEqual(0, col);
         }
 
         [Test]
+        public void UpdateToken_RowIndexLessThanRange_ExceptionNotThrown()
+        {
+            _mockBoard.updateToken(-1, 0);
+        }
+
+        [Test]
+        public void UpdateToken_RowIndexGreaterThanRange_ExceptionNotThrown()
+        {
+            _mockBoard.updateToken(PokemonBoard.gridSize, 0);
+        }
+
+        [Test]
+        public void UpdateToken_ColumnIndexOutOfRange_ExceptionNotThrown()
+        {
+            _mockBoard.updateToken(0, -1);
+        }
+
+        [Test]
+        public void UpdateToken_ColumnIndexGreaterThanRange_ExceptionNotThrown()
+        {
+            _mockBoard.updateToken(0, PokemonBoard.gridSize);
+        }
+
+        [Test]
+        public void UpdateToken_TokenAlreadyMarkedNull_NoActionTaken()
+        {
+            bool actionTaken = false;
+            int row = 3;
+            int col = 4;
+            _pokemonGrid[row, col] = null;
+            _mockBoard.NewPokemonGrid = _pokemonGrid;
+            _mockBoard.PointsAdded += delegate { actionTaken = true; };
+            _mockBoard.updateToken(row, col);
+            Assert.IsFalse(actionTaken);
+        }
+
+        [Test]
+        public void UpdateToken_RegularToken_Add10Points()
+        {
+            int pointsAdded = 0;
+            _pokemonBoard.PointsAdded += delegate(object sender, PointsAddedEventArgs e)
+            {
+                pointsAdded += e.Points;
+            };
+            _pokemonBoard.updateToken(3, 4);
+            Assert.AreEqual(10, pointsAdded);
+        }
+
+        [Test]
+        public void UpdateToken_RegularToken_TokenMarkedNull()
+        {
+            int row = 3;
+            int col = 4;
+            _pokemonBoard.updateToken(row, col);
+            Assert.IsNull(_pokemonBoard.NewPokemonGrid[row, col]);
+        }
+
+        [Test]
         public void UpdateToken_FirstLevelEvolution_CallMarkSurroundingTokensNull()
         {
-            int row = 0;
-            int col = 0;
-            _pokemonGrid[row, col] = new PikachuToken();
+            int row = 3;
+            int col = 4;
+            _pokemonGrid[row, col] = new CroconawToken();
             _mockBoard.PokemonGrid = _pokemonGrid;
             _mockBoard.Expect(g => g.markSurroundingTokensNull(row, col));
             _mockBoard.Replay();
@@ -644,16 +654,48 @@ namespace PokemonBejeweledTest
         }
 
         [Test]
-        public void UpdateToken_SecondLevelEvolution_CallMarkRowAndColumnNull()
+        public void UpdateToken_FirstLevelEvolution_Total120Points()
         {
-            int row = 0;
-            int col = 0;
-            _pokemonGrid[row, col] = new RaichuToken();
+            int pointsAdded = 0;
+            int row = 3;
+            int col = 4;
+            _pokemonGrid[row, col] = new CroconawToken();
+            _pokemonBoard.PokemonGrid = _pokemonGrid;
+            _pokemonBoard.PointsAdded += delegate(object sender, PointsAddedEventArgs e)
+            {
+                pointsAdded += e.Points;
+            };
+            _pokemonBoard.updateToken(row, col);
+            Assert.AreEqual(120, pointsAdded);
+        }
+
+        [Test]
+        public void UpdateToken_SecondLevelEvolution_CallMarkFullRowAndColumnNull()
+        {
+            int row = 3;
+            int col = 4;
+            _pokemonGrid[row, col] = new FeraligatorToken();
             _mockBoard.PokemonGrid = _pokemonGrid;
             _mockBoard.Expect(g => g.markFullRowAndColumnAsNull(row, col));
             _mockBoard.Replay();
             _mockBoard.updateToken(row, col);
             _mockBoard.VerifyAllExpectations();
+        }
+
+        [Test]
+        public void UpdateToken_SecondLevelEvolution_Total210Points()
+        {
+            int pointsAdded = 0;
+            int row = 3;
+            int col = 4;
+            _pokemonGrid[row, col] = new FeraligatorToken();
+            _pokemonBoard.PokemonGrid = _pokemonGrid;
+            _pokemonBoard.PointsAdded += delegate(object sender, PointsAddedEventArgs e)
+            {
+                pointsAdded += e.Points;
+            };
+            _pokemonBoard.updateToken(row, col);
+            Assert.AreEqual(210, pointsAdded);
         }
     }
 }

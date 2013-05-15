@@ -157,7 +157,7 @@ namespace PokemonBejeweled
             _justMadeMove = true;
             if (null != BoardChanged)
             {
-                BoardChanged(this, new MakingPlayEventArgs(e.PokemonGrid));
+                BoardChanged(this, e);
             }
         }
 

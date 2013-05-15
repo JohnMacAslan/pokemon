@@ -75,7 +75,7 @@ namespace PokemonBejeweledTest
             gameState.Board = mockBoard;
             _mainWindow.GameState = gameState;
             int row, col;
-            mockBoard.Expect(g => g.areMovesLeft(out row, out col)).Return(false);
+            mockBoard.Expect(g => g.areMovesLeft(gameState.CurrentGrid, out row, out col)).Return(false);
             mockBoard.Replay();
             _mainWindow.hint(_mainWindow, null);
             mockBoard.VerifyAllExpectations();

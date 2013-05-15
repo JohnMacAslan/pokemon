@@ -198,7 +198,7 @@ namespace PokemonBejeweled
         public void hint(object sender, RoutedEventArgs e)
         {
             int rowHint, colHint;
-            if (_gameState.Board.areMovesLeft(out rowHint, out colHint))
+            if (_gameState.Board.areMovesLeft(_gameState.CurrentGrid, out rowHint, out colHint))
             {
                 ((UIElement)GridBoard.Children[rowHint * 8 + colHint]).Focus();
             }

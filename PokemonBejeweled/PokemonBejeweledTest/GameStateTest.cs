@@ -17,7 +17,6 @@ namespace PokemonBejeweledTest
         private GameState _gameState;
         private MockRepository _mocks;
         private PokemonBoard _pokemonBoard;
-        private PokemonBejeweled.Pokemon.IBasicPokemonToken[,] _pokemonGrid;
 
         [SetUp]
         public void setupMocks()
@@ -67,7 +66,7 @@ namespace PokemonBejeweledTest
         [Test]
         public void MakePlay_CanMakePlay_CallsBoardMakePlay()
         {
-            _pokemonBoard.Expect(g => g.tryPlay(0, 0, 0, 0));
+            _pokemonBoard.Expect(g => g.tryPlay(_gameState.CurrentGrid, 0, 0, 0, 0));
             _pokemonBoard.Replay();
             _gameState.tryPlay(0, 0);
             _gameState.Board = _pokemonBoard;

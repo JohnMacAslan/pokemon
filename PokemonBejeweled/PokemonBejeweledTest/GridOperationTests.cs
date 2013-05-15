@@ -30,6 +30,24 @@ namespace PokemonBejeweledTest
         }
 
         [Test]
+        public void PiecesAreAdjacent_PiecesAreHorizontallyAdjacent_ReturnTrue()
+        {
+            Assert.IsTrue(GridOperations.arePiecesAdjacent(1, 1, 1, 2));
+        }
+
+        [Test]
+        public void PiecesAreAdjacent_PiecesAreVerticallyAdjacent_ReturnTrue()
+        {
+            Assert.IsTrue(GridOperations.arePiecesAdjacent(1, 2, 1, 1));
+        }
+
+        [Test]
+        public void PiecesAreAdjacent_PiecesAreNotAdjacent_ReturnFalse()
+        {
+            Assert.IsFalse(GridOperations.arePiecesAdjacent(1, 1, 2, 2));
+        }
+
+        [Test]
         public void InvertGrid_NoError_GridInverted()
         {
             IBasicPokemonToken[,] pokemonToInvert = new IBasicPokemonToken[3, 3];

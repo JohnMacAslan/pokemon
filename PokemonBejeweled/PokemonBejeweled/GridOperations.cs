@@ -10,6 +10,27 @@ namespace PokemonBejeweled
     class GridOperations
     {
         /// <summary>
+        /// Checks to see if two locations are adjacent. 
+        /// </summary>
+        /// <param name="row1">The row of the first location on the grid. </param>
+        /// <param name="col1">The column of the first location on the grid. </param>
+        /// <param name="row2">The row of the second location on the grid. </param>
+        /// <param name="col2">The column of the second location on the grid. </param>
+        /// <returns>True if the two locations are adjacent, false otherwise. </returns>
+        public static bool arePiecesAdjacent(int row1, int col1, int row2, int col2)
+        {
+            if (row1 == row2 && Math.Abs(col1 - col2) == 1)
+            {
+                return true;
+            }
+            if (col1 == col2 && Math.Abs(row1 - row2) == 1)
+            {
+                return true;
+            }
+            return false;
+        }
+        
+        /// <summary>
         /// Copies a 2-d array of IBasicPokemonTokens to another 2-d array. 
         /// </summary>
         /// <param name="gridToCopy">The 2-d array from which to copy. </param>

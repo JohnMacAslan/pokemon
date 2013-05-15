@@ -64,27 +64,6 @@ namespace PokemonBejeweled
         }
 
         /// <summary>
-        /// Checks to see if two locations on the grid are adjacent. 
-        /// </summary>
-        /// <param name="row1">The row of the first location on the grid. </param>
-        /// <param name="col1">The column of the first location on the grid. </param>
-        /// <param name="row2">The row of the second location on the grid. </param>
-        /// <param name="col2">The column of the second location on the grid. </param>
-        /// <returns>True if the two locations are adjacent, false otherwise. </returns>
-        public virtual bool piecesAreAdjacent(int row1, int col1, int row2, int col2)
-        {
-            if (row1 == row2 && Math.Abs(col1 - col2) == 1)
-            {
-                return true;
-            }
-            if (col1 == col2 && Math.Abs(row1 - row2) == 1)
-            {
-                return true;
-            }
-            return false;
-        }
-
-        /// <summary>
         /// Begins a play. 
         /// </summary>
         /// <param name="row1">The row of the first location on the grid. </param>
@@ -94,14 +73,14 @@ namespace PokemonBejeweled
         /// <returns>True if a play was made, false otherwise. </returns>
         public virtual void tryPlay(IBasicPokemonToken[,] pokemonGrid, int row1, int col1, int row2, int col2)
         {
-            if (piecesAreAdjacent(row1, col1, row2, col2))
+            if (GridOperations.arePiecesAdjacent(row1, col1, row2, col2))
             {
                 PokemonGrid = pokemonGrid;
                 NewPokemonGrid = pokemonGrid;
                 makePlay(row1, col1, row2, col2);
                 updateBoard();
+                OnEndingPlay();
             }
-            OnEndingPlay();
         }
 
         /// <summary>
@@ -487,8 +466,10 @@ namespace PokemonBejeweled
         /// <param name="rowHint">The row of the token that can be switched to make a move. </param>
         /// <param name="colHint">The column of the token that can be switched to make a move. </param>
         /// <returns>True if a move is possible, false otherwise. </returns>
-        public virtual bool areMovesLeft(out int rowHint, out int colHint)
+        public virtual bool areMovesLeft(IBasicPokemonToken[,] pokemonGrid, out int rowHint, out int colHint)
         {
+            PokemonGrid = pokemonGrid;
+            NewPokemonGrid = pokemonGrid;
             bool isMove = false;
             for (int row = 0; row < gridSize; row++)
             {
