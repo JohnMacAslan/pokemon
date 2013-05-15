@@ -29,7 +29,7 @@ namespace PokemonBejeweledTest
             for (int row = 0; row < PokemonBoard.gridSize; row++) {
                 for (int col = 0; col < PokemonBoard.gridSize; col++)
                 {
-                    _pokemonGrid[row, col] = (PokemonToken)Activator.CreateInstance(PokemonBoard.TokenDict[tokenToAdd++ % 6 + 1]);
+                    _pokemonGrid[row, col] = (PokemonToken)Activator.CreateInstance(PokemonBoard.TokenList[tokenToAdd++ % 6 + 1]);
                 }
             }
             _pokemonBoard.PokemonGrid = _pokemonGrid;
@@ -186,7 +186,7 @@ namespace PokemonBejeweledTest
             _mockBoard.PokemonGrid = _pokemonGrid;
             _mockBoard.Expect(g => g.piecesAreAdjacent(rowOne, colOne, rowTwo, colTwo)).Return(false);
             _mockBoard.Replay();
-            _mockBoard.startPlay(rowOne, colOne, rowTwo, colTwo);
+            _mockBoard.tryPlay(rowOne, colOne, rowTwo, colTwo);
             _mockBoard.VerifyAllExpectations();
         }
 
@@ -201,7 +201,7 @@ namespace PokemonBejeweledTest
             _mockBoard.Expect(g => g.piecesAreAdjacent(rowOne, colOne, rowTwo, colTwo)).Return(true);
             _mockBoard.Expect(g => g.makePlay(rowOne, colOne, rowTwo, colTwo));
             _mockBoard.Replay();
-            _mockBoard.startPlay(rowOne, colOne, rowTwo, colTwo);
+            _mockBoard.tryPlay(rowOne, colOne, rowTwo, colTwo);
             _mockBoard.VerifyAllExpectations();
         }
 
@@ -216,14 +216,14 @@ namespace PokemonBejeweledTest
             _mockBoard.Expect(g => g.piecesAreAdjacent(rowOne, colOne, rowTwo, colTwo)).Return(true);
             _mockBoard.Expect(g => g.updateBoard());
             _mockBoard.Replay();
-            _mockBoard.startPlay(rowOne, colOne, rowTwo, colTwo);
+            _mockBoard.tryPlay(rowOne, colOne, rowTwo, colTwo);
             _mockBoard.VerifyAllExpectations();
         }
 
         [Test]
         public void UpdateBoard_NoRowsOrColumnsOfThree_GridUnchanged()
         {
-            _pokemonBoard.startPlay(0, 0, 0, 0);
+            _pokemonBoard.tryPlay(0, 0, 0, 0);
             Assert.AreEqual(_pokemonGrid, _pokemonBoard.PokemonGrid);
         }
 

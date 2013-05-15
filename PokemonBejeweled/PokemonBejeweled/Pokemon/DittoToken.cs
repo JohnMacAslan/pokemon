@@ -12,7 +12,7 @@ namespace PokemonBejeweled.Pokemon
     {
         public DittoToken()
         {
-            _pictureLocation = "Pokemon/Pictures/ditto.JPG";  
+            _pictureName = "ditto";  
         }
     }
 }

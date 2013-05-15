@@ -12,7 +12,7 @@ namespace PokemonBejeweled.Pokemon
     {
         public RaichuToken()
         {
-            _pictureLocation = "Pokemon/Pictures/raichu.JPG";            
+            _pictureName = "raichu";            
         }
     }
 }

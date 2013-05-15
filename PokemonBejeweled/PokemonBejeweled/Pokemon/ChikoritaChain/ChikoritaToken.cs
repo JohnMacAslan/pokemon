@@ -14,7 +14,7 @@ namespace PokemonBejeweled.Pokemon
         {
             _firstEvolution = typeof(BayleefToken);
             _secondEvolution = typeof(MeganiumToken);
-            _pictureLocation = "Pokemon/Pictures/chikorita.JPG";          
+            _pictureName = "chikorita";          
         }
     }
 }

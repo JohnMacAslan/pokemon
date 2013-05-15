@@ -12,7 +12,7 @@ namespace PokemonBejeweled.Pokemon
     {
         public PokeballToken()
         {
-            _pictureLocation = "Pokemon/Pictures/pokeball.JPG";  
+            _pictureName = "pokeball";
         }
     }
 }

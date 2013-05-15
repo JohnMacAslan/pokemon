@@ -24,7 +24,6 @@ namespace PokemonBejeweled
             get { return _gameState; }
             set { _gameState = value; }
         }
-        private System.Windows.Threading.DispatcherTimer _countdown = new System.Windows.Threading.DispatcherTimer();
         private bool _paused = false;
         public bool Paused
         {
@@ -32,7 +31,7 @@ namespace PokemonBejeweled
         }
         private Window _instructionsWindow = new Window();
         private TextBlock _instructionsText = new TextBlock();
-        private ImageBrush _pokeball = (new PokeballToken()).getPokemonPicture();
+        private ImageBrush _pokeball = PokemonPictureDictionary.getImageBrush(new PokeballToken());
 
         /// <summary>
         /// Constructs the primary display for the PokemonBejeweled game. 
@@ -42,23 +41,23 @@ namespace PokemonBejeweled
             InitializeComponent();
             setUpInstructionWindow();
             setUpGridBoard();
+            _gameState.ScoreUpdated += OnScoreUpdated;
+            _gameState.BoardChanged += OnBoardChanged;
+            _gameState.TimeUpdated += OnTimeUpdated;
             newGame(this, null);
             setLocalizedText();
             setUpLanguageButtons();
             NewGameButton.Click += newGame;
             PauseButton.Click += pauseGame;
-            UndoButton.Click += delegate { _gameState.Board.undoPlay(); };
+            UndoButton.Click += _gameState.undoPlay;
             HintButton.Click += hint;
             QuitGameButton.Click += delegate { this.Close(); };
             Closing += delegate
             {
                 _instructionsWindow.Closing -= new CancelEventHandler(HideInsteadOfClose);
-                _instructionsWindow.Close(); 
+                _instructionsWindow.Close();
             };
             InstructionsButton.Click += openInstructions;
-            _countdown.Tick += new EventHandler(updateTimer);
-            _countdown.Interval = new TimeSpan(0, 0, 1);
-            _countdown.Start();
         }
 
         /// <summary>
@@ -93,36 +92,6 @@ namespace PokemonBejeweled
         }
 
         /// <summary>
-        /// Updates the images associated with the grid buttons for the PokemonBoard. 
-        /// </summary>
-        private void updateGridBoard()
-        {
-            GridButton currentButton;
-            System.Collections.IEnumerator buttonEnumerator = GridBoard.Children.GetEnumerator();
-            for (int r = 0; r < PokemonBoard.gridSize; r++)
-            {
-                for (int c = 0; c < PokemonBoard.gridSize; c++)
-                {
-                    buttonEnumerator.MoveNext();
-                    currentButton = (GridButton)buttonEnumerator.Current;
-                    if (null == _gameState.Board.PokemonGrid[r, c])
-                    {
-                        currentButton.Background = _pokeball;
-                    }
-                    else
-                    {
-                        currentButton.Background = (_gameState.Board.PokemonGrid[r, c].getPokemonPicture());
-                    }
-                }
-            }
-
-            HintButton.Content = _resourceManager.GetString("Hint");
-            DependencyObject scope = FocusManager.GetFocusScope(this);
-            FocusManager.SetFocusedElement(scope, this);
-            GridBoard.Dispatcher.Invoke(delegate() { Thread.Sleep(500); }, DispatcherPriority.Render);
-        }
-
-        /// <summary>
         /// Sets the GUI text based on the chosen language. 
         /// </summary>
         private void setLocalizedText()
@@ -133,7 +102,7 @@ namespace PokemonBejeweled
                 MainMenu.Header = _resourceManager.GetString("Main_Menu");
                 GameTitle.Text = _resourceManager.GetString("Game_Title");
                 NewGameButton.Content = _resourceManager.GetString("New_Game");
-                PauseButton.Content = _resourceManager.GetString("Pause");
+                PauseButton.Content = _paused ? _resourceManager.GetString("Resume") : _resourceManager.GetString("Pause");
                 HintButton.Content = _resourceManager.GetString("Hint");
                 UndoButton.Content = _resourceManager.GetString("Undo");
                 QuitGameButton.Content = _resourceManager.GetString("Quit");
@@ -171,15 +140,6 @@ namespace PokemonBejeweled
         }
 
         /// <summary>
-        /// Updates the displayed score according to the score stored in the GameState. 
-        /// </summary>
-        private void updateScore()
-        {
-            ScoreboardLabel.Content = _gameState.Score;
-            ScoreboardLabel.Dispatcher.Invoke(delegate() { }, DispatcherPriority.Render);
-        }
-
-        /// <summary>
         /// Resets the timer according to the checked button. 
         /// </summary>
         public void resetTimer()
@@ -196,13 +156,9 @@ namespace PokemonBejeweled
             {
                 _gameState.TimeLeft = 600;
             }
-            else if ((bool)UnlimitedRadio.IsChecked)
-            {
-                _gameState.TimeLeft = GameState.NO_TIME_LIMIT;
-            }
             else
             {
-                _gameState.TimeLeft = 600;
+                _gameState.TimeLeft = GameState.NO_TIME_LIMIT;
             }
         }
 
@@ -213,10 +169,6 @@ namespace PokemonBejeweled
         {
             _gameState.newGame();
             resetTimer();
-            updateScore();
-            updateGridBoard();
-            _gameState.Board.BoardDirtied += new BoardDirtiedEventHandler(delegate { updateGridBoard(); });
-            _gameState.ScoreUpdated += new ScoreUpdatedEventHandler(delegate { updateScore(); });
         }
 
         /// <summary>
@@ -275,34 +227,81 @@ namespace PokemonBejeweled
         }
 
         /// <summary>
-        /// Updates the timer according to the time left stored in the GameState. 
+        /// Updates the images associated with the grid buttons for the PokemonBoard. 
+        /// <param name="e">The event args that holds to current grid with which to updatee the screen. </param>
         /// </summary>
-        private void updateTimer(object sender, EventArgs e)
+        private void OnBoardChanged(object obj, MakingPlayEventArgs e)
         {
-            TimerLabel.Foreground = Brushes.Green;
-            if (0 == _gameState.TimeLeft)
+            IBasicPokemonToken[,] currentGrid = e.PokemonGrid;
+            GridButton currentButton;
+            System.Collections.IEnumerator buttonEnumerator = GridBoard.Children.GetEnumerator();
+            for (int r = 0; r < PokemonBoard.gridSize; r++)
             {
-                TimerLabel.Foreground = Brushes.White;
-                TimerLabel.Content = _resourceManager.GetString("Done");
-            }
-            else if (GameState.NO_TIME_LIMIT == _gameState.TimeLeft)
-            {
-                TimerLabel.Content = "--:--";
-            }
-            else
-            {
-                if (10 > _gameState.TimeLeft)
+                for (int c = 0; c < PokemonBoard.gridSize; c++)
                 {
-                    TimerLabel.Foreground = Brushes.Red;
+                    buttonEnumerator.MoveNext();
+                    currentButton = (GridButton)buttonEnumerator.Current;
+                    if (null == currentGrid[r, c])
+                    {
+                        currentButton.Background = _pokeball;
+                    }
+                    else
+                    {
+                        currentButton.Background = PokemonPictureDictionary.getImageBrush(currentGrid[r, c]);
+                    }
                 }
-                else if (30 > _gameState.TimeLeft)
-                {
-                    TimerLabel.Foreground = Brushes.Yellow;
-                }
-                TimeSpan t = TimeSpan.FromSeconds(_gameState.TimeLeft);
-                TimerLabel.Content = string.Format("{0}:{1:D2}", t.Minutes, t.Seconds);
             }
-            CommandManager.InvalidateRequerySuggested();
+
+            HintButton.Content = _resourceManager.GetString("Hint");
+            DependencyObject scope = FocusManager.GetFocusScope(this);
+            FocusManager.SetFocusedElement(scope, this);
+            GridBoard.Dispatcher.Invoke(delegate() { Thread.Sleep(500); }, DispatcherPriority.Render);
+        }
+
+        /// <summary>
+        /// Updates the time according to the TimeUpdatedEventArgs parameter.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnTimeUpdated(object sender, TimeUpdatedEventArgs e)
+        {
+            double timeLeft = e.Time;
+            this.Dispatcher.Invoke((Action)(() =>
+            {
+                TimerLabel.Foreground = Brushes.Green;
+                if (0 == timeLeft)
+                {
+                    TimerLabel.Foreground = Brushes.White;
+                    TimerLabel.Content = _resourceManager.GetString("Done");
+                }
+                else if (GameState.NO_TIME_LIMIT == timeLeft)
+                {
+                    TimerLabel.Content = "--:--";
+                }
+                else
+                {
+                    if (10 > timeLeft)
+                    {
+                        TimerLabel.Foreground = Brushes.Red;
+                    }
+                    else if (30 > timeLeft)
+                    {
+                        TimerLabel.Foreground = Brushes.Yellow;
+                    }
+                    TimeSpan t = TimeSpan.FromSeconds(timeLeft);
+                    TimerLabel.Content = string.Format("{0}:{1:D2}", t.Minutes, t.Seconds);
+                }
+                CommandManager.InvalidateRequerySuggested();
+            }));
+        }
+
+        /// <summary>
+        /// Updates the displayed score according to the score stored in the GameState. 
+        /// </summary>
+        private void OnScoreUpdated(object obj, ScoreUpdatedEventArgs e)
+        {
+            ScoreboardLabel.Content = e.Score;
+            ScoreboardLabel.Dispatcher.Invoke(delegate() { }, DispatcherPriority.Render);
         }
     }
 }

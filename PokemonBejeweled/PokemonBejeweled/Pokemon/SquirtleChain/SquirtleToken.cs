@@ -14,7 +14,7 @@ namespace PokemonBejeweled.Pokemon
         {
             _firstEvolution = typeof(WartortleToken);
             _secondEvolution = typeof(BlastoiseToken);
-            _pictureLocation = "Pokemon/Pictures/squirtle.JPG";      
+            _pictureName = "squirtle";      
         }
     }
 }

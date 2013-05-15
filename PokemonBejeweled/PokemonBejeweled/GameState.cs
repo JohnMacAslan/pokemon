@@ -5,46 +5,44 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
+using PokemonBejeweled.Pokemon;
 
 namespace PokemonBejeweled
 {
-    public delegate void ScoreUpdatedEventHandler(object source);
-
     public class GameState
     {
-        private Boolean _justMadeMove;
+        internal static readonly int NO_TIME_LIMIT = -1;
+        internal int PreviousScore = 0;
+        internal int CurrentScore = 0;
         private int _previousRow;
         private int _previousColumn;
+        internal double TimeLeft = NO_TIME_LIMIT;
+        private Boolean _justMadeMove;
         private Timer _countdown = new Timer(1000);
-        public Timer Countdown
+        internal Timer Countdown
         {
             get { return _countdown; }
-        } 
-        private double _timeLeft;
-        public double TimeLeft
-        {
-            get { return _timeLeft; }
-            set
-            {
-                if (value < 0 && value != NO_TIME_LIMIT)
-                {
-                    throw new ArgumentOutOfRangeException();
-                }
-                _timeLeft = value;
-            }
         }
-        public static readonly int NO_TIME_LIMIT = -1;
-        private int _score = 0;
-        public int Score
-        {
-            get { return _score; }
-        }
-        public ScoreUpdatedEventHandler ScoreUpdated;
+        public EventHandler<TimeUpdatedEventArgs> TimeUpdated;
+        public EventHandler<ScoreUpdatedEventArgs> ScoreUpdated;
+        public EventHandler<MakingPlayEventArgs> BoardChanged;
         private PokemonBoard _board;
-        public PokemonBoard Board
+        internal PokemonBoard Board
         {
             get { return _board; }
             set { _board = value; }
+        }
+        private IBasicPokemonToken[,] _currentGrid = new IBasicPokemonToken[PokemonBoard.gridSize, PokemonBoard.gridSize];
+        internal IBasicPokemonToken[,] CurrentGrid
+        {
+            get { return _currentGrid; }
+            set { GridOperations.copyGrid(value, _currentGrid); }
+        }
+        private IBasicPokemonToken[,] _previousGrid = new IBasicPokemonToken[PokemonBoard.gridSize, PokemonBoard.gridSize];
+        internal IBasicPokemonToken[,] PreviousGrid
+        {
+            get { return _previousGrid; }
+            set { GridOperations.copyGrid(value, _previousGrid); }
         }
 
         /// <summary>
@@ -62,13 +60,19 @@ namespace PokemonBejeweled
         /// </summary>
         public void newGame()
         {
-            _board = new PokemonBoard();
-            _board.PointsAdded += delegate { OnScoreUpdated(); };
-            _board.BoardDirtied += delegate { _justMadeMove = true; };
-            _score = 0;
-            _previousColumn = 0;
             _previousRow = 0;
-            _timeLeft = 120000; // Default
+            _previousColumn = 0;
+            _board = new PokemonBoard();
+            PreviousGrid = _board.generateGrid();
+            CurrentGrid = PreviousGrid;
+            PreviousScore = 0;
+            CurrentScore = 0;
+            _board.PointsAdded += OnPointsAdded;
+            _board.BoardChanged += OnBoardChanged;
+            _board.StartingPlay += OnStartingPlay;
+            _board.EndingPlay += OnEndingPlay;
+            OnScoreUpdated();
+            OnBoardChanged(this, new MakingPlayEventArgs(CurrentGrid));
         }
 
         /// <summary>
@@ -77,11 +81,11 @@ namespace PokemonBejeweled
         /// </summary>
         /// <param name="row">The row of the last token clicked. </param>
         /// <param name="col">The column of the last token clicked. </param>
-        public virtual void makePlay(int row, int col)
+        public virtual void tryPlay(int row, int col)
         {
             if (TimeLeft != 0 && !_justMadeMove)
             {
-                _board.startPlay(row, col, _previousRow, _previousColumn);
+                _board.tryPlay(CurrentGrid, row, col, _previousRow, _previousColumn);
             }
             else
             {
@@ -90,17 +94,18 @@ namespace PokemonBejeweled
             _previousRow = row;
             _previousColumn = col;
         }
-
+        
         /// <summary>
-        /// Fired when the score is updated. 
+        /// Reverts the state of the current grid to that of the previous grid and the current score to the previous score.
         /// </summary>
-        private void OnScoreUpdated()
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public virtual void undoPlay(object sender, EventArgs e)
         {
-            _score += _board.PointsToAdd;
-            if (null != ScoreUpdated)
-            {
-                ScoreUpdated(this);
-            }
+            CurrentGrid = PreviousGrid;
+            CurrentScore = PreviousScore;
+            OnBoardChanged(this, new MakingPlayEventArgs(CurrentGrid));
+            OnScoreUpdated();
         }
 
         /// <summary>
@@ -110,9 +115,69 @@ namespace PokemonBejeweled
         /// <param name="e"></param>
         public void decrementTime(object sender, ElapsedEventArgs e)
         {
-            if (_timeLeft != 0 && NO_TIME_LIMIT != _timeLeft)
+            if (TimeLeft != 0 && NO_TIME_LIMIT != TimeLeft)
             {
-                _timeLeft--;
+                TimeLeft--;
+                if (null != TimeUpdated)
+                {
+                    TimeUpdated(this, new TimeUpdatedEventArgs(TimeLeft));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Updates the state of the current grid and previous grid when a valid play starts. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void OnStartingPlay(object sender, EventArgs e)
+        {
+            PreviousGrid = CurrentGrid;
+            PreviousScore = CurrentScore;
+        }
+
+        /// <summary>
+        /// Updates the state of the current grid when a play ends. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void OnEndingPlay(object sender, MakingPlayEventArgs e)
+        {
+            CurrentGrid = e.PokemonGrid;
+            OnBoardChanged(this, e);
+        }
+
+        /// <summary>
+        /// Updates the state of the current grid and previous grid when a play ends. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnBoardChanged(object sender, MakingPlayEventArgs e)
+        {
+            _justMadeMove = true;
+            if (null != BoardChanged)
+            {
+                BoardChanged(this, new MakingPlayEventArgs(e.PokemonGrid));
+            }
+        }
+
+        /// <summary>
+        /// Fired when points are added to the score. 
+        /// </summary>
+        private void OnPointsAdded(object sender, PointsAddedEventArgs e)
+        {
+            CurrentScore += e.Points;
+            OnScoreUpdated();
+        }
+
+        /// <summary>
+        /// Fired when the score is updated. 
+        /// </summary>
+        private void OnScoreUpdated()
+        {
+            if (null != ScoreUpdated)
+            {
+                ScoreUpdated(this, new ScoreUpdatedEventArgs(CurrentScore));
             }
         }
     }

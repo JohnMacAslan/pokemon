@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using PokemonBejeweled;
+using PokemonBejeweled.Pokemon;
 using Rhino.Mocks;
 
 
@@ -15,13 +16,14 @@ namespace PokemonBejeweledTest
     {
         private GameState _gameState;
         private MockRepository _mocks;
-        private PokemonBoard _mockBoard;
+        private PokemonBoard _pokemonBoard;
+        private PokemonBejeweled.Pokemon.IBasicPokemonToken[,] _pokemonGrid;
 
         [SetUp]
         public void setupMocks()
         {
             _mocks = new MockRepository();
-            _mockBoard = _mocks.PartialMock<PokemonBoard>();
+            _pokemonBoard = _mocks.PartialMock<PokemonBoard>();
         }
 
         [SetUp]
@@ -30,66 +32,72 @@ namespace PokemonBejeweledTest
             _gameState = new GameState();
         }
 
-        [Test()]
-        public void TestGameInitialization()
+        private IBasicPokemonToken[,] generateStableGrid()
         {
-            Assert.AreEqual(0, _gameState.Score);
-            Assert.AreEqual(120000, _gameState.TimeLeft);
-            Assert.IsNotNull(_gameState);
+            int tokenToAdd = 0;
+            IBasicPokemonToken[,] pokemonGrid = new IBasicPokemonToken[PokemonBoard.gridSize, PokemonBoard.gridSize];
+            for (int row = 0; row < PokemonBoard.gridSize; row++)
+            {
+                for (int col = 0; col < PokemonBoard.gridSize; col++)
+                {
+                    pokemonGrid[row, col] = (PokemonToken)Activator.CreateInstance(PokemonBoard.TokenList[tokenToAdd++ % 6 + 1]);
+                }
+            }
+            return pokemonGrid;
         }
 
         [Test()]
-        public void TestGetScore()
+        public void GameState_CurrentScoreSetTo0()
         {
-            Assert.AreEqual(0, _gameState.Score);
+            Assert.AreEqual(0, _gameState.CurrentScore);
         }
 
         [Test()]
-        public void TestTimeLeftDefault()
+        public void GameState_PreviousScoreSetTo0()
         {
-            Assert.AreEqual(120000, _gameState.TimeLeft);
+            Assert.AreEqual(0, _gameState.CurrentScore);
         }
 
         [Test()]
-        public void TestSetTimeLeft()
+        public void GameState_DefaultNoTimeLimit()
         {
-            _gameState.TimeLeft = 2000;
-            Assert.AreEqual(2000, _gameState.TimeLeft);
-        }
-        [Test()]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void TestSetTimeWhenNegativeValue()
-        {
-            _gameState.TimeLeft = -100;
-        }
-
-        [Test()]
-        public void TestSetTimeThatExceptionNotThrownWhenNoTimeLimit()
-        {
-            _gameState.TimeLeft = -1; // When -1, no time limit for game
-            Assert.AreEqual(-1, _gameState.TimeLeft);
-        }
-
-        [Test()]
-        public void TestThatNewGameResetsGameValues()
-        {
-            _gameState.TimeLeft = 1000;
-            Assert.AreEqual(1000, _gameState.TimeLeft);
-
-            _gameState.newGame();
-            Assert.AreEqual(0, _gameState.Score);
-            Assert.AreEqual(120000, _gameState.TimeLeft);
+            Assert.AreEqual(GameState.NO_TIME_LIMIT, _gameState.TimeLeft);
         }
 
         [Test]
         public void MakePlay_CanMakePlay_CallsBoardMakePlay()
         {
-            _mockBoard.Expect(g => g.startPlay(0, 0, 0, 0));
-            _mockBoard.Replay();
-            _gameState.makePlay(0, 0);
-            _gameState.Board = _mockBoard;
-            _gameState.makePlay(0, 0);
-            _mockBoard.VerifyAllExpectations();
+            _pokemonBoard.Expect(g => g.tryPlay(0, 0, 0, 0));
+            _pokemonBoard.Replay();
+            _gameState.tryPlay(0, 0);
+            _gameState.Board = _pokemonBoard;
+            _gameState.tryPlay(0, 0);
+            _pokemonBoard.VerifyAllExpectations();
+        }
+
+        [Test]
+        public void UndoPlay_CantUndoPlay_BoardUnchanged()
+        {
+            _gameState.undoPlay(this, null);
+            Assert.AreEqual(_gameState.PreviousGrid, _gameState.CurrentGrid);   
+        }
+
+        [Test]
+        public void UndoPlay_CanUndoPlay_BoardReverted()
+        {
+            _gameState.CurrentGrid = generateStableGrid();
+            _gameState.PreviousGrid = generateStableGrid();
+            _gameState.undoPlay(this, null);
+            Assert.AreEqual(_gameState.PreviousGrid, _gameState.CurrentGrid);            
+        }
+
+        [Test]
+        public void UndoPlay_CanUndoPlay_ScoreReverted()
+        {
+            _gameState.CurrentScore = 100;
+            _gameState.PreviousScore = 50;
+            _gameState.undoPlay(this, null);
+
         }
     }
 }

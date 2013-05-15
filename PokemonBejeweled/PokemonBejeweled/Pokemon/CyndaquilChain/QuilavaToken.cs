@@ -12,7 +12,7 @@ namespace PokemonBejeweled.Pokemon
     {
         public QuilavaToken()
         {
-            _pictureLocation = "Pokemon/Pictures/quilava.JPG";            
+            _pictureName = "quilava";            
         }
     }
 }

@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+
+using System;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-
-
 namespace PokemonBejeweled.Pokemon
 {
     public abstract class PokemonToken : IBasicPokemonToken
     {
         protected Type _firstEvolution;
         protected Type _secondEvolution;
-        protected String _pictureLocation;
-
+        protected static String _pictureName;
+        
         /// <summary>
         /// Returns an instance of the first evolutionary form of a species of pokemon
         /// </summary>
@@ -60,45 +55,6 @@ namespace PokemonBejeweled.Pokemon
             {
                 return this.GetType().BaseType;
             }
-        }
-
-        /// <summary>
-        /// Fetches the image associated with a given PokemonToken. 
-        /// </summary>
-        public ImageBrush getPokemonPicture()
-        {
-            Uri image = null;
-            Uri shader = null;
-            try
-            {
-                image = new Uri(System.Reflection.Assembly.GetEntryAssembly().Location);
-                shader = new Uri(image, _pictureLocation);
-            }
-            catch (ArgumentNullException e)
-            {
-                System.Console.WriteLine(e.Message);
-            }
-            catch (UriFormatException f)
-            {
-                System.Console.WriteLine(f.Message);
-            }
-            catch
-            {
-                System.Console.WriteLine("whoah somethin different");
-            }
-
-
-            BitmapImage bitImage = null;
-            try
-            {
-                bitImage = new BitmapImage(shader);
-            }
-            catch (Exception e)
-            {
-                System.Console.WriteLine(e.Message);
-            }
-            ImageBrush background = new ImageBrush(bitImage);
-            return background;
         }
     }
 }

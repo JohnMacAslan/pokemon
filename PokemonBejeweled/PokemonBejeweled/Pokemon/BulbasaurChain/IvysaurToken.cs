@@ -12,7 +12,7 @@ namespace PokemonBejeweled.Pokemon
     {
         public IvysaurToken()
         {
-            _pictureLocation = "Pokemon/Pictures/ivysaur.JPG";
+            _pictureName = "ivysaur";
         }
     }
 }

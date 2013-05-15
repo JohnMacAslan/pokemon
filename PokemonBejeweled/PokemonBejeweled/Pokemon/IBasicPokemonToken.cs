@@ -14,8 +14,6 @@ namespace PokemonBejeweled.Pokemon
         Type Species();
         bool isSameSpecies(IBasicPokemonToken pokemonToken);
         IFirstEvolutionPokemonToken firstEvolvedToken();
-        ISecondEvolutionPokemonToken secondEvolvedToken();
-        ImageBrush getPokemonPicture();
-        
+        ISecondEvolutionPokemonToken secondEvolvedToken();        
     }
 }

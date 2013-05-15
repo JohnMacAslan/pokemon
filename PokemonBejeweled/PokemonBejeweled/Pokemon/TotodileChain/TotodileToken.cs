@@ -14,7 +14,7 @@ namespace PokemonBejeweled.Pokemon
         {
             _firstEvolution = typeof(CroconawToken);
             _secondEvolution = typeof(FeraligatorToken);
-            _pictureLocation = "Pokemon/Pictures/totodile.JPG";              
+            _pictureName = "totodile";              
         }
     }
 }

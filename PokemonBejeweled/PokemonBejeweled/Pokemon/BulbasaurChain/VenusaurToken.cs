@@ -12,7 +12,7 @@ namespace PokemonBejeweled.Pokemon
     {
         public VenusaurToken()
         {
-            _pictureLocation = "Pokemon/Pictures/venusaur.JPG";
+            _pictureName = "venusaur.JPG";
         }
     }
 }

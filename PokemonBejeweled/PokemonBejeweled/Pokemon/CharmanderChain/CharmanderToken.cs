@@ -14,7 +14,7 @@ namespace PokemonBejeweled.Pokemon
         {
             _firstEvolution = typeof(CharmeleonToken);
             _secondEvolution = typeof(CharizardToken);
-            _pictureLocation = "Pokemon/Pictures/charmander.JPG";
+            _pictureName = "charmander";
         }
     }
 }

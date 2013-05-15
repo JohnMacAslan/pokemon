@@ -13,7 +13,8 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
-    <PublishUrl>publish\</PublishUrl>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>C:\Users\macaslje\Desktop\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -23,10 +24,10 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationRevision>6</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -48,10 +49,23 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>0FBAA348CB4BD25CB7B6DE0D44A064F480173A20</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>PokemonBejeweled_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="nunit.framework, Version=2.6.2.12296, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -87,17 +101,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="PokemonBoard.cs" />
+    <Compile Include="PokemonEvents.cs" />
     <Compile Include="PokemonGridHistory.cs" />
+    <Compile Include="PokemonPictureDictionary.cs" />
+    <Compile Include="PokemonPictures.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PokemonPictures.resx</DependentUpon>
+    </Compile>
     <Compile Include="Pokemon\BulbasaurChain\BulbasaurToken.cs" />
     <Compile Include="Pokemon\BulbasaurChain\IvysaurToken.cs" />
     <Compile Include="Pokemon\BulbasaurChain\VenusaurToken.cs" />
+    <Compile Include="Pokemon\PokeballToken.cs" />
     <Compile Include="Pokemon\CharmanderChain\CharizardToken.cs" />
     <Compile Include="Pokemon\CharmanderChain\CharmanderToken.cs" />
     <Compile Include="Pokemon\CharmanderChain\CharmeleonToken.cs" />
     <Compile Include="Pokemon\ChikoritaChain\BayleefToken.cs" />
     <Compile Include="Pokemon\ChikoritaChain\ChikoritaToken.cs" />
     <Compile Include="Pokemon\ChikoritaChain\MeganiumToken.cs" />
-    <Compile Include="Pokemon\PokeballToken.cs" />
     <Compile Include="Pokemon\CyndaquilChain\CyndaquilToken.cs" />
     <Compile Include="Pokemon\CyndaquilChain\QuilavaToken.cs" />
     <Compile Include="Pokemon\CyndaquilChain\TyphlosionToken.cs" />
@@ -130,11 +151,16 @@
     </Compile>
     <EmbeddedResource Include="jp-JP.resx" />
     <EmbeddedResource Include="en-US.resx" />
+    <EmbeddedResource Include="PokemonPictures.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>PokemonPictures.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="DomainClassDiagram.cd" />
+    <None Include="PokemonBejeweled_TemporaryKey.pfx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -143,68 +169,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Pokemon\Pictures\bayleef.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Pokemon\Pictures\blastoise.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Pokemon\Pictures\bulbasaur.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Pokemon\Pictures\charmander.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Pokemon\Pictures\charmeleon.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Pokemon\Pictures\chikorita.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Pokemon\Pictures\croconaw.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Pokemon\Pictures\cyndaquil.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Pokemon\Pictures\ditto.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Pokemon\Pictures\feraligator.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Pokemon\Pictures\ivysaur.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Pokemon\Pictures\meganium.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Pokemon\Pictures\pichu.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Pokemon\Pictures\pikachu.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Pokemon\Pictures\quilava.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Pokemon\Pictures\squirtle.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Pokemon\Pictures\totodile.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Pokemon\Pictures\typhlosion.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Pokemon\Pictures\venasaur.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Pokemon\Pictures\wartortle.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
@@ -222,15 +186,6 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Pokemon\Pictures\charizard.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Pokemon\Pictures\pokeball.JPG" />
-    <Resource Include="Pokemon\Pictures\raichu.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

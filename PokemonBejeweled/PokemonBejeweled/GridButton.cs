@@ -42,7 +42,7 @@ namespace PokemonBejeweled
         /// </summary>
         protected override void OnClick()
         {
-            _gameState.makePlay(_row, _column);
+            _gameState.tryPlay(_row, _column);
         }
     }
 }

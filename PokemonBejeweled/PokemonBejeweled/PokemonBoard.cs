@@ -7,23 +7,16 @@ using PokemonBejeweled.Pokemon;
 
 namespace PokemonBejeweled
 {
-    public delegate void BoardDirtiedEventHandler(object source);
-    public delegate void PointsAddedEventHandler(object source);
-
     public class PokemonBoard
     {
         public static readonly int gridSize = 8;
-        public event BoardDirtiedEventHandler BoardDirtied;
-        public event PointsAddedEventHandler PointsAdded;
-        private bool _undoAllowed = true;
+        public static List<Type> TokenList = basicTokens();
+        public event EventHandler StartingPlay;
+        public event EventHandler<MakingPlayEventArgs> EndingPlay;
+        public event EventHandler<MakingPlayEventArgs> BoardChanged;
+        public event EventHandler<PointsAddedEventArgs> PointsAdded;
         private Random _rand = new Random();
-        public static Dictionary<int, Type> TokenDict = basicTokens();
-        private PokemonGridHistory _pokemonHistory = new PokemonGridHistory();
-        private int _pointsToAdd = 0;
-        internal int PointsToAdd
-        {
-            get { return _pointsToAdd; }
-        }
+        private int _pointsFromCurrentPlay = 0;
         private IBasicPokemonToken[,] _pokemonGrid = new IBasicPokemonToken[gridSize, gridSize];
         internal IBasicPokemonToken[,] PokemonGrid
         {
@@ -42,15 +35,12 @@ namespace PokemonBejeweled
         /// </summary>
         public PokemonBoard()
         {
-            generateGrid();
-            _pokemonHistory.Clear();
-            _pokemonHistory.Add((IBasicPokemonToken[,])_pokemonGrid.Clone());
         }
 
         /// <summary>
         /// Generates the inital grid of IBasicPokemonTokens for the board. 
         /// </summary>
-        public virtual void generateGrid()
+        public virtual IBasicPokemonToken[,] generateGrid()
         {
             for (int row = 0; row < gridSize; row++)
             {
@@ -60,6 +50,7 @@ namespace PokemonBejeweled
                 }
             }
             updateBoard();
+            return PokemonGrid;
         }
 
         /// <summary>
@@ -68,8 +59,8 @@ namespace PokemonBejeweled
         /// <returns>A random basic pokemon of the type IBasicPokemonToken</returns>
         private IBasicPokemonToken generateNewPokemon()
         {
-            int pokeNumber = _rand.Next(1, 8);
-            return (IBasicPokemonToken)Activator.CreateInstance(TokenDict[pokeNumber]);
+            int pokeNumber = _rand.Next(TokenList.Count);
+            return (IBasicPokemonToken)Activator.CreateInstance(TokenList[pokeNumber]);
         }
 
         /// <summary>
@@ -94,6 +85,26 @@ namespace PokemonBejeweled
         }
 
         /// <summary>
+        /// Begins a play. 
+        /// </summary>
+        /// <param name="row1">The row of the first location on the grid. </param>
+        /// <param name="col1">The column of the first location on the grid. </param>
+        /// <param name="row2">The row of the second location on the grid. </param>
+        /// <param name="col2">The column of the second location on the grid. </param>
+        /// <returns>True if a play was made, false otherwise. </returns>
+        public virtual void tryPlay(IBasicPokemonToken[,] pokemonGrid, int row1, int col1, int row2, int col2)
+        {
+            if (piecesAreAdjacent(row1, col1, row2, col2))
+            {
+                PokemonGrid = pokemonGrid;
+                NewPokemonGrid = pokemonGrid;
+                makePlay(row1, col1, row2, col2);
+                updateBoard();
+            }
+            OnEndingPlay();
+        }
+
+        /// <summary>
         /// Executes a play. 
         /// </summary>
         /// <param name="row1">The row of the first location on the grid. </param>
@@ -102,6 +113,7 @@ namespace PokemonBejeweled
         /// <param name="col2">The column of the second location on the grid. </param>
         public virtual void makePlay(int row1, int col1, int row2, int col2)
         {
+            _pointsFromCurrentPlay = 0;
             bool madeMove = false;
             IBasicPokemonToken firstToken = _pokemonGrid[row1, col1];
             IBasicPokemonToken secondToken = _pokemonGrid[row2, col2];
@@ -121,42 +133,6 @@ namespace PokemonBejeweled
             }
             _pokemonGrid[row1, col1] = firstToken;
             _pokemonGrid[row2, col2] = secondToken;
-        }
-
-        /// <summary>
-        /// Begins a play. 
-        /// </summary>
-        /// <param name="row1">The row of the first location on the grid. </param>
-        /// <param name="col1">The column of the first location on the grid. </param>
-        /// <param name="row2">The row of the second location on the grid. </param>
-        /// <param name="col2">The column of the second location on the grid. </param>
-        public virtual void startPlay(int row1, int col1, int row2, int col2)
-        {
-            _pointsToAdd = 0;
-            if (piecesAreAdjacent(row1, col1, row2, col2))
-            {
-                makePlay(row1, col1, row2, col2);
-                updateBoard();
-                _pokemonHistory.Add((IBasicPokemonToken[,])_pokemonGrid.Clone());
-                OnPointsAdded();
-                _undoAllowed = true;
-            }
-        }
-
-        /// <summary>
-        /// Resets the board to the previous state. This can only be done once per turn. 
-        /// </summary>
-        public virtual void undoPlay()
-        {
-            if (_undoAllowed && 2 <= _pokemonHistory.PokemonHistory.Count)
-            {
-                GridOperations.copyGrid(_pokemonHistory.NextToLast(), _pokemonGrid);
-                GridOperations.copyGrid(_pokemonHistory.NextToLast(), _newPokemonGrid);
-                _pokemonHistory.RemoveAt(_pokemonHistory.PokemonHistory.Count - 1);
-                _pointsToAdd = -_pointsToAdd;
-                _undoAllowed = false;
-                OnBoardDirtied();
-            }
         }
 
         /// <summary>
@@ -196,8 +172,8 @@ namespace PokemonBejeweled
         /// </summary>
         public virtual void pullDownTokens()
         {
-            GridOperations.copyGrid(_newPokemonGrid, _pokemonGrid);
-            OnBoardDirtied();
+            PokemonGrid = NewPokemonGrid;
+            OnBoardChanged();
             int numberOfTokensToPullDown;
             for (int col = 0; col < gridSize; col++)
             {
@@ -225,8 +201,8 @@ namespace PokemonBejeweled
                     }
                 }
             }
-            GridOperations.copyGrid(_pokemonGrid, _newPokemonGrid);
-            OnBoardDirtied();
+            NewPokemonGrid = PokemonGrid;
+            OnBoardChanged();
         }
 
         /// <summary>
@@ -303,6 +279,7 @@ namespace PokemonBejeweled
             }
             if (3 <= numberOfSameTokens)
             {
+                OnStartingPlay();
                 markNullRow(rowStart, currentCol - numberOfSameTokens, numberOfSameTokens);
                 evolveToken(rowStart, colStart, numberOfSameTokens);
                 return true;
@@ -337,14 +314,30 @@ namespace PokemonBejeweled
         /// <returns>True if a DittoToken was swapped, false otherwise. </returns>
         public virtual bool markDittoNulls(int row1, int col1, int row2, int col2)
         {
-            if (_pokemonGrid[row1, col1].GetType() == typeof(DittoToken))
+            if (_pokemonGrid[row1, col1].GetType() == typeof(DittoToken) && _pokemonGrid[row2, col2].GetType() == typeof(DittoToken))
             {
+                OnPointsAdded(1000);
+                OnStartingPlay();
+                markFullRowAndColumnAsNull(row1 - 1, col1);
+                markFullRowAndColumnAsNull(row1 - 1, col1 - 1);
+                markFullRowAndColumnAsNull(row1 - 1, col1 + 1);
+                markFullRowAndColumnAsNull(row1, col1 - 1);
+                markFullRowAndColumnAsNull(row1, col1 + 1);
+                markFullRowAndColumnAsNull(row1 + 1, col1);
+                markFullRowAndColumnAsNull(row1 + 1, col1 - 1);
+                markFullRowAndColumnAsNull(row1 + 1, col1 + 1);
+                return true;
+            }
+            else if (_pokemonGrid[row1, col1].GetType() == typeof(DittoToken))
+            {
+                OnStartingPlay();
                 markAllTokensOfSameTypeAsNull(_pokemonGrid[row2, col2]);
                 _newPokemonGrid[row1, col1] = null;
                 return true;
             }
             else if (_pokemonGrid[row2, col2].GetType() == typeof(DittoToken))
             {
+                OnStartingPlay();
                 markAllTokensOfSameTypeAsNull(_pokemonGrid[row1, col1]);
                 _newPokemonGrid[row2, col2] = null;
                 return true;
@@ -362,26 +355,21 @@ namespace PokemonBejeweled
         /// <param name="col">The column of the token to mark null. </param>
         public virtual void updateToken(int row, int col)
         {
-            if (_pokemonGrid[row, col].GetType().GetInterfaces().Contains(typeof(IFirstEvolutionPokemonToken)))
+            if (0 <= row && row < gridSize && 0 <= col && col < gridSize && null != _newPokemonGrid[row, col])
             {
-                if (null != _newPokemonGrid[row, col])
+                _newPokemonGrid[row, col] = null;
+                if (_pokemonGrid[row, col].GetType().GetInterfaces().Contains(typeof(IFirstEvolutionPokemonToken)))
                 {
-                    _pointsToAdd += 30;
-                    _newPokemonGrid[row, col] = null;
+                    OnPointsAdded(30);
                     markSurroundingTokensNull(row, col);
                 }
-            }
-            else if (_pokemonGrid[row, col].GetType().GetInterfaces().Contains(typeof(ISecondEvolutionPokemonToken)))
-            {
-                if (null != _newPokemonGrid[row, col])
+                else if (_pokemonGrid[row, col].GetType().GetInterfaces().Contains(typeof(ISecondEvolutionPokemonToken)))
                 {
-                    _pointsToAdd += 60;
-                    _newPokemonGrid[row, col] = null;
+                    OnPointsAdded(60);
                     markFullRowAndColumnAsNull(row, col);
                 }
+                OnPointsAdded(10);
             }
-            _newPokemonGrid[row, col] = null;
-            _pointsToAdd += 10;
         }
 
         /// <summary>
@@ -395,20 +383,21 @@ namespace PokemonBejeweled
         public virtual void evolveToken(int row, int col, int numberOfSameTokens)
         {
             IBasicPokemonToken movedToken = _pokemonGrid[row, col];
-            switch (numberOfSameTokens)
+            if (3 < numberOfSameTokens)
             {
-                case 4:
-                    _pointsToAdd += 100;
-                    _newPokemonGrid[row, col] = movedToken.firstEvolvedToken();
-                    break;
-                case 5:
-                    _pointsToAdd += 300;
-                    _newPokemonGrid[row, col] = new DittoToken();
-                    break;
-                case 6:
-                    _pointsToAdd += 600;
-                    _newPokemonGrid[row, col] = movedToken.secondEvolvedToken();
-                    break;
+                OnPointsAdded((int)Math.Pow(2, numberOfSameTokens) * 10);
+                switch (numberOfSameTokens)
+                {
+                    case 4:
+                        _newPokemonGrid[row, col] = movedToken.firstEvolvedToken();
+                        break;
+                    case 5:
+                        _newPokemonGrid[row, col] = new DittoToken();
+                        break;
+                    default:
+                        _newPokemonGrid[row, col] = movedToken.secondEvolvedToken();
+                        break;
+                }
             }
         }
 
@@ -448,7 +437,7 @@ namespace PokemonBejeweled
                     }
                 }
             }
-            _pointsToAdd += (int)Math.Pow(numTokensMarkedNull, 2) * 10;
+             OnPointsAdded((int)Math.Pow(numTokensMarkedNull, 2) * 10);
         }
 
         /// <summary>
@@ -458,20 +447,14 @@ namespace PokemonBejeweled
         /// <param name="col">The column of the location around which to mark tokens as null. </param>
         public virtual void markSurroundingTokensNull(int row, int col)
         {
-            if (row - 1 >= 0)
-            {
-                updateToken(row - 1, col);
-                if (col - 1 >= 0) updateToken(row - 1, col - 1); ;
-                if (col + 1 < gridSize) updateToken(row - 1, col + 1); ;
-            }
-            if (col - 1 >= 0) updateToken(row, col - 1);
-            if (col + 1 < gridSize) updateToken(row, col + 1);
-            if (row + 1 < gridSize)
-            {
-                updateToken(row + 1, col);
-                if (col - 1 >= 0) updateToken(row + 1, col - 1);
-                if (col + 1 < gridSize) updateToken(row + 1, col + 1);
-            }
+            updateToken(row - 1, col);
+            updateToken(row - 1, col - 1);
+            updateToken(row - 1, col + 1);
+            updateToken(row, col - 1);
+            updateToken(row, col + 1);
+            updateToken(row + 1, col);
+            updateToken(row + 1, col - 1);
+            updateToken(row + 1, col + 1);
         }
 
         /// <summary>
@@ -481,13 +464,19 @@ namespace PokemonBejeweled
         /// <param name="col">The column to mark null. </param>
         public virtual void markFullRowAndColumnAsNull(int row, int col)
         {
-            for (int currentRow = 0; currentRow < gridSize; currentRow++)
+            if (0 <= row && row < gridSize)
             {
-                updateToken(currentRow, col);
+                for (int currentRow = 0; currentRow < gridSize; currentRow++)
+                {
+                    updateToken(currentRow, col);
+                }
             }
-            for (int currentCol = 0; currentCol < gridSize; currentCol++)
+            if (0 <= col && col < gridSize)
             {
-                updateToken(row, currentCol);
+                for (int currentCol = 0; currentCol < gridSize; currentCol++)
+                {
+                    updateToken(row, currentCol);
+                }
             }
         }
 
@@ -538,38 +527,61 @@ namespace PokemonBejeweled
         /// <returns>rue if a move is found, false otherwise. </returns>
         private bool testForMove(int row, int col)
         {
-            int pointsFromLastPlay = _pointsToAdd;
+            bool isMove = false;
+            int pointsFromLastPlay = _pointsFromCurrentPlay;
             makePlay(row, col, row, col + 1);
             if (!haveGridsStabilized())
             {
-                _pointsToAdd = -50;
-                OnPointsAdded();
-                _pointsToAdd = pointsFromLastPlay;
+                OnPointsAdded(-50 - _pointsFromCurrentPlay);
                 GridOperations.copyGrid(_pokemonGrid, _newPokemonGrid);
-                return true;
+                isMove = true;
             }
-            return false;
+            _pointsFromCurrentPlay = pointsFromLastPlay;
+            return isMove;
         }
 
         /// <summary>
-        /// Fired when the points for a play are finalized. 
+        /// Fired when points are gained.  
         /// </summary>
-        protected virtual void OnPointsAdded()
+        protected void OnPointsAdded(int pointsToAdd)
         {
+            _pointsFromCurrentPlay += pointsToAdd;
             if (null != PointsAdded)
             {
-                PointsAdded(this);
+                PointsAdded(this, new PointsAddedEventArgs(pointsToAdd));
             }
         }
 
         /// <summary>
         /// Fired when the board changes. 
         /// </summary>
-        protected virtual void OnBoardDirtied()
+        protected void OnBoardChanged()
         {
-            if (BoardDirtied != null)
+            if (null != BoardChanged)
             {
-                BoardDirtied(this);
+                BoardChanged(this, new MakingPlayEventArgs(PokemonGrid));
+            }
+        }
+
+        /// <summary>
+        /// Fired when a valid play is starting. 
+        /// </summary>
+        protected void OnStartingPlay()
+        {
+            if (null != StartingPlay)
+            {
+                StartingPlay(this, new MakingPlayEventArgs(PokemonGrid));
+            }
+        }
+
+        /// <summary>
+        /// Fired when a play, valid or not, ends.  
+        /// </summary>
+        protected void OnEndingPlay()
+        {
+            if (null != EndingPlay)
+            {
+                EndingPlay(this, new MakingPlayEventArgs(PokemonGrid));
             }
         }
 
@@ -578,17 +590,17 @@ namespace PokemonBejeweled
         /// randomly generating new tokens. 
         /// </summary>
         /// <returns>A dictionary mapping ints to pokemon types. </returns>
-        private static Dictionary<int, Type> basicTokens()
+        private static List<Type> basicTokens()
         {
-            Dictionary<int, Type> dict = new Dictionary<int, Type>();
-            dict.Add(1, typeof(BulbasaurToken));
-            dict.Add(2, typeof(CharmanderToken));
-            dict.Add(3, typeof(ChikoritaToken));
-            dict.Add(4, typeof(CyndaquilToken));
-            dict.Add(5, typeof(PichuToken));
-            dict.Add(6, typeof(SquirtleToken));
-            dict.Add(7, typeof(TotodileToken));
-            return dict;
+            List<Type> list = new List<Type>();
+            list.Add(typeof(BulbasaurToken));
+            list.Add(typeof(CharmanderToken));
+            list.Add(typeof(ChikoritaToken));
+            list.Add(typeof(CyndaquilToken));
+            list.Add(typeof(PichuToken));
+            list.Add(typeof(SquirtleToken));
+            list.Add(typeof(TotodileToken));
+            return list;
         }
     }
 }

@@ -24,14 +24,14 @@
                 <Expander IsExpanded="True" Header="Settings">
                     <StackPanel Width="100" >
                         <RadioButton GroupName="GameTime" x:Name="OneMinuteRadio" Content="One Minute" TextElement.Foreground="YellowGreen"/>
-                        <RadioButton GroupName="GameTime" x:Name="FiveMinuteRadio" Content ="Five Minutes" TextElement.Foreground="YellowGreen" IsChecked="True"/>
+                        <RadioButton GroupName="GameTime" x:Name="FiveMinuteRadio" Content ="Five Minutes" TextElement.Foreground="YellowGreen"/>
                         <RadioButton GroupName="GameTime" x:Name="TenMinuteRadio" Content ="Ten Minutes" TextElement.Foreground="YellowGreen"/>
-                        <RadioButton GroupName="GameTime" x:Name="UnlimitedRadio" Content ="Unlimited" TextElement.Foreground="YellowGreen"/>
+                        <RadioButton GroupName="GameTime" x:Name="UnlimitedRadio" Content ="Unlimited" TextElement.Foreground="YellowGreen" IsChecked="True"/>
                     </StackPanel>
                 </Expander>
                 <Expander x:Name="TimeLeftExpander" IsExpanded="True" Header="Time Left" TextElement.Foreground="YellowGreen" Margin="0,0,0.4,0">
                     <StackPanel Height="35">
-                        <Label x:Name="TimerLabel" FontSize="30" TextElement.Foreground="Green" HorizontalAlignment="Left" Content="5:00" Height="45" Margin="43,-8,-0.2,0" />
+                        <Label x:Name="TimerLabel" FontSize="30" TextElement.Foreground="Green" HorizontalAlignment="Left" Content="--:--" Height="45" Margin="43,-8,-0.2,0" />
                     </StackPanel>
                 </Expander>
                 <Expander x:Name="ScoreboardExpander" IsExpanded="True" Header="Scoreboard" TextElement.Foreground="YellowGreen" Margin="0,0,0.4,0" Height="66">

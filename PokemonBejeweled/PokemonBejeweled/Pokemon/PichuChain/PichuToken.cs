@@ -14,7 +14,7 @@ namespace PokemonBejeweled.Pokemon
         {
             _firstEvolution = typeof(PikachuToken);
             _secondEvolution = typeof(RaichuToken);
-            _pictureLocation = "Pokemon/Pictures/pichu.JPG"; 
+            _pictureName = "pichu"; 
         }
     }
 }

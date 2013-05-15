@@ -12,7 +12,7 @@ namespace PokemonBejeweled.Pokemon
     {
         public CroconawToken()
         {
-            _pictureLocation = "Pokemon/Pictures/croconaw.JPG";
+            _pictureName = "croconaw";
         }
     }
 }
