@@ -169,17 +169,20 @@ namespace PokemonBejeweledTest
         }
 
         [Test]
-        public void TryPlay_PiecesAreAdjacent_CallMakePlay()
+        public void TryPlay_PiecesAreAdjacent_CallMakePlayAndEndPlay()
         {
+            bool endedPlay = false;
             int rowOne = 0;
             int colOne = 0;
             int rowTwo = 0;
             int colTwo = 1;
             _mockBoard = _mocks.PartialMock<PokemonBoard>();
+            _mockBoard.EndingPlay += delegate { endedPlay = true; };
             _mockBoard.Expect(g => g.makePlay(rowOne, colOne, rowTwo, colTwo));
             _mockBoard.Replay();
             _mockBoard.tryPlay(_pokemonGrid, rowOne, colOne, rowTwo, colTwo);
             _mockBoard.VerifyAllExpectations();
+            Assert.IsTrue(endedPlay);
         }
 
         [Test]
@@ -345,6 +348,22 @@ namespace PokemonBejeweledTest
         }
 
         [Test]
+        public void MarkDittoNulls_BothAreDitto_MarkFullRowAndColumnNullCalledOnSurroundingLocations()
+        {
+            int row = 1;
+            int col = 1;
+            _pokemonGrid[row, col] = new DittoToken();
+            _pokemonGrid[row, col + 1] = new DittoToken();
+            _mockBoard.PokemonGrid = _pokemonGrid;
+            _mockBoard.Expect(g => g.markFullRowAndColumnAsNull(row - 1, col - 1));
+            _mockBoard.Expect(g => g.markFullRowAndColumnAsNull(row, col));
+            _mockBoard.Expect(g => g.markFullRowAndColumnAsNull(row + 1, col + 1));
+            _mockBoard.Replay();
+            _mockBoard.markDittoNulls(row, col, row, col + 1);
+            _mockBoard.VerifyAllExpectations();
+        }
+
+        [Test]
         public void UpdateAllColumns_ColumnOfThreeOnTopEdge_ColumnMarkedAsNull()
         {
             _pokemonGrid[0, 0] = new TotodileToken();
@@ -486,17 +505,20 @@ namespace PokemonBejeweledTest
         }
         
         [Test]
-        public void UpdateSingleRow_RowOfThreeStartFromLeft_NullifyRowAndEvolveToken()
+        public void UpdateSingleRow_RowOfThreeStartFromLeft_NullifyRowEvolveTokenAndStartPlay()
         {
+            bool startedPlay = false;
             _pokemonGrid[0, 0] = new TotodileToken();
             _pokemonGrid[0, 1] = new TotodileToken();
             _pokemonGrid[0, 2] = new TotodileToken();
             _mockBoard.PokemonGrid = _pokemonGrid;
+            _mockBoard.StartingPlay += delegate { startedPlay = true; };
             _mockBoard.Expect(g => g.markNullRow(0, 0, 3));
             _mockBoard.Expect(g => g.evolveToken(0, 0, 3));
             _mockBoard.Replay();
             _mockBoard.updateSingleRow(0, 0);
             _mockBoard.VerifyAllExpectations();
+            Assert.IsTrue(startedPlay);
         }
 
         [Test]
@@ -545,18 +567,21 @@ namespace PokemonBejeweledTest
         }
 
         [Test]
-        public void PullDownTokens_NoError_NoNullsLeftInGrid()
+        public void PullDownTokens_NoError_NoNullsLeftInGridBoardChangedEvoked()
         {
+            bool boardChanged = false;
             _pokemonGrid[0, 0] = null;
             _pokemonGrid[2, 3] = new TotodileToken();
             _pokemonGrid[3, 3] = null;
             _pokemonGrid[7, 7] = null;
             _pokemonGrid[6, 7] = new TotodileToken();
+            _pokemonBoard.BoardChanged += delegate { boardChanged = true; };
             _pokemonBoard.NewPokemonGrid = _pokemonGrid;
             _pokemonBoard.pullDownTokens();
             Assert.IsNotNull(_pokemonBoard.PokemonGrid[0, 0]);
             Assert.AreEqual(_pokemonGrid[2, 3], _pokemonBoard.PokemonGrid[3,3]);
             Assert.AreEqual(_pokemonGrid[6, 7], _pokemonBoard.PokemonGrid[7,7]);
+            Assert.IsTrue(boardChanged);
         }
 
         [Test]
@@ -568,7 +593,7 @@ namespace PokemonBejeweledTest
         }
 
         [Test]
-        public void AreMovesLeft_MovesLeft_ReturnTrue()
+        public void AreMovesLeft_MovesLeftInRow_ReturnTrue()
         {
             int row;
             int col;
@@ -576,6 +601,21 @@ namespace PokemonBejeweledTest
             _pokemonGrid[0, 1] = new TotodileToken();
             _pokemonGrid[0, 2] = new TotodileToken();
             _pokemonGrid[1, 0] = new TotodileToken();
+            _pokemonBoard.PokemonGrid = _pokemonGrid;
+            Assert.IsTrue(_pokemonBoard.areMovesLeft(_pokemonGrid, out row, out col));
+            Assert.AreEqual(0, row);
+            Assert.AreEqual(0, col);
+        }
+
+        [Test]
+        public void AreMovesLeft_MovesLeftInColumn_ReturnTrue()
+        {
+            int row;
+            int col;
+            _pokemonGrid[0, 0] = new PichuToken();
+            _pokemonGrid[1, 0] = new TotodileToken();
+            _pokemonGrid[2, 0] = new TotodileToken();
+            _pokemonGrid[0, 1] = new TotodileToken();
             _pokemonBoard.PokemonGrid = _pokemonGrid;
             Assert.IsTrue(_pokemonBoard.areMovesLeft(_pokemonGrid, out row, out col));
             Assert.AreEqual(0, row);

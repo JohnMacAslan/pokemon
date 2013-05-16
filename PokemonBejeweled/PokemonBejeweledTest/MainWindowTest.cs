@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Media;
 using NUnit.Framework;
 using PokemonBejeweled;
 using Rhino.Mocks;

@@ -4,6 +4,11 @@ using PokemonBejeweled.Pokemon;
 
 namespace PokemonBejeweled
 {
+    public interface IGameState
+    {
+        public event EventHandler<TimeUpdatedEventArgs> TimeUpdated;
+    }
+
     public class GameState
     {
         internal static readonly int NO_TIME_LIMIT = -1;
@@ -18,7 +23,6 @@ namespace PokemonBejeweled
         {
             get { return _countdown; }
         }
-        public EventHandler<TimeUpdatedEventArgs> TimeUpdated;
         public EventHandler<ScoreUpdatedEventArgs> ScoreUpdated;
         public EventHandler<MakingPlayEventArgs> BoardChanged;
         private PokemonBoard _board;

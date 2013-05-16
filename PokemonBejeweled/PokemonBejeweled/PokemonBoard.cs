@@ -295,13 +295,8 @@ namespace PokemonBejeweled
             {
                 OnPointsAdded(1000);
                 OnStartingPlay();
-                markFullRowAndColumnAsNull(row1 - 1, col1);
                 markFullRowAndColumnAsNull(row1 - 1, col1 - 1);
-                markFullRowAndColumnAsNull(row1 - 1, col1 + 1);
-                markFullRowAndColumnAsNull(row1, col1 - 1);
-                markFullRowAndColumnAsNull(row1, col1 + 1);
-                markFullRowAndColumnAsNull(row1 + 1, col1);
-                markFullRowAndColumnAsNull(row1 + 1, col1 - 1);
+                markFullRowAndColumnAsNull(row1, col1);
                 markFullRowAndColumnAsNull(row1 + 1, col1 + 1);
                 return true;
             }

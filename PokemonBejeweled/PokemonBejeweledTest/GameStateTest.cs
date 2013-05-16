@@ -88,5 +88,37 @@ namespace PokemonBejeweledTest
             _gameState.undoPlay(this, null);
 
         }
+
+        [Test]
+        public void PokemonBoardPointsAdded_BoardAddsPoint_ScoreIncremented()
+        {
+            _gameState.CurrentScore = 100;
+            _gameState.CurrentGrid = generateStableGrid();
+            _gameState.CurrentGrid[0, 0] = new PichuToken();
+            _gameState.CurrentGrid[0, 1] = new TotodileToken();
+            _gameState.CurrentGrid[0, 2] = new TotodileToken();
+            _gameState.CurrentGrid[1, 0] = new TotodileToken();
+            _gameState.tryPlay(0, 0);
+            _gameState.tryPlay(1, 0);
+            Assert.AreEqual(130, _gameState.CurrentScore);
+        }
+
+        [Test]
+        public void PokemonBoardEndingPlay_BoardEndsPlay_BoardChangedEvoked()
+        {
+            bool boardChangedEvoked = false;
+            _gameState.BoardChanged += delegate { boardChangedEvoked = true; };
+            _gameState.CurrentScore = 100;
+            _gameState.CurrentGrid = generateStableGrid();
+            _gameState.CurrentGrid[0, 0] = new PichuToken();
+            _gameState.CurrentGrid[0, 1] = new TotodileToken();
+            _gameState.CurrentGrid[0, 2] = new TotodileToken();
+            _gameState.CurrentGrid[1, 0] = new TotodileToken();
+            _gameState.PreviousGrid = _gameState.CurrentGrid;
+            _gameState.tryPlay(0, 0);
+            _gameState.tryPlay(1, 0);
+            Assert.IsTrue(boardChangedEvoked);
+            Assert.AreNotEqual(_gameState.PreviousGrid, _gameState.CurrentGrid);
+        }
     }
 }

@@ -8,7 +8,6 @@ namespace PokemonBejeweledTest
     [TestFixture]
     class GridButtonTests
     {
-        private MockRepository _mocks = new MockRepository();
         private GameState _gameState = new GameState();
         private GridButton _gridButton;
 
