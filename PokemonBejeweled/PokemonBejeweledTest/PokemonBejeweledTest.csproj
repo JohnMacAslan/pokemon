@@ -39,7 +39,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="Rhino.Mocks">
-      <HintPath>..\..\..\..\..\..\..\..\Desktop\Rhino.Mocks.dll</HintPath>
+      <HintPath>..\..\..\Documents\Courses\CSSE 376\RhinoMocks\Rhino.Mocks.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xaml" />
