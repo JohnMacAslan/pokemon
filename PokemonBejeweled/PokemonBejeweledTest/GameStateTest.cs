@@ -1,17 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NUnit.Framework;
 using PokemonBejeweled;
 using PokemonBejeweled.Pokemon;
 using Rhino.Mocks;
 
-
 namespace PokemonBejeweledTest
 {
-    [TestFixture()]
+    [TestFixture]
     public class GameStateTest
     {
         private GameState _gameState;
@@ -19,15 +14,10 @@ namespace PokemonBejeweledTest
         private PokemonBoard _pokemonBoard;
 
         [SetUp]
-        public void setupMocks()
+        public void setUp()
         {
             _mocks = new MockRepository();
             _pokemonBoard = _mocks.PartialMock<PokemonBoard>();
-        }
-
-        [SetUp]
-        public void resetGameState()
-        {
             _gameState = new GameState();
         }
 
@@ -45,19 +35,19 @@ namespace PokemonBejeweledTest
             return pokemonGrid;
         }
 
-        [Test()]
+        [Test]
         public void GameState_CurrentScoreSetTo0()
         {
             Assert.AreEqual(0, _gameState.CurrentScore);
         }
 
-        [Test()]
+        [Test]
         public void GameState_PreviousScoreSetTo0()
         {
             Assert.AreEqual(0, _gameState.CurrentScore);
         }
 
-        [Test()]
+        [Test]
         public void GameState_DefaultNoTimeLimit()
         {
             Assert.AreEqual(GameState.NO_TIME_LIMIT, _gameState.TimeLeft);

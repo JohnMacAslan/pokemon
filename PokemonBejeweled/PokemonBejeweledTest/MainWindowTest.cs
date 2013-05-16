@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Windows;
 using NUnit.Framework;
 using PokemonBejeweled;
 using Rhino.Mocks;
@@ -7,7 +6,7 @@ using Rhino.Mocks;
 
 namespace PokemonBejeweledTest
 {
-    [TestFixture()]
+    [TestFixture]
     public class MainWindowTest
     {
         private MainWindow _mainWindow;

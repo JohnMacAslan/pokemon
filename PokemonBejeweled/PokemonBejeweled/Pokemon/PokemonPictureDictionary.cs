@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using System.Reflection;
 using System.Resources;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -16,7 +13,7 @@ namespace PokemonBejeweled
 {
     abstract class PokemonPictureDictionary
     {
-        private static ResourceManager _pictureManager = new ResourceManager("PokemonBejeweled.PokemonPictures", Assembly.GetExecutingAssembly());
+        private static ResourceManager _pictureManager = new ResourceManager("PokemonBejeweled.Resources.PokemonPictures", Assembly.GetExecutingAssembly());
         private static Dictionary<Type, ImageBrush> _pictureDictionary = pokemonPictureDictionary();
         
         private static Dictionary<Type, ImageBrush> pokemonPictureDictionary()
@@ -44,11 +41,10 @@ namespace PokemonBejeweled
             dict.Add(typeof(CroconawToken), getBrushFromString("croconaw"));
             dict.Add(typeof(FeraligatorToken), getBrushFromString("feraligator"));
             dict.Add(typeof(DittoToken), getBrushFromString("ditto"));
-            dict.Add(typeof(PokeballToken), getBrushFromString("pokeball"));
             return dict;
         }
 
-        private static ImageBrush getBrushFromString(string pokemon)
+        public static ImageBrush getBrushFromString(string pokemon)
         {
             try
             {

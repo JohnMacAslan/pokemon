@@ -102,40 +102,24 @@
   <ItemGroup>
     <Compile Include="PokemonBoard.cs" />
     <Compile Include="PokemonEvents.cs" />
-    <Compile Include="PokemonGridHistory.cs" />
-    <Compile Include="PokemonPictureDictionary.cs" />
-    <Compile Include="PokemonPictures.Designer.cs">
+    <Compile Include="Pokemon\ChainBulbasaur.cs" />
+    <Compile Include="Pokemon\ChainTotodile.cs" />
+    <Compile Include="Pokemon\ChainPichu.cs" />
+    <Compile Include="Pokemon\ChainCyndaquil.cs" />
+    <Compile Include="Pokemon\ChainSquirtle.cs" />
+    <Compile Include="Pokemon\ChainCharmander.cs" />
+    <Compile Include="Pokemon\ChainChikorita.cs" />
+    <Compile Include="Resources\PokemonPictures.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>PokemonPictures.resx</DependentUpon>
     </Compile>
-    <Compile Include="Pokemon\BulbasaurChain\BulbasaurToken.cs" />
-    <Compile Include="Pokemon\BulbasaurChain\IvysaurToken.cs" />
-    <Compile Include="Pokemon\BulbasaurChain\VenusaurToken.cs" />
-    <Compile Include="Pokemon\PokeballToken.cs" />
-    <Compile Include="Pokemon\CharmanderChain\CharizardToken.cs" />
-    <Compile Include="Pokemon\CharmanderChain\CharmanderToken.cs" />
-    <Compile Include="Pokemon\CharmanderChain\CharmeleonToken.cs" />
-    <Compile Include="Pokemon\ChikoritaChain\BayleefToken.cs" />
-    <Compile Include="Pokemon\ChikoritaChain\ChikoritaToken.cs" />
-    <Compile Include="Pokemon\ChikoritaChain\MeganiumToken.cs" />
-    <Compile Include="Pokemon\CyndaquilChain\CyndaquilToken.cs" />
-    <Compile Include="Pokemon\CyndaquilChain\QuilavaToken.cs" />
-    <Compile Include="Pokemon\CyndaquilChain\TyphlosionToken.cs" />
+    <Compile Include="Pokemon\PokemonPictureDictionary.cs" />
     <Compile Include="Pokemon\DittoToken.cs" />
     <Compile Include="Pokemon\IBasicPokemonToken.cs" />
     <Compile Include="Pokemon\IFirstEvolutionPokemonToken.cs" />
     <Compile Include="Pokemon\ISecondEvolutionPokemonToken.cs" />
-    <Compile Include="Pokemon\PichuChain\PichuToken.cs" />
-    <Compile Include="Pokemon\PichuChain\PikachuToken.cs" />
-    <Compile Include="Pokemon\PichuChain\RaichuToken.cs" />
     <Compile Include="Pokemon\PokemonToken.cs" />
-    <Compile Include="Pokemon\SquirtleChain\BlastoiseToken.cs" />
-    <Compile Include="Pokemon\SquirtleChain\SquirtleToken.cs" />
-    <Compile Include="Pokemon\SquirtleChain\WartortleToken.cs" />
-    <Compile Include="Pokemon\TotodileChain\CroconawToken.cs" />
-    <Compile Include="Pokemon\TotodileChain\FeraligatorToken.cs" />
-    <Compile Include="Pokemon\TotodileChain\TotodileToken.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -149,10 +133,11 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="jp-JP.resx" />
-    <EmbeddedResource Include="en-US.resx" />
-    <EmbeddedResource Include="PokemonPictures.resx">
+    <EmbeddedResource Include="Resources\jp-JP.resx" />
+    <EmbeddedResource Include="Resources\en-US.resx" />
+    <EmbeddedResource Include="Resources\PokemonPictures.resx">
       <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
       <LastGenOutput>PokemonPictures.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -160,7 +145,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="DomainClassDiagram.cd" />
-    <None Include="PokemonBejeweled_TemporaryKey.pfx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -186,6 +170,75 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pictures\bulbasaur.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pictures\charizard.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pictures\charmander.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pictures\charmeleon.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pictures\chikorita.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pictures\croconaw.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pictures\cyndaquil.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pictures\ditto.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pictures\feraligator.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pictures\ivysaur.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pictures\meganium.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pictures\pichu.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pictures\pikachu.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pictures\pokeball.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pictures\quilava.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pictures\raichu.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pictures\squirtle.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pictures\totodile.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pictures\typhlosion.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pictures\venusaur.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pictures\wartortle.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pictures\bayleef.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pictures\blastoise.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

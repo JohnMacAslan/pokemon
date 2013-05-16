@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NUnit.Framework;
-using PokemonBejeweled;
+﻿using NUnit.Framework;
 using PokemonBejeweled.Pokemon;
 
 namespace PokemonBejeweledTest
@@ -12,96 +6,138 @@ namespace PokemonBejeweledTest
     [TestFixture()]
     public class PokemonTokenTest
     {
-        private readonly BulbasaurToken bulba = new BulbasaurToken();
-        private readonly CharmanderToken charm = new CharmanderToken();
-        private readonly SquirtleToken squirt = new SquirtleToken();
-        private readonly PichuToken pichu = new PichuToken();
-        private readonly ChikoritaToken chik = new ChikoritaToken();
-        private readonly CyndaquilToken cynda = new CyndaquilToken();
-        private readonly TotodileToken toto = new TotodileToken();
+        private BulbasaurToken bulbasaur = new BulbasaurToken();
+        private IvysaurToken ivysaur = new IvysaurToken();
+        private VenusaurToken venusaur = new VenusaurToken();
+        private CharmanderToken charmander = new CharmanderToken();
+        private CharmeleonToken charmeleon = new CharmeleonToken();
+        private CharizardToken charizard = new CharizardToken();
+        private SquirtleToken squirtle = new SquirtleToken();
+        private WartortleToken wartortle = new WartortleToken();
+        private BlastoiseToken blastoise = new BlastoiseToken();
+        private PichuToken pichu = new PichuToken();
+        private PikachuToken pikachu = new PikachuToken();
+        private RaichuToken raichu = new RaichuToken();
+        private ChikoritaToken chikorita = new ChikoritaToken();
+        private BayleefToken bayleef = new BayleefToken();
+        private MeganiumToken meganium = new MeganiumToken();
+        private CyndaquilToken cyndaquil = new CyndaquilToken();
+        private QuilavaToken quilava = new QuilavaToken();
+        private TyphlosionToken typhlosion = new TyphlosionToken();
+        private TotodileToken totodile = new TotodileToken();
+        private CroconawToken croconaw = new CroconawToken();
+        private FeraligatorToken feraligator = new FeraligatorToken();
 
-        [Test()]
-        public void TestThatBulbasaurTokenCreatesFirstEvolvedToken()
+        [Test]
+        public void FirstEvolvedToken_BulbasaurChain_ReturnsNewIvysaur()
         {
-           Assert.AreEqual((new IvysaurToken()).GetType(), bulba.firstEvolvedToken().GetType());           
+            Assert.IsInstanceOf<IvysaurToken>(bulbasaur.firstEvolvedToken());
+            Assert.IsInstanceOf<IvysaurToken>(ivysaur.firstEvolvedToken());
+            Assert.IsInstanceOf<IvysaurToken>(venusaur.firstEvolvedToken());
         }
 
-        [Test()]
-        public void TestThatBulbasaurTokenCreatesSecondEvolvedToken()
+        [Test]
+        public void SecondEvolvedToken_BulbasaurChain_ReturnsNewVenusaur()
         {
-            Assert.AreEqual((new VenusaurToken()).GetType(), bulba.secondEvolvedToken().GetType());
+            Assert.IsInstanceOf<VenusaurToken>(bulbasaur.secondEvolvedToken());
+            Assert.IsInstanceOf<VenusaurToken>(ivysaur.secondEvolvedToken());
+            Assert.IsInstanceOf<VenusaurToken>(venusaur.secondEvolvedToken());
         }
 
-        [Test()]
-        public void TestThatCharmanderTokenCreatesFirstEvolvedToken()
+        [Test]
+        public void FirstEvolvedToken_CharmanderChain_ReturnsNewCharmelon()
         {
-            Assert.AreEqual((new CharmeleonToken()).GetType(), charm.firstEvolvedToken().GetType());
+            Assert.IsInstanceOf<CharmeleonToken>(charmander.firstEvolvedToken());
+            Assert.IsInstanceOf<CharmeleonToken>(charmeleon.firstEvolvedToken());
+            Assert.IsInstanceOf<CharmeleonToken>(charizard.firstEvolvedToken());
         }
 
-        [Test()]
-        public void TestThatCharmanderTokenCreatesSecondEvolvedToken()
+        [Test]
+        public void SecondEvolvedToken_CharmanderChain_ReturnsNewCharizard()
         {
-            Assert.AreEqual((new CharizardToken()).GetType(), charm.secondEvolvedToken().GetType());
+            Assert.IsInstanceOf<CharizardToken>(charmander.secondEvolvedToken());
+            Assert.IsInstanceOf<CharizardToken>(charmeleon.secondEvolvedToken());
+            Assert.IsInstanceOf<CharizardToken>(charizard.secondEvolvedToken());
         }
 
-        [Test()]
-        public void TestThatSquirtleTokenCreatesFirstEvolvedToken()
+        [Test]
+        public void FirstEvolvedToken_ChikoritaChain_ReturnsNewBayleef()
         {
-            Assert.AreEqual((new WartortleToken()).GetType(), squirt.firstEvolvedToken().GetType());
+            Assert.IsInstanceOf<BayleefToken>(chikorita.firstEvolvedToken());
+            Assert.IsInstanceOf<BayleefToken>(bayleef.firstEvolvedToken());
+            Assert.IsInstanceOf<BayleefToken>(meganium.firstEvolvedToken());
         }
 
-        [Test()]
-        public void TestThatSquirtleTokenCreatesSecondEvolvedToken()
+        [Test]
+        public void SecondEvolvedToken_ChikoritaChain_ReturnsNewMeganium()
         {
-            Assert.AreEqual((new BlastoiseToken()).GetType(), squirt.secondEvolvedToken().GetType());
+            Assert.IsInstanceOf<MeganiumToken>(chikorita.secondEvolvedToken());
+            Assert.IsInstanceOf<MeganiumToken>(bayleef.secondEvolvedToken());
+            Assert.IsInstanceOf<MeganiumToken>(meganium.secondEvolvedToken());
         }
 
-        [Test()]
-        public void TestThatPichuTokenCreatesFirstEvolvedToken()
+        [Test]
+        public void FirstEvolvedToken_CyndaquilChain_ReturnsNewQuilava()
         {
-            Assert.AreEqual((new PikachuToken()).GetType(), pichu.firstEvolvedToken().GetType());
+            Assert.IsInstanceOf<QuilavaToken>(cyndaquil.firstEvolvedToken());
+            Assert.IsInstanceOf<QuilavaToken>(quilava.firstEvolvedToken());
+            Assert.IsInstanceOf<QuilavaToken>(typhlosion.firstEvolvedToken());
         }
 
-        [Test()]
-        public void TestThatPichuTokenCreatesSecondEvolvedToken()
+        [Test]
+        public void SecondEvolvedToken_CyndaquilChain_ReturnsNewTyphlosion()
         {
-            Assert.AreEqual((new RaichuToken()).GetType(), pichu.secondEvolvedToken().GetType());
+            Assert.IsInstanceOf<TyphlosionToken>(cyndaquil.secondEvolvedToken());
+            Assert.IsInstanceOf<TyphlosionToken>(quilava.secondEvolvedToken());
+            Assert.IsInstanceOf<TyphlosionToken>(typhlosion.secondEvolvedToken());
         }
 
-        [Test()]
-        public void TestThatChikoritaTokenCreatesFirstEvolvedToken()
+        [Test]
+        public void FirstEvolvedToken_PichuChain_ReturnsNewPikachu()
         {
-            Assert.AreEqual((new BayleefToken()).GetType(), chik.firstEvolvedToken().GetType());
+            Assert.IsInstanceOf<PikachuToken>(pichu.firstEvolvedToken());
+            Assert.IsInstanceOf<PikachuToken>(pikachu.firstEvolvedToken());
+            Assert.IsInstanceOf<PikachuToken>(raichu.firstEvolvedToken());
         }
 
-        [Test()]
-        public void TestThatChikoritaTokenCreatesSecondEvolvedToken()
+        [Test]
+        public void SecondEvolvedToken_PichuChain_ReturnsNewRaichu()
         {
-            Assert.AreEqual((new MeganiumToken()).GetType(), chik.secondEvolvedToken().GetType());
+            Assert.IsInstanceOf<RaichuToken>(pichu.secondEvolvedToken());
+            Assert.IsInstanceOf<RaichuToken>(pikachu.secondEvolvedToken());
+            Assert.IsInstanceOf<RaichuToken>(raichu.secondEvolvedToken());
         }
 
-        [Test()]
-        public void TestThatCyndaquilTokenCreatesFirstEvolvedToken()
+        [Test]
+        public void FirstEvolvedToken_SquirtleChain_ReturnsNewWartortle()
         {
-            Assert.AreEqual((new QuilavaToken()).GetType(), cynda.firstEvolvedToken().GetType());
+            Assert.IsInstanceOf<WartortleToken>(squirtle.firstEvolvedToken());
+            Assert.IsInstanceOf<WartortleToken>(wartortle.firstEvolvedToken());
+            Assert.IsInstanceOf<WartortleToken>(blastoise.firstEvolvedToken());
         }
 
-        [Test()]
-        public void TestThatCyndaquilTokenCreatesSecondEvolvedToken()
+        [Test]
+        public void SecondEvolvedToken_SquirtleChain_ReturnsNewBlastoise()
         {
-            Assert.AreEqual((new TyphlosionToken()).GetType(), cynda.secondEvolvedToken().GetType());
+            Assert.IsInstanceOf<BlastoiseToken>(squirtle.secondEvolvedToken());
+            Assert.IsInstanceOf<BlastoiseToken>(wartortle.secondEvolvedToken());
+            Assert.IsInstanceOf<BlastoiseToken>(blastoise.secondEvolvedToken());
         }
 
-        [Test()]
-        public void TestThatTotodileTokenCreatesFirstEvolvedToken()
+        [Test]
+        public void FirstEvolvedToken_TotodileChain_ReturnsNewCroconaw()
         {
-            Assert.AreEqual((new CroconawToken()).GetType(), toto.firstEvolvedToken().GetType());
+            Assert.IsInstanceOf<CroconawToken>(totodile.firstEvolvedToken());
+            Assert.IsInstanceOf<CroconawToken>(croconaw.firstEvolvedToken());
+            Assert.IsInstanceOf<CroconawToken>(feraligator.firstEvolvedToken());
         }
 
-        [Test()]
-        public void TestThatTotodileTokenCreatesSecondEvolvedToken()
+        [Test]
+        public void SecondEvolvedToken_TotodileChain_ReturnsNewFeraligator()
         {
-            Assert.AreEqual((new FeraligatorToken()).GetType(), toto.secondEvolvedToken().GetType());
+            Assert.IsInstanceOf<FeraligatorToken>(totodile.secondEvolvedToken());
+            Assert.IsInstanceOf<FeraligatorToken>(croconaw.secondEvolvedToken());
+            Assert.IsInstanceOf<FeraligatorToken>(feraligator.secondEvolvedToken());
         }
     }
 }

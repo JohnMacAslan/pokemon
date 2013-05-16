@@ -17,7 +17,7 @@ namespace PokemonBejeweled
     /// </summary>
     public partial class MainWindow : Window
     {
-        private ResourceManager _resourceManager = new ResourceManager("PokemonBejeweled.en-US", Assembly.GetExecutingAssembly());
+        private ResourceManager _resourceManager = new ResourceManager("PokemonBejeweled.Resources.en-US", Assembly.GetExecutingAssembly());
         private GameState _gameState = new GameState();
         public GameState GameState
         {
@@ -31,7 +31,7 @@ namespace PokemonBejeweled
         }
         private Window _instructionsWindow = new Window();
         private TextBlock _instructionsText = new TextBlock();
-        private ImageBrush _pokeball = PokemonPictureDictionary.getImageBrush(new PokeballToken());
+        private ImageBrush _pokeball = PokemonPictureDictionary.getBrushFromString("pokeball");
 
         /// <summary>
         /// Constructs the primary display for the PokemonBejeweled game. 
@@ -129,12 +129,12 @@ namespace PokemonBejeweled
         {
             EnglishButton.Click += delegate
             {
-                _resourceManager = new ResourceManager("PokemonBejeweled.en-US", Assembly.GetExecutingAssembly());
+                _resourceManager = new ResourceManager("PokemonBejeweled.Resources.en-US", Assembly.GetExecutingAssembly());
                 setLocalizedText();
             };
             JapaneseButton.Click += delegate
             {
-                _resourceManager = new ResourceManager("PokemonBejeweled.jp-JP", Assembly.GetExecutingAssembly());
+                _resourceManager = new ResourceManager("PokemonBejeweled.Resources.jp-JP", Assembly.GetExecutingAssembly());
                 setLocalizedText();
             };
         }

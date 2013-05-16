@@ -62,7 +62,6 @@
     <Compile Include="GameStateTest.cs" />
     <Compile Include="GridButtonTests.cs" />
     <Compile Include="GridOperationTests.cs" />
-    <Compile Include="PokemonGridHistoryTests.cs" />
     <Compile Include="PokemonTokenTest.cs" />
     <Compile Include="PokemonBoardTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
