@@ -31,11 +31,11 @@
                 </Expander>
                 <Expander x:Name="TimeLeftExpander" IsExpanded="True" Header="Time Left" TextElement.Foreground="YellowGreen" Margin="0,0,0.4,0">
                     <StackPanel Height="35">
-                        <Label x:Name="TimerLabel" FontSize="30" TextElement.Foreground="Green" HorizontalAlignment="Left" Content="--:--" Height="45" Margin="43,-8,-0.2,0" />
+                        <Label x:Name="TimerLabel" FontSize="30" TextElement.Foreground="Green" Content="--:--" Height="45" Margin="0,-8,0,0" Width="107" />
                     </StackPanel>
                 </Expander>
                 <Expander x:Name="ScoreboardExpander" IsExpanded="True" Header="Scoreboard" TextElement.Foreground="YellowGreen" Margin="0,0,0.4,0" Height="66">
-                    <Label x:Name="ScoreboardLabel" FontSize="30" TextElement.Foreground="Orange" HorizontalAlignment="Right" Content="0"/>
+                    <Label x:Name="ScoreboardLabel" FontSize="30" TextElement.Foreground="Orange" Content="0"/>
                 </Expander>
                 <Expander x:Name="LanguageExpander"  IsExpanded="True" Header="Languages" TextElement.Foreground="YellowGreen">
                     <StackPanel Width="100">
