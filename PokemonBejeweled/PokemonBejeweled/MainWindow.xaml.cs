@@ -115,6 +115,7 @@ namespace PokemonBejeweled
                 TimeLeftExpander.Header = _resourceManager.GetString("Time_Left");
                 LanguageExpander.Header = _resourceManager.GetString("Language");
                 _instructionsText.Text = _resourceManager.GetString("Instruction_Content");
+                OnTimeUpdated(this, new TimeUpdatedEventArgs(_gameState.TimeLeft));
             }
             catch (Exception e)
             {
